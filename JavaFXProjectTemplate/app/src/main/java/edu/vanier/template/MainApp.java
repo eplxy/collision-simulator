@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * @author Sleiman Rabah.
  */
 public class MainApp extends Application {
-
+//Test
     
     private ArrayList<Shape> nodes;
 
