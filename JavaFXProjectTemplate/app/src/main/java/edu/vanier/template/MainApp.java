@@ -21,7 +21,10 @@ import javafx.stage.Stage;
  * @author Sleiman Rabah.
  */
 public class MainApp extends Application {
-//Test
+//Test 
+    /**
+     * Lets use another template because we cant rename it.
+     */
     
     private ArrayList<Shape> nodes;
 
