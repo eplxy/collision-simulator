@@ -1,8 +1,16 @@
 package edu.vanier.template;
 
+import java.util.ArrayList;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 /**
@@ -14,30 +22,68 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        //--> Step 1) Create the parent node of the scene graph.
-        VBox root = new VBox();
-        
-        //-----------
-        //TODO:| Create your Scene graph here.
-        //-----------       
-        //FIXME: ask me in class what FIXME is supposed to mean.
-        //-----
-        //--> Step 2) Create the scene with the specified width and height
-        //          and attach the scene graph to the scene.        
-        Scene scene = new Scene(root, 300, 300);
-        //--> Step 3) Load the scene into stage (window)
-        stage.setScene(scene);        
+    
+    private ArrayList<Shape> nodes;
 
-        stage.setTitle("This is a JavaFX app template...");
-        // Resize the stage so the size matches the scene
-        stage.sizeToScene();
-        //--> Step 4) Show the window.
-        stage.show();
+  public static void main(String[] args) { launch(args); }
+
+  @Override public void start(Stage primaryStage) {
+    primaryStage.setTitle("Drag circles around to see collisions");
+    Group root = new Group();
+    Scene scene = new Scene(root, 400, 400);
+
+    nodes = new ArrayList<>();
+    nodes.add(new Circle(15, 15, 30));
+    nodes.add(new Circle(90, 60, 30));
+    nodes.add(new Circle(40, 200, 30));
+    for (Shape block : nodes) {
+      setDragListeners(block);
+    }
+    root.getChildren().addAll(nodes);
+    checkShapeIntersection(nodes.get(nodes.size() - 1));
+
+    primaryStage.setScene(scene);
+    primaryStage.show();
+  }
+
+  public void setDragListeners(final Shape block) {
+    final Delta dragDelta = new Delta();
+
+    block.setOnMousePressed((MouseEvent mouseEvent) -> {
+        // record a delta distance for the drag and drop operation.
+        dragDelta.x = block.getLayoutX() - mouseEvent.getSceneX();
+        dragDelta.y = block.getLayoutY() - mouseEvent.getSceneY();
+        block.setCursor(Cursor.NONE);
+    });
+    block.setOnMouseReleased((MouseEvent mouseEvent) -> {
+        block.setCursor(Cursor.HAND);
+    });
+    block.setOnMouseDragged((MouseEvent mouseEvent) -> {
+        block.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
+        block.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+        checkShapeIntersection(block);
+    });
+  }
+
+  private void checkShapeIntersection(Shape block) {
+    boolean collisionDetected = false;
+    for (Shape static_bloc : nodes) {
+      if (static_bloc != block) {
+        static_bloc.setFill(Color.GREEN);
+
+        Shape intersect = Shape.intersect(block, static_bloc);
+        if (intersect.getBoundsInLocal().getWidth() != -1) {
+          collisionDetected = true;
+        }
+      }
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    if (collisionDetected) {
+      block.setFill(Color.BLUE);
+    } else {
+      block.setFill(Color.GREEN);
     }
+  }
+
+  class Delta { double x, y; }
 }
