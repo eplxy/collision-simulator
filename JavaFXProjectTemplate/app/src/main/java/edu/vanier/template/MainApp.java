@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import edu.vanier.UI.MainMenuController;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * This is a JavaFX project template to be used for creating GUI applications.
@@ -36,27 +37,26 @@ public class MainApp extends Application {
   public static void main(String[] args) { launch(args); }
 
   @Override public void start(Stage primaryStage) throws IOException {
-//    primaryStage.setTitle("Drag circles around to see collisions");
-//    Group root = new Group();
-//    Scene scene = new Scene(root, 400, 400);
-//
-//    nodes = new ArrayList<>();
-//    nodes.add(new Circle(15, 15, 30));
-//    nodes.add(new Circle(90, 60, 30));
-//    nodes.add(new Circle(40, 200, 30));
-//    for (Shape block : nodes) {
-//      setDragListeners(block);
-//    }
-//    root.getChildren().addAll(nodes);
-//    checkShapeIntersection(nodes.get(nodes.size() - 1));
-//
-//    primaryStage.setScene(scene);
-//    primaryStage.show();
+    primaryStage.setTitle("Drag circles around to see collisions");
+    Group animation = new Group();
+
+    nodes = new ArrayList<>();
+    nodes.add(new Circle(15, 15, 30));
+    nodes.add(new Circle(90, 60, 30));
+    nodes.add(new Circle(40, 200, 30));
+    for (Shape block : nodes) {
+      setDragListeners(block);
+    }
+    animation.getChildren().addAll(nodes);
+    checkShapeIntersection(nodes.get(nodes.size() - 1));
+
     
         try{
+       
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu.fxml"));
-        Pane root = loader.load();
-        Scene scene = new Scene(root, 300, 300);
+        AnchorPane root = loader.load();
+        root.getChildren().add(animation);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("This is a JavaFX app template...");
         primaryStage.sizeToScene();
