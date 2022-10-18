@@ -13,7 +13,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import static javafx.application.Application.launch;
+import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 public class UIDriver extends Application {
 
@@ -26,7 +29,7 @@ public class UIDriver extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Drag circles around to see collisions");
-        Group animation = new Group();
+        //Group animation = new Group();
 
         nodes = new ArrayList<>();
         nodes.add(new Circle(500, 400, 50));
@@ -35,21 +38,26 @@ public class UIDriver extends Application {
         for (Shape block : nodes) {
             setDragListeners(block);
         }
-        animation.getChildren().addAll(nodes);
+        //animation.getChildren().addAll(nodes);
         checkShapeIntersection(nodes.get(nodes.size() - 1));
 
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu.fxml"));
+            edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
+            loader.setController(menuController);
             AnchorPane root = loader.load();
-            root.getChildren().add(animation);
+            
+
+            menuController.initialize(nodes);
+            
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.sizeToScene();
             primaryStage.show();
         } catch (Exception e) {
             System.out.println(e);
-        };
+        }
     }
 
     public void setDragListeners(final Shape block) {
