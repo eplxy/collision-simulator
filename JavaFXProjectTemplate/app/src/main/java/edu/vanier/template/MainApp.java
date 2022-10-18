@@ -1,17 +1,22 @@
 package edu.vanier.template;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import edu.vanier.UI.MainMenuController;
 
 /**
  * This is a JavaFX project template to be used for creating GUI applications.
@@ -30,24 +35,36 @@ public class MainApp extends Application {
 
   public static void main(String[] args) { launch(args); }
 
-  @Override public void start(Stage primaryStage) {
-    primaryStage.setTitle("Drag circles around to see collisions");
-    Group root = new Group();
-    Scene scene = new Scene(root, 400, 400);
-
-    nodes = new ArrayList<>();
-    nodes.add(new Circle(15, 15, 30));
-    nodes.add(new Circle(90, 60, 30));
-    nodes.add(new Circle(40, 200, 30));
-    for (Shape block : nodes) {
-      setDragListeners(block);
+  @Override public void start(Stage primaryStage) throws IOException {
+//    primaryStage.setTitle("Drag circles around to see collisions");
+//    Group root = new Group();
+//    Scene scene = new Scene(root, 400, 400);
+//
+//    nodes = new ArrayList<>();
+//    nodes.add(new Circle(15, 15, 30));
+//    nodes.add(new Circle(90, 60, 30));
+//    nodes.add(new Circle(40, 200, 30));
+//    for (Shape block : nodes) {
+//      setDragListeners(block);
+//    }
+//    root.getChildren().addAll(nodes);
+//    checkShapeIntersection(nodes.get(nodes.size() - 1));
+//
+//    primaryStage.setScene(scene);
+//    primaryStage.show();
+    
+        try{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu.fxml"));
+        Pane root = loader.load();
+        Scene scene = new Scene(root, 300, 300);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("This is a JavaFX app template...");
+        primaryStage.sizeToScene();
+        primaryStage.show();}
+        catch (Exception e){
+            System.out.println(e);};
     }
-    root.getChildren().addAll(nodes);
-    checkShapeIntersection(nodes.get(nodes.size() - 1));
-
-    primaryStage.setScene(scene);
-    primaryStage.show();
-  }
+  
 
   public void setDragListeners(final Shape block) {
     final Delta dragDelta = new Delta();
