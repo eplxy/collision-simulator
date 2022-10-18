@@ -14,10 +14,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar layoutX="206.0" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -38,9 +38,9 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button layoutX="530.0" layoutY="362.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Button fx:id="saveBtn" layoutX="530.0" layoutY="362.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Button layoutX="437.0" layoutY="363.0" mnemonicParsing="false" text="Show graphs" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="55.0" />
-      <Button layoutX="129.0" layoutY="361.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="191.0" layoutY="337.0" mnemonicParsing="false" text="Button" />
       <VBox layoutX="429.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="342.0" prefWidth="171.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="186.0" text="Parameters" />
@@ -51,6 +51,7 @@
                   <Insets top="5.0" />
                </padding>
             </Slider>
+            <Button fx:id="wtvBtn" mnemonicParsing="false" text="Button" />
             <TextField alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0">
                <VBox.margin>
                   <Insets left="15.0" top="5.0" />
@@ -107,5 +108,6 @@
          </children>
       </VBox>
       <Accordion layoutX="129.0" layoutY="196.0" />
+      <Pane fx:id="animationPane" layoutX="14.0" layoutY="33.0" prefHeight="297.0" prefWidth="405.0" style="-fx-background-color: red;" />
    </children>
 </AnchorPane>
