@@ -106,6 +106,6 @@
             </TabPane>
          </children>
       </VBox>
-      <BorderPane layoutX="22.0" layoutY="32.0" prefHeight="293.0" prefWidth="370.0" style="-fx-background-color: red;" />
+      <BorderPane fx:id="animationPane" layoutX="22.0" layoutY="32.0" prefHeight="293.0" prefWidth="370.0" style="-fx-background-color: red;" />
    </children>
 </AnchorPane>
