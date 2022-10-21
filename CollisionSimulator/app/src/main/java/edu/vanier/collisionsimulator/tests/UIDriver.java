@@ -2,6 +2,9 @@ package edu.vanier.collisionsimulator.tests;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -13,10 +16,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import static javafx.application.Application.launch;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class UIDriver extends Application {
 
@@ -31,6 +38,7 @@ public class UIDriver extends Application {
         primaryStage.setTitle("Drag circles around to see collisions");
         //Group animation = new Group();
 
+        
         nodes = new ArrayList<>();
         nodes.add(new Circle(500, 400, 50));
         nodes.add(new Circle(250, 600, 50));
@@ -40,7 +48,9 @@ public class UIDriver extends Application {
         }
         //animation.getChildren().addAll(nodes);
         checkShapeIntersection(nodes.get(nodes.size() - 1));
-
+        
+        
+        
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu.fxml"));
@@ -48,8 +58,36 @@ public class UIDriver extends Application {
             loader.setController(menuController);
             AnchorPane root = loader.load();
             
-
             menuController.initialize(nodes);
+            Circle circle = new Circle(10,10,10);
+            root.getChildren().add(circle);
+            
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+
+                double deltaX = 2;
+                double deltaY = 2;
+
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    circle.setLayoutX(circle.getLayoutX() + deltaX);
+                    circle.setLayoutY(circle.getLayoutY() + deltaY);
+
+                    Bounds bounds = root.getBoundsInLocal();
+                    boolean rightBorder = circle.getLayoutX() >= (bounds.getMaxX() - circle.getRadius());
+                    boolean leftBorder = circle.getLayoutX() <= (bounds.getMinX() + circle.getRadius());
+                    boolean bottomBorder = circle.getLayoutY() >= (bounds.getMaxY() - circle.getRadius());
+                    boolean topBorder = circle.getLayoutY() <= (bounds.getMinY() + circle.getRadius());
+
+                    if (rightBorder || leftBorder) {
+                        deltaX *= -1;
+                    }
+                    if (bottomBorder || topBorder) {
+                        deltaY *= -1;
+                    }
+                }
+            }));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
             
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -59,7 +97,9 @@ public class UIDriver extends Application {
             System.out.println(e);
         }
     }
-
+    
+    
+    
     public void setDragListeners(final Shape block) {
         final Delta dragDelta = new Delta();
 
