@@ -5,13 +5,21 @@
 package edu.vanier.collisionsimulator.ui;
 
 import java.util.ArrayList;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 /**
  *
@@ -24,6 +32,7 @@ public class CollisionMenuController {
     Button saveBtn;
     @FXML
     Button wtvBtn;
+     
     
     public void initialize(ArrayList<Shape> nodesList){
         animationPane.getChildren().addAll(nodesList);
@@ -35,5 +44,7 @@ public class CollisionMenuController {
         wtvBtn.setOnAction((event)->{
             System.out.println("it works!");}
         );
+        
+       
     }
 }
