@@ -1,5 +1,6 @@
 package edu.vanier.collisionsimulator.tests;
 
+import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Application;
@@ -25,27 +26,16 @@ public class AnimationDriver extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Drag circles around to see collisions");
-        Group animation = new Group();
         BorderPane root = new BorderPane();
-        root.getChildren().add(animation);
-        
-        
-        
-        nodes = new ArrayList<>();
-        nodes.add(new Circle(15, 15, 30));
-        nodes.add(new Circle(90, 60, 30));
-        nodes.add(new Circle(40, 200, 30));
-        for (Shape block : nodes) {
-            setDragListeners(block);
-        }
-        animation.getChildren().addAll(nodes);
-        checkShapeIntersection(nodes.get(nodes.size() - 1));
-
-            Scene scene = new Scene(root, 1920, 1000);
+            Scene scene = new Scene(root, 1800, 1000);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Animation Test Window");
             primaryStage.sizeToScene();
             primaryStage.show();
+            
+        Simulation testsim = new Simulation();
+        root.getChildren().add(testsim.animationPane);
+        testsim.loop.play();
     }
 
     public void setDragListeners(final Shape block) {

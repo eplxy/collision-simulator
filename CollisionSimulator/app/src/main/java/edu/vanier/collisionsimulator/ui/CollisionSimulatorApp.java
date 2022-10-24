@@ -2,7 +2,7 @@ package edu.vanier.collisionsimulator.ui;
 
 public class CollisionSimulatorApp {
 
-    public CollisionSimulatorApp() {
+    public static void main(String[] args) {
         
     }
     
