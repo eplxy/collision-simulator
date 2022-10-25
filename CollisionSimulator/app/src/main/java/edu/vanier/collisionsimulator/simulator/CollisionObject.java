@@ -19,7 +19,7 @@ import javafx.scene.shape.Shape;
 //mostly pulled from Assignment 2
 public abstract class CollisionObject {
     
-    ParametersController parametersController = new ParametersController();
+    ParametersController parametersController = new ParametersController(this) ;
 
     protected AnchorPane parameters;
     protected double width, height;
@@ -68,10 +68,11 @@ public abstract class CollisionObject {
     
     private  AnchorPane createParametersPane() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
-        loader.setController(new ParametersController());
-        //AnchorPane parameters = loader.load(); 
+        loader.setController(parametersController);
+        parametersController.initialize();
         return loader.load();
     }
+    
     
 
     public AnchorPane getParameters() {
@@ -162,14 +163,14 @@ public abstract class CollisionObject {
     public void setHeight(double height) {
         this.height = height;
     }
-    public ParametersController getParametersController() {
-        return parametersController;
-    }
-
-    public void setParametersController(ParametersController parametersController) {
-        this.parametersController = parametersController;
-    }
-    
+//    public ParametersController getParametersController() {
+//        return parametersController;
+//    }
+//
+//    public void setParametersController(ParametersController parametersController) {
+//        this.parametersController = parametersController;
+//    }
+//    
 
     
 }
