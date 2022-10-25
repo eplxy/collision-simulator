@@ -29,8 +29,8 @@ public class Simulation {
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
 
-        CircleObject c1 = new CircleObject();
-        CircleObject c2 = new CircleObject();
+        CircleObj c1 = new CircleObj();
+        CircleObj c2 = new CircleObj();
         this.animationPane.getChildren().addAll(c1.node, c2.node);
         c1.setPosX(500);
         c1.setPosY(300);

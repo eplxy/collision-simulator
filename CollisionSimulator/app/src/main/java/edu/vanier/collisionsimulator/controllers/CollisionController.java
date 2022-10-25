@@ -1,7 +1,6 @@
 package edu.vanier.collisionsimulator.controllers;
 
 import edu.vanier.collisionsimulator.simulator.AnimationPane;
-import edu.vanier.collisionsimulator.simulator.CircleObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
 

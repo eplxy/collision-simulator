@@ -19,77 +19,36 @@ import javafx.scene.shape.Circle;
  *
  * @author sabri
  */
-public class CircleObj extends Circle{
+public class CircleObj extends CollisionObject{
 
-    private double speed;
-    private double mass;
-    private AnchorPane parameters;
+        private double radius;
+
     
-    ParametersController parametersController = new ParametersController();
-
-    public CircleObj(double speed, double mass, double d, double d1, double d2, CollisionMenuController cmc) throws IOException {
-        super(d, d1, d2);
-        this.speed = speed;
-        this.mass = mass;
-        setMouseListener(this, cmc);
-        this.parameters = createParametersPane();
-        cmc.addShape(this);
+    //default circle object for animation
+    public CircleObj(){
+        super();
+        this.node = new Circle(50);
+        this.radius = 50;
+        this.height = radius;
+        this.width = radius;
+        this.mass = 5;
         
     }
+     //default circle object for ui testing
+    public CircleObj(CollisionMenuController cmc) throws IOException {
+        super(cmc);
+        this.node = new Circle(50);
+        this.radius = 50;
+        this.height = radius;
+        this.width = radius;
+        setMouseListener(cmc);
+        cmc.addNode(node);
+    }
 
-    private void setMouseListener(CircleObj circle, CollisionMenuController cmc){
-        circle.setOnMouseClicked((MouseEvent mouseEvent) -> {
-            System.out.println("You clicked circle");
+    private void setMouseListener(CollisionMenuController cmc){
+        this.node.setOnMouseClicked((MouseEvent mouseEvent) -> {
             cmc.getParametersPane().getChildren().setAll(parameters);
-            
         });
     } 
-    
-    private  AnchorPane createParametersPane() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
-        loader.setController(new ParametersController());
-        AnchorPane parameters = loader.load(); 
-        return parameters;
-    }
-    
-    private void display (AnchorPane parameters){
-        
-    }
-
-    public AnchorPane getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(AnchorPane parameters) {
-        this.parameters = parameters;
-    }
-
-    public ParametersController getParametersController() {
-        return parametersController;
-    }
-
-    public void setParametersController(ParametersController parametersController) {
-        this.parametersController = parametersController;
-    }
-    
-    
-
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    
-    }
-
-    public double getMass() {
-        return mass;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
     
 }

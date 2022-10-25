@@ -15,6 +15,7 @@ import javafx.scene.shape.Shape;
  * @author sabri
  */
 public class ParametersController {
+    
     public  void initialize() {
        
     }      

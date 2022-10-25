@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -51,8 +52,8 @@ public class CollisionMenuController {
         
     }   
     
-    public void addShape(Shape shape) {
-        animationPane.getChildren().add(shape);
+    public void addNode(Node node) {
+        animationPane.getChildren().add(node);
     }
     
 

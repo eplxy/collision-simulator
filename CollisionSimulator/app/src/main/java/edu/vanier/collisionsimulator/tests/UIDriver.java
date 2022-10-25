@@ -47,7 +47,7 @@ public class UIDriver extends Application {
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
             loader.setController(menuController);
             BorderPane root = loader.load();
-            CircleObj circle1 = new CircleObj(15, 20, 35, 50, 54, menuController);
+            CircleObj circle1 = new CircleObj(menuController);
             
             
             Scene scene = new Scene(root);

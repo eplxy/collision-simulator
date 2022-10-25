@@ -1,9 +1,16 @@
 package edu.vanier.collisionsimulator.simulator;
 
+import edu.vanier.collisionsimulator.ui.CollisionMenuController;
+import edu.vanier.collisionsimulator.ui.ParametersController;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
 
 /**
  *
@@ -11,7 +18,10 @@ import javafx.scene.paint.Paint;
  */
 //mostly pulled from Assignment 2
 public abstract class CollisionObject {
+    
+    ParametersController parametersController = new ParametersController();
 
+    protected AnchorPane parameters;
     protected double width, height;
     protected int index;
     protected Node node;
@@ -27,6 +37,12 @@ public abstract class CollisionObject {
         return collidingNode.getBoundsInParent().intersects(other.node.getBoundsInParent());
     }
 
+    public CollisionObject(CollisionMenuController cmc) throws IOException {
+        vX = 0;
+        vY = 0;
+        this.parameters = createParametersPane();
+    }
+    
     public CollisionObject() {
         vX = 0;
         vY = 0;
@@ -46,7 +62,24 @@ public abstract class CollisionObject {
         this.setPosX(posX+vX);
         this.setPosY(posY+vY);
         
-        
+    }
+    
+    
+    
+    private  AnchorPane createParametersPane() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
+        loader.setController(new ParametersController());
+        //AnchorPane parameters = loader.load(); 
+        return loader.load();
+    }
+    
+
+    public AnchorPane getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(AnchorPane parameters) {
+        this.parameters = parameters;
     }
     
     public Image getImage() {
@@ -129,6 +162,14 @@ public abstract class CollisionObject {
     public void setHeight(double height) {
         this.height = height;
     }
+    public ParametersController getParametersController() {
+        return parametersController;
+    }
+
+    public void setParametersController(ParametersController parametersController) {
+        this.parametersController = parametersController;
+    }
+    
 
     
 }
