@@ -29,7 +29,12 @@ public class CollisionController {
     static boolean handleCollision(CollisionObject colObjA, CollisionObject colObjB) {
         if (colObjA != colObjB) {
             if (colObjA.collide(colObjB)) {
-                //PhysicsController.collidedSpeed();
+                CustomVector[] velocities = PhysicsController.collidedSpeed(colObjA, colObjB);
+                colObjA.setVelocityX(velocities[0].x);
+                colObjA.setVelocityY(velocities[0].y);
+                colObjB.setVelocityX(velocities[1].x);
+                colObjB.setVelocityY(velocities[1].y);
+
             }
         }
         return false;
@@ -48,10 +53,10 @@ public class CollisionController {
     }
 
     //TODO: SOLVE BOUNDS ISSUE (it is 3 am. i am tired.)
+    //TODO: Solve top and bottom border bouncing teleportation
     public static void bounceOffBorder(CollisionObject colObj, AnimationPane aPane) {
 
         //should be aPane.getBounds().getMinX() instead of "0" and maxX instead of "1800"
-        
         if ((colObj.getNode().getLayoutX() >= (1800 - colObj.getWidth()))
                 || (colObj.getNode().getLayoutX() <= (0 + colObj.getWidth()))) {
             colObj.setVelocityX(colObj.getVelocityX() * -1);

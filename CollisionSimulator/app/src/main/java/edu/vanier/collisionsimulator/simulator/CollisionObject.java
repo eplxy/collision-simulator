@@ -24,8 +24,13 @@ public abstract class CollisionObject {
     protected AnchorPane parameters;
     protected double width, height;
     protected int index;
+    
+    //TODO: issues with node =/= shape =/= circle
+    
     protected Node node;
     protected Node collidingNode;
+    
+    
     protected Paint color;
 
     //FOR FUTURE USE IN APPLYING IMAGES ONTO OBJECTS

@@ -28,6 +28,7 @@ public class CircleObj extends CollisionObject{
     public CircleObj(){
         super();
         this.node = new Circle(50);
+        this.collidingNode = this.node;
         this.radius = 50;
         this.height = radius;
         this.width = radius;

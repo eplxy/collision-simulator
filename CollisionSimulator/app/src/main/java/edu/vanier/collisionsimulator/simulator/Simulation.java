@@ -23,6 +23,7 @@ public class Simulation {
     public Timeline loop;
     //associated pane
     public AnimationPane animationPane;
+
     //default simulation (test simulation)
     public Simulation() {
 
@@ -34,16 +35,15 @@ public class Simulation {
         this.animationPane.getChildren().addAll(c1.node, c2.node);
         c1.setPosX(500);
         c1.setPosY(300);
-        
-        c1.setVelocityX(-5);
-        c1.setVelocityY(-5);
 
-        
+        c1.setVelocityX(-5);
+        c1.setVelocityY(0);
+
         c2.setPosX(200);
         c2.setPosY(300);
 
-        c2.setVelocityX(-3);
-        c2.setVelocityY(7);
+        c2.setVelocityX(10);
+        c2.setVelocityY(0);
         com = new CollisionObjectManager();
         com.addCollisionObjects(c1, c2);
         loop.play();
@@ -56,7 +56,7 @@ public class Simulation {
             // update actors
             CollisionController.updateCollisionObjects(com, this.animationPane);
             // check for collision.
-            //CollisionController.checkCollisions(com);
+            CollisionController.checkCollisions(com);
             // removed dead sprites.
             com.cleanupCollisionObjects();
             System.out.println(com.getAllColObjs().get(1).getPosX() + "|||" + this.animationPane.getBoundsInParent());
@@ -99,7 +99,7 @@ Circle circle = new Circle(10, 10, 10);
                     System.out.println("cX=" + circle.getLayoutX() + " ,cY=" + circle.getLayoutY() + " ,radius=" + circle.getRadius());
                     System.out.println("top=" + topBorder + " ,bottom=" + bottomBorder + " ,left=" + leftBorder + " ,right=" + rightBorder);
  */
-/*
+ /*
                     if (rightBorder || leftBorder) {
                         deltaX *= -1;
                     }
@@ -110,4 +110,4 @@ Circle circle = new Circle(10, 10, 10);
             }));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
-*/
+ */
