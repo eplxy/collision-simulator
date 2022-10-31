@@ -1,16 +1,11 @@
 package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
-import java.util.HashSet;
-import java.util.Set;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 /**
@@ -31,21 +26,36 @@ public class Simulation {
         loop = setLoop();
 
         CircleObj c1 = new CircleObj();
+        c1.setMass(50);
         CircleObj c2 = new CircleObj();
-        this.animationPane.getChildren().addAll(c1.node, c2.node);
-        c1.setPosX(500);
+        c2.setMass(400);
+        CircleObj c3 = new CircleObj();
+        c3.setMass(5000);
+        CircleObj c4 = new CircleObj();
+        c4.setMass(12);
+        this.animationPane.getChildren().addAll(c1.node, c2.node, c3.node, c4.node);
+        c1.setPosX(1500);
         c1.setPosY(300);
+        c1.setVelocityX(-4);
+        c1.setVelocityY(2);
 
-        c1.setVelocityX(-5);
-        c1.setVelocityY(0);
-
-        c2.setPosX(200);
+        c2.setPosX(300);
         c2.setPosY(300);
+        c2.setVelocityX(4);
+        c2.setVelocityY(2);
 
-        c2.setVelocityX(10);
-        c2.setVelocityY(0);
+        c3.setPosX(300);
+        c3.setPosY(700);
+        c3.setVelocityX(4);
+        c3.setVelocityY(-1);
+
+        c4.setPosX(1500);
+        c4.setPosY(700);
+        c4.setVelocityX(-4);
+        c4.setVelocityY(-1);
+
         com = new CollisionObjectManager();
-        com.addCollisionObjects(c1, c2);
+        com.addCollisionObjects(c1, c2, c3, c4);
         loop.play();
 
     }
