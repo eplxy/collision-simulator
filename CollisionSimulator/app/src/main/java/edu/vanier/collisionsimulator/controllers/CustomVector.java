@@ -3,8 +3,9 @@ package edu.vanier.collisionsimulator.controllers;
 public class CustomVector {
 
     //TODO:find angles
+    //TODO:resolve issue with JavaFX positive Y pointing to bottom of screen
     
-    
+    public double direction;
     public double x,destX,y,destY;
     /**
      * This is a default constructor which will take a Cartesian coordinate.
@@ -47,6 +48,10 @@ public class CustomVector {
             q = 4;
         }
         return q;
+    }
+    
+    public double direction(){
+        return Math.toDegrees(Math.atan2(y, x));
     }
 
     @Override

@@ -39,9 +39,6 @@ public class CollisionController {
                 colObjA.getShape().setFill(color);
                 colObjB.getShape().setFill(color);
 
-            } else {
-                //colObjA.getShape().setFill(Color.PINK);
-                //colObjB.getShape().setFill(Color.PINK);
             }
         }
         return false;
