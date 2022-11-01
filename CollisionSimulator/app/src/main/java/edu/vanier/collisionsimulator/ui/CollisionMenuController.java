@@ -4,14 +4,11 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
-import edu.vanier.collisionsimulator.simulator.CircleObj;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -42,18 +39,18 @@ public class CollisionMenuController {
        objectChoices = newObjectChoices;
     }
     
-    public void initialize(ArrayList<Shape> nodesList) throws IOException{
+    public void initialize(ArrayList<Shape> shapesList) throws IOException{
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
 //        loader.setController(new ParametersController());
 //        parametersVBox.getChildren().add(loader.load());
         
-        animationPane.getChildren().addAll(nodesList);
+        animationPane.getChildren().addAll(shapesList);
         
         
     }   
     
-    public void addNode(Node node) {
-        animationPane.getChildren().add(node);
+    public void addShape(Shape shape) {
+        animationPane.getChildren().add(shape);
     }
     
 

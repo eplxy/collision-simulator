@@ -33,7 +33,7 @@ public class Simulation {
         c3.setMass(5000);
         CircleObj c4 = new CircleObj();
         c4.setMass(12);
-        this.animationPane.getChildren().addAll(c1.node, c2.node, c3.node, c4.node);
+        this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
         c1.setPosX(1500);
         c1.setPosY(300);
         c1.setVelocityX(-4);
@@ -77,13 +77,12 @@ public class Simulation {
         loop.setCycleCount(Animation.INDEFINITE);
         return loop;
     }
-
 }
 /*
 Circle circle = new Circle(10, 10, 10);
             circle.setLayoutX(20);
             circle.setLayoutY(20);
-            nodes.add(circle);
+            shapes.add(circle);
             root.getChildren().add(circle);
 
             

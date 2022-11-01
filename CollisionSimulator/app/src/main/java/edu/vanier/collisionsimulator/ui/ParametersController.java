@@ -5,14 +5,9 @@
 package edu.vanier.collisionsimulator.ui;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
-import java.io.IOException;
-import java.util.ArrayList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Shape;
 
 /**
  *

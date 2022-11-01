@@ -5,9 +5,7 @@ import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
@@ -18,19 +16,16 @@ import javafx.scene.shape.Shape;
  */
 //mostly pulled from Assignment 2
 public abstract class CollisionObject {
-    
-    ParametersController parametersController = new ParametersController(this) ;
+
+    ParametersController parametersController = new ParametersController(this);
 
     protected AnchorPane parameters;
     protected double width, height;
     protected int index;
-    
-    //TODO: issues with node =/= shape =/= circle
-    
-    protected Node node;
-    protected Node collidingNode;
-    
-    
+
+    protected Shape shape;
+    protected Shape collidingShape;
+
     protected Paint color;
 
     //FOR FUTURE USE IN APPLYING IMAGES ONTO OBJECTS
@@ -39,7 +34,7 @@ public abstract class CollisionObject {
     protected double posX, posY, vX, vY, mass;
 
     public boolean collide(CollisionObject other) {
-        return collidingNode.getBoundsInParent().intersects(other.node.getBoundsInParent());
+        return collidingShape.getBoundsInParent().intersects(other.shape.getBoundsInParent());
     }
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
@@ -47,7 +42,7 @@ public abstract class CollisionObject {
         vY = 0;
         this.parameters = createParametersPane();
     }
-    
+
     public CollisionObject() {
         vX = 0;
         vY = 0;
@@ -55,30 +50,26 @@ public abstract class CollisionObject {
 
     public boolean intersects(CollisionObject s) {
         //return s.getBoundary().intersects(this.getBoundary());        
-        Bounds sBounds = s.getNode().localToScene(s.getNode().getBoundsInLocal());
-        return node.intersects(sBounds);
+        Bounds sBounds = s.getShape().localToScene(s.getShape().getBoundsInLocal());
+        return shape.intersects(sBounds);
 
     }
 
-    public void update(){
-        
-        this.node.setTranslateX(vX);
-        this.node.setTranslateX(vY);
-        this.setPosX(posX+vX);
-        this.setPosY(posY+vY);
-        
+    public void update() {
+
+        this.shape.setTranslateX(vX);
+        this.shape.setTranslateX(vY);
+        this.setPosX(posX + vX);
+        this.setPosY(posY + vY);
+
     }
-    
-    
-    
-    private  AnchorPane createParametersPane() throws IOException{
+
+    private AnchorPane createParametersPane() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
         loader.setController(parametersController);
         parametersController.initialize();
         return loader.load();
     }
-    
-    
 
     public AnchorPane getParameters() {
         return parameters;
@@ -87,7 +78,7 @@ public abstract class CollisionObject {
     public void setParameters(AnchorPane parameters) {
         this.parameters = parameters;
     }
-    
+
     public Image getImage() {
         return image;
     }
@@ -98,7 +89,7 @@ public abstract class CollisionObject {
 
     public void setPosX(double posX) {
         this.posX = posX;
-        this.getNode().setLayoutX(posX);
+        this.getShape().setLayoutX(posX);
     }
 
     public double getPosY() {
@@ -107,7 +98,7 @@ public abstract class CollisionObject {
 
     public void setPosY(double posY) {
         this.posY = posY;
-        this.getNode().setLayoutY(posY);
+        this.getShape().setLayoutY(posY);
     }
 
     public double getMass() {
@@ -124,7 +115,7 @@ public abstract class CollisionObject {
 
     public void setVelocityX(double velocityX) {
         this.vX = velocityX;
-        this.node.setTranslateX(vX);
+        this.shape.setTranslateX(vX);
     }
 
     public double getVelocityY() {
@@ -134,23 +125,23 @@ public abstract class CollisionObject {
 
     public void setVelocityY(double velocityY) {
         this.vY = velocityY;
-        this.node.setTranslateY(vY);
+        this.shape.setTranslateY(vY);
     }
 
-    public Node getNode() {
-        return node;
+    public Shape getShape() {
+        return shape;
     }
 
-    public void setNode(Node node) {
-        this.node = node;
+    public void setShape(Shape shape) {
+        this.shape = shape;
     }
 
-    public Node getCollisionBounds() {
-        return collidingNode;
+    public Shape getCollisionBounds() {
+        return collidingShape;
     }
 
-    public void setCollisionBounds(Node collisionBounds) {
-        this.collidingNode = collisionBounds;
+    public void setCollisionBounds(Shape collisionBounds) {
+        this.collidingShape = collisionBounds;
     }
 
     public double getWidth() {
@@ -177,5 +168,4 @@ public abstract class CollisionObject {
 //    }
 //    
 
-    
 }

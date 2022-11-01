@@ -3,6 +3,7 @@ package edu.vanier.collisionsimulator.controllers;
 import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -34,7 +35,13 @@ public class CollisionController {
                 colObjA.setVelocityY(velocities[0].y);
                 colObjB.setVelocityX(velocities[1].x);
                 colObjB.setVelocityY(velocities[1].y);
+                Color color = new Color(Math.random(), Math.random(), Math.random(), 1);
+                colObjA.getShape().setFill(color);
+                colObjB.getShape().setFill(color);
 
+            } else {
+                //colObjA.getShape().setFill(Color.PINK);
+                //colObjB.getShape().setFill(Color.PINK);
             }
         }
         return false;
@@ -57,12 +64,12 @@ public class CollisionController {
     public static void bounceOffBorder(CollisionObject colObj, AnimationPane aPane) {
 
         //should be aPane.getBounds().getMinX() instead of "0" and maxX instead of "1800"
-        if ((colObj.getNode().getLayoutX() >= (1800 - colObj.getWidth()))
-                || (colObj.getNode().getLayoutX() <= (0 + colObj.getWidth()))) {
+        if ((colObj.getShape().getLayoutX() >= (1800 - colObj.getWidth()))
+                || (colObj.getShape().getLayoutX() <= (0 + colObj.getWidth()))) {
             colObj.setVelocityX(colObj.getVelocityX() * -1);
         }
-        if ((colObj.getNode().getLayoutY() >= (1000 - colObj.getHeight()))
-                || (colObj.getNode().getLayoutY() <= (0 + colObj.getHeight()))) {
+        if ((colObj.getShape().getLayoutY() >= (1000 - colObj.getHeight()))
+                || (colObj.getShape().getLayoutY() <= (0 + colObj.getHeight()))) {
             colObj.setVelocityY(colObj.getVelocityY() * -1);
         }
 
