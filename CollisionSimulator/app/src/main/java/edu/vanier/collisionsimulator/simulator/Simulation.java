@@ -26,36 +26,53 @@ public class Simulation {
         loop = setLoop();
 
         CircleObj c1 = new CircleObj();
-        c1.setMass(50);
+        c1.setMass(69);
         CircleObj c2 = new CircleObj();
-        c2.setMass(400);
+        c2.setMass(40);
         CircleObj c3 = new CircleObj();
-        c3.setMass(5000);
+        c3.setMass(500);
         CircleObj c4 = new CircleObj();
-        c4.setMass(12);
+        c4.setMass(10);
+        
+         CircleObj c5 = new CircleObj();
+        c3.setMass(10);
+        CircleObj c6 = new CircleObj();
+        c4.setMass(10);
         this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
+        //this.animationPane.getChildren().addAll(c5.shape, c6.shape);
         c1.setPosX(1500);
         c1.setPosY(300);
-        c1.setVelocityX(-4);
+        c1.setVelocityX(-6);
         c1.setVelocityY(2);
 
         c2.setPosX(300);
         c2.setPosY(300);
-        c2.setVelocityX(4);
+        c2.setVelocityX(6);
         c2.setVelocityY(2);
 
         c3.setPosX(300);
         c3.setPosY(700);
-        c3.setVelocityX(4);
-        c3.setVelocityY(-1);
+        c3.setVelocityX(6);
+        c3.setVelocityY(-2);
 
         c4.setPosX(1500);
         c4.setPosY(700);
-        c4.setVelocityX(-4);
-        c4.setVelocityY(-1);
+        c4.setVelocityX(-6);
+        c4.setVelocityY(-2);
+        
+        c5.setPosX(300);
+        c5.setPosY(700);
+        c5.setVelocityX(0);
+        c5.setVelocityY(0);
+
+        c6.setPosX(1500);
+        c6.setPosY(600);
+        c6.setVelocityX(-4);
+        c6.setVelocityY(0);
 
         com = new CollisionObjectManager();
         com.addCollisionObjects(c1, c2, c3, c4);
+        //com.addCollisionObjects(c5,c6);
         loop.play();
 
     }

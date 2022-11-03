@@ -22,7 +22,12 @@ public abstract class CollisionObject {
     protected AnchorPane parameters;
     protected double width, height;
     protected int index;
-
+    
+    //TODO: define these as position values, replace usage of getShape().LayoutX/Y
+    protected double centerX;
+    protected double centerY;
+    
+    
     protected Shape shape;
     protected Shape collidingShape;
 
@@ -159,6 +164,8 @@ public abstract class CollisionObject {
     public void setHeight(double height) {
         this.height = height;
     }
+    
+    
 //    public ParametersController getParametersController() {
 //        return parametersController;
 //    }

@@ -4,9 +4,9 @@ public class CustomVector {
 
     //TODO:find angles
     //TODO:resolve issue with JavaFX positive Y pointing to bottom of screen
-    
-    public double direction;
-    public double x,destX,y,destY;
+    public double[] direction;
+    public double x, destX, y, destY, norm;
+
     /**
      * This is a default constructor which will take a Cartesian coordinate.
      *
@@ -16,6 +16,8 @@ public class CustomVector {
     public CustomVector(double x, double y) {
         this.x = x;
         this.y = y;
+        this.norm = this.normalize();
+        this.direction = this.direction();
     }
 
     public CustomVector(double destX, double destY, double objX, double objY) {
@@ -36,27 +38,37 @@ public class CustomVector {
      *
      * @return int quadrant number 1 through 4
      */
-    public int quadrant() {
+    public double quadrant() {
         int q = 0;
         if (x > 0 && y > 0) {
-            q = 1;
-        } else if (x < 0 && y > 0) {
-            q = 2;
-        } else if (x < 0 && y < 0) {
-            q = 3;
-        } else if (x > 0 && y < 0) {
             q = 4;
+        } else if (x < 0 && y > 0) {
+            q = 3;
+        } else if (x < 0 && y < 0) {
+            q = 2;
+        } else if (x > 0 && y < 0) {
+            q = 1;
         }
         return q;
     }
+
     
-    public double direction(){
-        return Math.toDegrees(Math.atan2(y, x));
+    /**
+     * 
+     * @return double array, value 1 is angle, value 2 is quadrant
+     */
+    public double[] direction() {
+
+        return new double[]{Math.toDegrees(Math.atan2(Math.abs(y), Math.abs(x))), this.quadrant()};
     }
 
     @Override
     public String toString() {
         return "(" + x + "," + y + ") quadrant=" + quadrant();
+    }
+
+    public double normalize() {
+        return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
     }
 
     /**
