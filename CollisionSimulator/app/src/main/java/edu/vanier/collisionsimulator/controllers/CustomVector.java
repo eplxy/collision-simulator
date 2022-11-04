@@ -5,7 +5,7 @@ public class CustomVector {
     //TODO:find angles
     //TODO:resolve issue with JavaFX positive Y pointing to bottom of screen
     public double[] direction;
-    public double x, destX, y, destY, norm;
+    public double x, destX, y, destY, length;
 
     /**
      * This is a default constructor which will take a Cartesian coordinate.
@@ -16,8 +16,8 @@ public class CustomVector {
     public CustomVector(double x, double y) {
         this.x = x;
         this.y = y;
-        this.norm = this.normalize();
-        this.direction = this.direction();
+        this.length = this.computeLength();
+        this.direction = this.computeDirection();
     }
 
     public CustomVector(double destX, double destY, double objX, double objY) {
@@ -52,12 +52,11 @@ public class CustomVector {
         return q;
     }
 
-    
     /**
-     * 
+     *
      * @return double array, value 1 is angle, value 2 is quadrant
      */
-    public double[] direction() {
+    public double[] computeDirection() {
 
         return new double[]{Math.toDegrees(Math.atan2(Math.abs(y), Math.abs(x))), this.quadrant()};
     }
@@ -67,8 +66,12 @@ public class CustomVector {
         return "(" + x + "," + y + ") quadrant=" + quadrant();
     }
 
-    public double normalize() {
+    public double computeLength() {
         return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+    }
+
+    public CustomVector normalize() {
+        return new CustomVector(this.x/this.length, this.y/this.length);
     }
 
     /**

@@ -30,7 +30,12 @@ public class CollisionController {
     static boolean handleCollision(CollisionObject colObjA, CollisionObject colObjB) {
         if (colObjA != colObjB) {
             if (colObjA.collide(colObjB)) {
+                
+                
+                
                 CustomVector[] velocities = PhysicsController.collidedSpeed(colObjA, colObjB);
+                
+                
                 colObjA.setVelocityX(velocities[0].x);
                 colObjA.setVelocityY(velocities[0].y);
                 colObjB.setVelocityX(velocities[1].x);
