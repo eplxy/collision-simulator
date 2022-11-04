@@ -19,6 +19,9 @@ public class PhysicsController {
 
         CustomVector v = new CustomVector(objA.getPosX() - objB.getPosX(), objA.getPosY() - objB.getPosY());
 
+        //FIXME: issue here - having objects of different masses messes with kinetic energy of the system
+        //my theory is that the formula calls for actual speed (norm of velocity vector) and so we can't use components.
+        //to test
         CustomVector vA = new CustomVector(
                 ((aMass - bMass) * aVelX + 2 * bMass * bVelX) / (aMass + bMass),
                 ((aMass - bMass) * aVelY + 2 * bMass * bVelY) / (aMass + bMass)
@@ -59,7 +62,6 @@ public class PhysicsController {
                 (vB2.y + vA1.y)
         );
 
-        System.out.println("AposX=" + objA.getPosX() + " AposY=" + objA.getPosY() + " BposX="+ objB.getPosX()+ " BposY=" + objB.getPosY()+ " vy=" + v.y + " vx=" + v.x + " vAx=" + vA.x+ " vAy=" + vA.y+ " vA1x=" + vA1.x + " vA2x=" + vA2.x + " vfAx=" + vfA.x);
         return new CustomVector[]{vfB, vfA};
 
     }
