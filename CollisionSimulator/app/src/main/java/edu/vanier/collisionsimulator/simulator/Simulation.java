@@ -33,13 +33,13 @@ public class Simulation {
         c3.setMass(500);
         CircleObj c4 = new CircleObj();
         c4.setMass(10);
-        
-         CircleObj c5 = new CircleObj();
+
+        CircleObj c5 = new CircleObj();
         c3.setMass(10);
         CircleObj c6 = new CircleObj();
         c4.setMass(10);
-        this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
-        //this.animationPane.getChildren().addAll(c5.shape, c6.shape);
+        //this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
+        this.animationPane.getChildren().addAll(c5.shape, c6.shape);
         c1.setPosX(1500);
         c1.setPosY(300);
         c1.setVelocityX(-6);
@@ -59,7 +59,7 @@ public class Simulation {
         c4.setPosY(700);
         c4.setVelocityX(-6);
         c4.setVelocityY(-2);
-        
+
         c5.setPosX(300);
         c5.setPosY(700);
         c5.setVelocityX(0);
@@ -71,8 +71,28 @@ public class Simulation {
         c6.setVelocityY(0);
 
         com = new CollisionObjectManager();
-        com.addCollisionObjects(c1, c2, c3, c4);
-        //com.addCollisionObjects(c5,c6);
+        //com.addCollisionObjects(c1, c2, c3, c4);
+        com.addCollisionObjects(c5, c6);
+        loop.play();
+
+    }
+
+    public Simulation(int numOfObjs) {
+        com = new CollisionObjectManager();
+        this.animationPane = new AnimationPane(1800, 1000);
+        loop = setLoop();
+
+        for (int i = 0; i < numOfObjs; i++) {
+            CircleObj c = new CircleObj();
+            c.setPosX(Math.random() * (1700 - 100) + 100);
+            c.setPosY(Math.random() * (900 - 100) + 100);
+
+            c.setVelocityX(Math.random() * (5 + 5) - 5);
+            c.setVelocityY(Math.random() * (5 + 5) - 5);
+            com.addCollisionObjects(c);
+            this.animationPane.getChildren().add(c.shape);
+        }
+
         loop.play();
 
     }
@@ -80,13 +100,12 @@ public class Simulation {
     private Timeline setLoop() {
 
         EventHandler<ActionEvent> onFinished = (event) -> {
-            // update actors
-            CollisionController.updateCollisionObjects(com, this.animationPane);
             // check for collision.
             CollisionController.checkCollisions(com);
+            // update actors
+            CollisionController.updateCollisionObjects(com, this.animationPane);
             // removed dead sprites.
             com.cleanupCollisionObjects();
-            System.out.println(com.getAllColObjs().get(1).getPosX() + "|||" + this.animationPane.getBoundsInParent());
         };
 
         final KeyFrame kf = new KeyFrame(Duration.millis((1000 / (float) 60)), onFinished);

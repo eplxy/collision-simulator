@@ -39,6 +39,8 @@ public abstract class CollisionObject {
     protected double posX, posY, vX, vY, mass;
 
     public boolean collide(CollisionObject other) {
+        
+        //FIXME: Redefine collision detection by using width/height & most importantly, direct vector distance for circle objects.
         return collidingShape.getBoundsInParent().intersects(other.shape.getBoundsInParent());
     }
 

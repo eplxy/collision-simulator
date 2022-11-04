@@ -13,13 +13,12 @@ import javafx.scene.shape.Circle;
  *
  * @author sabri
  */
-public class CircleObj extends CollisionObject{
+public class CircleObj extends CollisionObject {
 
-        private double radius;
+    private double radius;
 
-    
     //default circle object for animation
-    public CircleObj(){
+    public CircleObj() {
         super();
         this.shape = new Circle(50);
         this.collidingShape = this.shape;
@@ -27,9 +26,10 @@ public class CircleObj extends CollisionObject{
         this.height = radius;
         this.width = radius;
         this.mass = 5;
-        
+
     }
-     //default circle object for ui testing
+    //default circle object for ui testing
+
     public CircleObj(CollisionMenuController cmc) throws IOException {
         super(cmc);
         this.shape = new Circle(50);
@@ -40,12 +40,10 @@ public class CircleObj extends CollisionObject{
         cmc.addShape(shape);
     }
 
-    private void setMouseListener(CollisionMenuController cmc){
+    private void setMouseListener(CollisionMenuController cmc) {
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
             cmc.getParametersPane().getChildren().setAll(parameters);
         });
-    } 
-    
-    
-    
+    }
+
 }
