@@ -132,8 +132,9 @@ public class Simulation {
             CircleObj c = new CircleObj();
             c.setPosX(randX);
             c.setPosY(randY);
-            c.setVelocityX(Math.random() * (5 + 5) - 5);
-            c.setVelocityY(Math.random() * (5 + 5) - 5);
+            c.setMass(Math.random() * (100 - 10) + 10);
+            c.setVelocityX(Math.random() * (10 + 10) - 10);
+            c.setVelocityY(Math.random() * (10 + 10) - 10);
             randomObjsToAdd[i] = c;
         }
 

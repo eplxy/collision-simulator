@@ -31,7 +31,7 @@ public class AnimationDriver extends Application {
             primaryStage.sizeToScene();
             primaryStage.show();
             
-        Simulation testsim = new Simulation();
+        Simulation testsim = new Simulation(10);
         root.getChildren().add(testsim.animationPane);
         testsim.loop.play();
     }
