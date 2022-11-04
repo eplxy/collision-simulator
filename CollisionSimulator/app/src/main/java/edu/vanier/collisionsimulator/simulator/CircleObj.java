@@ -23,8 +23,8 @@ public class CircleObj extends CollisionObject {
         this.shape = new Circle(50);
         this.collidingShape = this.shape;
         this.radius = 50;
-        this.height = radius;
-        this.width = radius;
+        this.height = radius*2;
+        this.width = radius*2;
         this.mass = 5;
 
     }

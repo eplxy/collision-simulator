@@ -5,6 +5,7 @@ import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -22,12 +23,11 @@ public abstract class CollisionObject {
     protected AnchorPane parameters;
     protected double width, height;
     protected int index;
-    
+
     //TODO: define these as position values, replace usage of getShape().LayoutX/Y
     protected double centerX;
     protected double centerY;
-    
-    
+
     protected Shape shape;
     protected Shape collidingShape;
 
@@ -39,9 +39,20 @@ public abstract class CollisionObject {
     protected double posX, posY, vX, vY, mass;
 
     public boolean collide(CollisionObject other) {
+
+        Shape otherSphere = other.collidingShape;
+        Shape thisSphere = collidingShape;
+        Point2D otherCenter = otherSphere.localToScene(otherSphere.getLayoutX(), otherSphere.getLayoutY());
+        Point2D thisCenter = thisSphere.localToScene(thisSphere.getLayoutX(), thisSphere.getLayoutY());
+        double dx = otherCenter.getX() - thisCenter.getX();
+        double dy = otherCenter.getY() - thisCenter.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        double minDist = this.getWidth() + other.getWidth();
+
+        return (distance < minDist);
         
         //FIXME: Redefine collision detection by using width/height & most importantly, direct vector distance for circle objects.
-        return collidingShape.getBoundsInParent().intersects(other.shape.getBoundsInParent());
+        //return collidingShape.getBoundsInParent().intersects(other.shape.getBoundsInParent());
     }
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
@@ -64,8 +75,6 @@ public abstract class CollisionObject {
 
     public void update() {
 
-        this.shape.setTranslateX(vX);
-        this.shape.setTranslateX(vY);
         this.setPosX(posX + vX);
         this.setPosY(posY + vY);
 
@@ -166,8 +175,7 @@ public abstract class CollisionObject {
     public void setHeight(double height) {
         this.height = height;
     }
-    
-    
+
 //    public ParametersController getParametersController() {
 //        return parametersController;
 //    }
@@ -176,5 +184,4 @@ public abstract class CollisionObject {
 //        this.parametersController = parametersController;
 //    }
 //    
-
 }

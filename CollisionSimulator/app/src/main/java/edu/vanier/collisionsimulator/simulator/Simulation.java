@@ -1,11 +1,16 @@
 package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 /**
@@ -66,7 +71,7 @@ public class Simulation {
         c5.setVelocityY(0);
 
         c6.setPosX(1500);
-        c6.setPosY(600);
+        c6.setPosY(601);
         c6.setVelocityX(-4);
         c6.setVelocityY(0);
 
@@ -77,21 +82,17 @@ public class Simulation {
 
     }
 
+    
+    /**
+     * Creates and runs a simulation with randomized circle objects.
+     * Does not spawn objects that overlap. Takes an integer number of circle objects to be added.
+     * @param numOfObjs 
+     */
     public Simulation(int numOfObjs) {
         com = new CollisionObjectManager();
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
-
-        for (int i = 0; i < numOfObjs; i++) {
-            CircleObj c = new CircleObj();
-            c.setPosX(Math.random() * (1700 - 100) + 100);
-            c.setPosY(Math.random() * (900 - 100) + 100);
-
-            c.setVelocityX(Math.random() * (5 + 5) - 5);
-            c.setVelocityY(Math.random() * (5 + 5) - 5);
-            com.addCollisionObjects(c);
-            this.animationPane.getChildren().add(c.shape);
-        }
+        createRandomObjects(numOfObjs);
 
         loop.play();
 
@@ -113,7 +114,62 @@ public class Simulation {
         loop.setCycleCount(Animation.INDEFINITE);
         return loop;
     }
+
+    private void createRandomObjects(int numOfObjs) {
+
+        CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
+        ArrayList<Shape> shapesToAdd = new ArrayList<>();
+        double randX, randY;
+
+        for (int i = 0; i < numOfObjs; i++) {
+
+            do {
+
+                randX = Math.random() * (1700 - 100) + 100;
+                randY = Math.random() * (900 - 100) + 100;
+
+            } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
+            CircleObj c = new CircleObj();
+            c.setPosX(randX);
+            c.setPosY(randY);
+            c.setVelocityX(Math.random() * (5 + 5) - 5);
+            c.setVelocityY(Math.random() * (5 + 5) - 5);
+            randomObjsToAdd[i] = c;
+        }
+
+        for (CollisionObject obj : randomObjsToAdd) {
+
+            shapesToAdd.add(obj.getShape());
+
+        }
+
+        this.com.addCollisionObjects(randomObjsToAdd);
+        this.animationPane.getChildren().addAll(shapesToAdd);
+    }
+
+    private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
+
+        double objectWidth = 100/2;
+        double bufferDist = 10;
+        double minDist = objectWidth * 2 + bufferDist;
+        for (CollisionObject obj : objArray) {
+            
+            
+            if (obj == null) {
+                continue;
+            }
+            double actualDistance = Math.sqrt(Math.pow((randX - obj.getPosX()), 2) + Math.pow(randY - obj.getPosY(), 2));
+
+            if (actualDistance < minDist) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
+
+
 /*
 Circle circle = new Circle(10, 10, 10);
             circle.setLayoutX(20);
