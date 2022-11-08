@@ -20,7 +20,7 @@ public class CircleObject extends CollisionObject {
     //default circle object for animation
     public CircleObject() throws IOException {
         super();
-        this.shape = new Circle(50);
+        this.shape = new Circle(10);
         this.collidingShape = this.shape;
         this.radius = 50;
         this.height = radius*2;
@@ -33,10 +33,10 @@ public class CircleObject extends CollisionObject {
 //
     public CircleObject(CollisionMenuController cmc) throws IOException {
         super(cmc);
-        this.shape = new Circle(50);
+        this.shape = new Circle(20);
         
         this.collidingShape = this.shape;
-        this.radius = 50;
+        this.radius = 20;
         this.height = radius*2;
         this.width = radius*2;
         this.mass = 5;

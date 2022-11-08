@@ -4,6 +4,7 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
+import edu.vanier.collisionsimulator.controllers.CustomVector;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,11 @@ public class ParametersController {
     CollisionMenuController cmc;
     @FXML
     TextField massTxtField;
+    @FXML
     TextField speedTxtField;
+    @FXML
     TextField posXTxtField;
+    @FXML
     TextField posYTxtField;
     
 //    double massInput;
@@ -44,11 +48,25 @@ public class ParametersController {
     @FXML
     public void handleEnter(ActionEvent event){
         //obj.setMass(Double.parseDouble(massTxtField.getText()));
-        //obj.setPosY(Double.parseDouble(posYTxtField.getText()));
-        System.out.println("hehe");
-        obj.getShape().setLayoutX(20); 
-        //obj.getShape().setLayoutX(Double.parseDouble(posXTxtField.getText()));
+        obj.setPosY(Double.parseDouble(posYTxtField.getText()));
+        obj.setPosX(Double.parseDouble(posXTxtField.getText()));
+        obj.setVelocityX(setVelocityX(Double.parseDouble(speedTxtField.getText())));
+        obj.setVelocityY(setVelocityY(Double.parseDouble(speedTxtField.getText())));
     }
+    
+    private double setVelocityX(double velocity){
+        CustomVector cv = new CustomVector(obj.getVelocityX(), obj.getVelocityY());
+        double angle = cv.direction[0];
+        return velocity*Math.toDegrees(Math.sin(Math.toRadians(angle)));
+        
+    }
+    
+    private double setVelocityY(double velocity){
+        CustomVector cv = new CustomVector(obj.getVelocityX(), obj.getVelocityY());
+        double angle = cv.direction[0];
+        return velocity*Math.toDegrees(Math.cos(Math.toRadians(angle)));
+    }
+    
     @FXML
     public TextField getMassTxtField() {
         return massTxtField;
