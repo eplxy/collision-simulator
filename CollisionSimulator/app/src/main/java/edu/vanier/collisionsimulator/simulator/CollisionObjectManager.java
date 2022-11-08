@@ -12,7 +12,7 @@ public class CollisionObjectManager {
 
     
     //deferring from assignment 2's code to implement a manager
-    //used simulation by simulation rather than globally
+    //used simulation by simulation instance rather than globally
     public CollisionObjectManager() {
     }
     

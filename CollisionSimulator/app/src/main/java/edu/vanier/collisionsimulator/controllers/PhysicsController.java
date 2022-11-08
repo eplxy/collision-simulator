@@ -18,6 +18,7 @@ public class PhysicsController {
         double bMass = objB.getMass();
 
         CustomVector v = new CustomVector(objA.getPosX() - objB.getPosX(), objA.getPosY() - objB.getPosY());
+        v = v.normalize().scalarMult(objA.getWidth()+objB.getWidth());
 
         //FIXME: issue here - having objects of different masses messes with kinetic energy of the system
         //my theory is that the formula calls for actual speed (norm of velocity vector) and so we can't use components.

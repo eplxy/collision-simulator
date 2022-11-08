@@ -30,14 +30,14 @@ public class UIDriver extends Application {
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
             loader.setController(menuController);
             BorderPane root = loader.load();
-            Simulation sim = new Simulation(3, menuController);
+            Simulation sim = new Simulation(7, menuController);
             menuController.initialize(sim);
             
            
             
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setFullScreen(true);
+            primaryStage.setMaximized(true);
             primaryStage.show(); 
         } catch (Exception e) {
             System.out.println(e);

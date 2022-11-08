@@ -54,8 +54,6 @@ public abstract class CollisionObject {
 
         return (distance < minDist);
 
-        //FIXME: Redefine collision detection by using width/height & most importantly, direct vector distance for circle objects.
-        //return collidingShape.getBoundsInParent().intersects(other.shape.getBoundsInParent());
     }
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
@@ -84,11 +82,12 @@ public abstract class CollisionObject {
         and bounce it back.
         
         check if new position will be within bounds or not and handle accordingly
-        */
+         */
         double newPosX = posX + vX;
         double newPosY = posY + vY;
+        this.setPosX(newPosX);
+        this.setPosY(newPosY);
 //        if(!CollisionController.predictIntersectsBorderX(this, aPane) && 0<(newPosX) && (newPosX)< aPane.xMax){
-            this.setPosX(posX + vX);
 //        }
 //        else{
 //                if(vX>0){
@@ -102,7 +101,6 @@ public abstract class CollisionObject {
 // 
 //        }
 //        if(!CollisionController.predictIntersectsBorderY(this, aPane)){
-            this.setPosY(posY + vY);
 //        }
 //        else{
 //             if(vY>0){

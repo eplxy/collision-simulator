@@ -32,7 +32,7 @@ public class Simulation {
     public AnimationPane animationPane;
 
     //default simulation (test simulation)
-    public Simulation() throws IOException {
+    public Simulation(boolean option) throws IOException {
 
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
@@ -47,11 +47,8 @@ public class Simulation {
         c4.setMass(10);
 
         CircleObject c5 = new CircleObject();
-        c3.setMass(10);
         CircleObject c6 = new CircleObject();
-        c4.setMass(10);
-        //this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
-        this.animationPane.getChildren().addAll(c5.shape, c6.shape);
+
         c1.setPosX(1500);
         c1.setPosY(300);
         c1.setVelocityX(-6);
@@ -72,20 +69,27 @@ public class Simulation {
         c4.setVelocityX(-6);
         c4.setVelocityY(-2);
 
-        c5.setPosX(300);
-        c5.setPosY(700);
-        c5.setVelocityX(0);
+        c5.setPosX(1300);
+        c5.setPosY(500);
+        c5.setVelocityX(5);
         c5.setVelocityY(0);
 
         c6.setPosX(1500);
-        c6.setPosY(601);
-        c6.setVelocityX(-4);
+        c6.setPosY(500);
+        c6.setVelocityX(0);
         c6.setVelocityY(0);
 
         com = new CollisionObjectManager();
-        //com.addCollisionObjects(c1, c2, c3, c4);
-        com.addCollisionObjects(c5, c6);
-        loop.play();
+
+        if (option) {
+            this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
+            com.addCollisionObjects(c1, c2, c3, c4);
+
+        } else {
+            com.addCollisionObjects(c5, c6);
+            this.animationPane.getChildren().addAll(c5.shape, c6.shape);
+
+        }
 
     }
 
@@ -109,7 +113,7 @@ public class Simulation {
     public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
         com = new CollisionObjectManager();
         this.animationPane = new AnimationPane(1200, 500);
-        this.animationPane.changeBackground("0000FF");
+        this.animationPane.changeBackground("AAAAAA");
 
         loop = setLoop();
         createRandomObjects2(numOfObjs, cmc);
@@ -152,7 +156,8 @@ public class Simulation {
             CircleObject c = new CircleObject();
             c.setPosX(randX);
             c.setPosY(randY);
-            c.setMass(Math.random() * (100 - 10) + 10);
+//DON'T TOUCH THIS I SWEAR TO GOD IF YOU DO nothing will happen really it's just chaotic            
+//c.setMass(Math.random() * (100 - 10) + 10);
             c.setVelocityX(Math.random() * (10 + 10) - 10);
             c.setVelocityY(Math.random() * (10 + 10) - 10);
             randomObjsToAdd[i] = c;
@@ -208,7 +213,7 @@ public class Simulation {
             CircleObject c = new CircleObject(cmc);
             c.setPosX(randX);
             c.setPosY(randY);
-            c.setMass(Math.random() * (0.05));
+            //c.setMass(Math.random() * (0.05));
             c.setVelocityX(Math.random() * (10 + 5) - 10);
             c.setVelocityY(Math.random() * (10 + 5) - 10);
             randomObjsToAdd[i] = c;

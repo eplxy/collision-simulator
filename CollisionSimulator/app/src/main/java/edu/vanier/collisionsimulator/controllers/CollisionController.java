@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
  */
 public class CollisionController {
 
+    final static double BORDER_BUFFER = 10;
+
     public static void checkCollisions(CollisionObjectManager com) {
         com.resetCollisionsToCheck();
         // check each sprite against other sprite objects.
@@ -61,22 +63,24 @@ public class CollisionController {
     //TODO: SOLVE BOUNDS ISSUE (it is 3 am. i am tired.)
     //TODO: Solve top and bottom border bouncing teleportation
     public static boolean intersectsBorderX(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosX() >= (aPane.getxMax() - colObj.getWidth()/2))
-                || (colObj.getPosX() <= (0 + colObj.getWidth()/2)));
-    }
-    public static boolean predictIntersectsBorderX(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosX()+colObj.getVelocityX() >= (aPane.getxMax() - colObj.getWidth()/2))
-                || (colObj.getPosX()+colObj.getVelocityX() <= (0 + colObj.getWidth()/2)));
-    }
-    public static boolean intersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosY() >= (aPane.getyMax() - colObj.getHeight()/2))
-                || (colObj.getPosY() <= (0 + colObj.getHeight()/2)));
-    }
-        public static boolean predictIntersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosY()+colObj.getVelocityY() >= (aPane.getyMax() - colObj.getHeight()/2))
-                || (colObj.getPosY()+colObj.getVelocityY() <= (0 + colObj.getHeight()/2)));
+        return ((colObj.getPosX() + BORDER_BUFFER >= (aPane.getxMax() - colObj.getWidth() / 2))
+                || (colObj.getPosX() <= (0 + colObj.getWidth() / 2) + BORDER_BUFFER));
     }
 
+    public static boolean predictIntersectsBorderX(CollisionObject colObj, AnimationPane aPane) {
+        return ((colObj.getPosX() + colObj.getVelocityX() >= (aPane.getxMax() - colObj.getWidth() / 2))
+                || (colObj.getPosX() + colObj.getVelocityX() <= (0 + colObj.getWidth() / 2)));
+    }
+
+    public static boolean intersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
+        return ((colObj.getPosY() + BORDER_BUFFER >= (aPane.getyMax() - colObj.getHeight() / 2))
+                || (colObj.getPosY() <= (0 + colObj.getHeight() / 2) + BORDER_BUFFER));
+    }
+
+    public static boolean predictIntersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
+        return ((colObj.getPosY() + colObj.getVelocityY() >= (aPane.getyMax() - colObj.getHeight() / 2))
+                || (colObj.getPosY() + colObj.getVelocityY() <= (0 + colObj.getHeight() / 2)));
+    }
 
     public static void bounceOffBorder(CollisionObject colObj, AnimationPane aPane) {
 

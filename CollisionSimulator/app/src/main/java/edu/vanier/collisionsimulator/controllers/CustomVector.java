@@ -63,7 +63,7 @@ public class CustomVector {
 
     @Override
     public String toString() {
-        return "(" + x + "," + y + ") quadrant=" + quadrant();
+        return "(" + x + "," + y + ")";
     }
 
     public double computeLength() {
@@ -71,7 +71,20 @@ public class CustomVector {
     }
 
     public CustomVector normalize() {
-        return new CustomVector(this.x/this.length, this.y/this.length);
+
+        if (this.length == 0) {
+            return new CustomVector(0, 0);
+        }
+
+        return new CustomVector(this.x / this.length, this.y / this.length);
+    }
+
+    public static double dotProduct(CustomVector a, CustomVector b) {
+        return (a.x * b.x + a.y * b.y);
+    }
+
+    public CustomVector scalarMult(double scalar) {
+        return new CustomVector(this.x * scalar, this.y * scalar);
     }
 
     /**
