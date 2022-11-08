@@ -33,7 +33,7 @@ FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameter
     loader.setController(controller);
     
     Pane topPane  =  loader.load(); 
-    controller.initialize();
+    //controller.initialize();
 
     
     loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));

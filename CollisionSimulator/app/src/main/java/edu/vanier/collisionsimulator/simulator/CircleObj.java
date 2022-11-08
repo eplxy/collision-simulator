@@ -18,7 +18,7 @@ public class CircleObj extends CollisionObject {
     private double radius;
 
     //default circle object for animation
-    public CircleObj() {
+    public CircleObj() throws IOException {
         super();
         this.shape = new Circle(50);
         this.collidingShape = this.shape;
@@ -26,24 +26,23 @@ public class CircleObj extends CollisionObject {
         this.height = radius*2;
         this.width = radius*2;
         this.mass = 5;
+        
 
     }
-    //default circle object for ui testing
-
+//    //default circle object for ui testing
+//
     public CircleObj(CollisionMenuController cmc) throws IOException {
         super(cmc);
         this.shape = new Circle(50);
+        
+        this.collidingShape = this.shape;
         this.radius = 50;
-        this.height = radius;
-        this.width = radius;
-        setMouseListener(cmc);
-        cmc.addShape(shape);
+        this.height = radius*2;
+        this.width = radius*2;
+        this.mass = 5;
+        
+
     }
 
-    private void setMouseListener(CollisionMenuController cmc) {
-        this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
-            cmc.getParametersPane().getChildren().setAll(parameters);
-        });
-    }
 
 }

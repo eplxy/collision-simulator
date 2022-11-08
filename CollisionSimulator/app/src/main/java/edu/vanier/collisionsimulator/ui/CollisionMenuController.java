@@ -4,12 +4,12 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
+import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
-import java.util.ArrayList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -27,31 +27,44 @@ public class CollisionMenuController {
     @FXML
     private VBox parametersVBox; 
     @FXML
-    private ChoiceBox objectChoice;
+    Button btnSave;
+    @FXML
+    Button btnPlay;
+    @FXML
+    Button btnPause;
     
-    private static ObservableList<String> objectChoices = FXCollections.observableArrayList();
-
-    public static ObservableList<String> getObjectChoices(){
-        return objectChoices;
-    }
-
-    public static void setObjectChoices(ObservableList<String> newObjectChoices){
-       objectChoices = newObjectChoices;
-    }
-    
-    public void initialize(ArrayList<Shape> shapesList) throws IOException{
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
-//        loader.setController(new ParametersController());
-//        parametersVBox.getChildren().add(loader.load());
-        
-        animationPane.getChildren().addAll(shapesList);
-        
-        
+    public void initialize(Simulation sim) throws IOException{
+        for (CollisionObject obj :  sim.com.getAllColObjs()) {
+            obj.setMouseListener(this);
+            }
+        animationPane.getChildren().add(sim.animationPane);
+        btnSave.setOnAction((event) -> {
+            handleSave(event);
+        });
+        btnPlay.setOnAction((event) -> {
+            handlePlay(event, sim);
+        });
+        btnPause.setOnAction((event) -> {
+            handlePause(event, sim);
+        });
     }   
     
-    public void addShape(Shape shape) {
-        animationPane.getChildren().add(shape);
+    public void handleSave(ActionEvent event){
+        System.out.println("save pressed");
     }
+    
+    private void handlePlay(ActionEvent event, Simulation sim) {
+        sim.loop.play();
+    }
+    
+    private void handlePause(ActionEvent event, Simulation sim) {
+        sim.loop.pause();
+    }
+    
+    public void updateParameters(){
+        
+    }
+    
     
 
     public Pane getAnimationPane() {
@@ -78,15 +91,7 @@ public class CollisionMenuController {
         this.parametersVBox = parametersVBox;
     }
 
-    public ChoiceBox getObjectChoice() {
-        return objectChoice;
-    }
 
-    public void setObjectChoice(ChoiceBox objectChoice) {
-        this.objectChoice = objectChoice;
-    }
 
-    
-    
     
 }

@@ -66,12 +66,20 @@ public class CollisionController {
     public static void bounceOffBorder(CollisionObject colObj, AnimationPane aPane) {
 
         //should be aPane.getBounds().getMinX() instead of "0" and maxX instead of "1800"
-        if ((colObj.getShape().getLayoutX() >= (1800 - colObj.getWidth()))
-                || (colObj.getShape().getLayoutX() <= (0 + colObj.getWidth()))) {
+//        if ((colObj.getShape().getLayoutX() >= (1800 - colObj.getWidth()))
+//                || (colObj.getShape().getLayoutX() <= (0 + colObj.getWidth()))) {
+//            colObj.setVelocityX(colObj.getVelocityX() * -1);
+//        }
+//        if ((colObj.getShape().getLayoutY() >= (1000 - colObj.getHeight()))
+//                || (colObj.getShape().getLayoutY() <= (0 + colObj.getHeight()))) {
+//            colObj.setVelocityY(colObj.getVelocityY() * -1);
+//        }
+    if ((colObj.getShape().getLayoutX() >= (aPane.getBoundsInLocal().getMaxX()- (colObj.getWidth())))
+                || (colObj.getShape().getLayoutX() <= (aPane.getBoundsInLocal().getMinX() + (colObj.getWidth())))) {
             colObj.setVelocityX(colObj.getVelocityX() * -1);
         }
-        if ((colObj.getShape().getLayoutY() >= (1000 - colObj.getHeight()))
-                || (colObj.getShape().getLayoutY() <= (0 + colObj.getHeight()))) {
+        if ((colObj.getShape().getLayoutY() >= (aPane.getBoundsInLocal().getMaxY() - (colObj.getShape().getLayoutBounds().getHeight())))
+                || (colObj.getShape().getLayoutY() <= (aPane.getBoundsInLocal().getMinY() + (colObj.getShape().getLayoutBounds().getHeight())))) {
             colObj.setVelocityY(colObj.getVelocityY() * -1);
         }
 

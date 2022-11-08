@@ -5,6 +5,7 @@
 package edu.vanier.collisionsimulator.ui;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -14,8 +15,8 @@ import javafx.scene.control.TextField;
  * @author sabri
  */
 public class ParametersController {
-    
     CollisionObject obj;
+    CollisionMenuController cmc;
     @FXML
     TextField massTxtField;
     TextField speedTxtField;
@@ -29,37 +30,42 @@ public class ParametersController {
     @FXML
     Button btnEnter;
 
-    public ParametersController(CollisionObject obj) {
+    public ParametersController(CollisionObject obj, CollisionMenuController cmc) {
         this.obj = obj;
+        this.cmc = cmc;
     }
-    
+    @FXML
     public  void initialize() {
-       btnEnter.setOnAction((event)->{
-           obj.setMass(Double.parseDouble(massTxtField.getText()));
-           //obj.setVelocityX(Double.parseDouble(speedTxtField.getText()));
-           //obj.setVelocityY(massInput);
-           obj.setPosX(Double.parseDouble(posXTxtField.getText()));
-           obj.setPosY(Double.parseDouble(posYTxtField.getText()));
-           System.out.println(obj.getMass());
-       });
+         btnEnter.setOnAction((event) -> {
+            handleEnter(event);
+        });
     }      
-
+    
+    @FXML
+    public void handleEnter(ActionEvent event){
+        //obj.setMass(Double.parseDouble(massTxtField.getText()));
+        //obj.setPosY(Double.parseDouble(posYTxtField.getText()));
+        System.out.println("hehe");
+        obj.getShape().setLayoutX(20); 
+        //obj.getShape().setLayoutX(Double.parseDouble(posXTxtField.getText()));
+    }
+    @FXML
     public TextField getMassTxtField() {
         return massTxtField;
     }
-
+    @FXML
     public void setMassTxtField(TextField massTxtField) {
         this.massTxtField = massTxtField;
     }
-
+    @FXML
     public TextField getSpeedTxtField() {
         return speedTxtField;
     }
-
+    @FXML
     public void setSpeedTxtField(TextField speedTxtField) {
         this.speedTxtField = speedTxtField;
     }
-
+    @FXML
     public TextField getPosXTxtField() {
         return posXTxtField;
     }

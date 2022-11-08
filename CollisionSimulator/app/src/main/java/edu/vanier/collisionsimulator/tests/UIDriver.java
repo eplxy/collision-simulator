@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import static javafx.application.Application.launch;
 import edu.vanier.collisionsimulator.simulator.CircleObj;
+import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import edu.vanier.collisionsimulator.simulator.Simulation;
 import javafx.scene.layout.BorderPane;
 
 public class UIDriver extends Application {
@@ -28,8 +30,10 @@ public class UIDriver extends Application {
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
             loader.setController(menuController);
             BorderPane root = loader.load();
-            CircleObj circle1 = new CircleObj(menuController);
+            Simulation sim = new Simulation(3, menuController);
+            menuController.initialize(sim);
             
+           
             
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

@@ -1,6 +1,8 @@
 package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
+import edu.vanier.collisionsimulator.ui.CollisionMenuController;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.Animation;
@@ -25,7 +27,7 @@ public class Simulation {
     public AnimationPane animationPane;
 
     //default simulation (test simulation)
-    public Simulation() {
+    public Simulation() throws IOException {
 
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
@@ -88,13 +90,25 @@ public class Simulation {
      * Does not spawn objects that overlap. Takes an integer number of circle objects to be added.
      * @param numOfObjs 
      */
-    public Simulation(int numOfObjs) {
+    public Simulation(int numOfObjs) throws IOException {
         com = new CollisionObjectManager();
-        this.animationPane = new AnimationPane(1800, 1000);
+        this.animationPane = new AnimationPane(1000, 400);
+        this.animationPane.changeBackground("0000FF");
         loop = setLoop();
         createRandomObjects(numOfObjs);
+        
 
-        loop.play();
+        //loop.play();
+
+    }
+    
+    //attempt to link simulations and parameters
+    public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
+        com = new CollisionObjectManager();
+        this.animationPane = new AnimationPane(1000, 400);
+        this.animationPane.changeBackground("0000FF");
+        loop = setLoop();
+        createRandomObjects2(numOfObjs, cmc);
 
     }
 
@@ -115,7 +129,7 @@ public class Simulation {
         return loop;
     }
 
-    private void createRandomObjects(int numOfObjs) {
+    private void createRandomObjects(int numOfObjs) throws IOException {
 
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
@@ -166,6 +180,40 @@ public class Simulation {
             }
         }
         return false;
+    }
+    private void createRandomObjects2(int numOfObjs, CollisionMenuController cmc) throws IOException {
+
+        CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
+        ArrayList<Shape> shapesToAdd = new ArrayList<>();
+        double randX, randY;
+        double xLayout = this.animationPane.width;
+        double yLayout = this.animationPane.height;
+
+        for (int i = 0; i < numOfObjs; i++) {
+
+            do {
+
+                randX = (Math.random() * ((xLayout - 50) + 1)) + 50;   // This Will Create A Random Number Inbetween Your Min And Max.
+                randY = (Math.random() * ((yLayout - 50) + 1)) + 50; 
+
+            } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
+            CircleObj c = new CircleObj(cmc);
+            c.setPosX(randX);
+            c.setPosY(randY);
+            c.setMass(Math.random() * (100 - 10) + 10);
+            c.setVelocityX(Math.random() * (10 + 10) - 10);
+            c.setVelocityY(Math.random() * (10 + 10) - 10);
+            randomObjsToAdd[i] = c;
+        }
+
+        for (CollisionObject obj : randomObjsToAdd) {
+
+            shapesToAdd.add(obj.getShape());
+
+        }
+
+        this.com.addCollisionObjects(randomObjsToAdd);
+        this.animationPane.getChildren().addAll(shapesToAdd);
     }
 
 }

@@ -7,7 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
@@ -18,9 +20,9 @@ import javafx.scene.shape.Shape;
 //mostly pulled from Assignment 2
 public abstract class CollisionObject {
 
-    ParametersController parametersController = new ParametersController(this);
+    ParametersController parametersController ;
 
-    protected AnchorPane parameters;
+    protected Pane parameters;
     protected double width, height;
     protected int index;
 
@@ -58,10 +60,11 @@ public abstract class CollisionObject {
     public CollisionObject(CollisionMenuController cmc) throws IOException {
         vX = 0;
         vY = 0;
-        this.parameters = createParametersPane();
+        this.parameters = createParametersPane(cmc);
+        //setMouseListener(cmc);
     }
 
-    public CollisionObject() {
+    public CollisionObject() throws IOException {
         vX = 0;
         vY = 0;
     }
@@ -79,19 +82,26 @@ public abstract class CollisionObject {
         this.setPosY(posY + vY);
 
     }
-
-    private AnchorPane createParametersPane() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
-        loader.setController(parametersController);
-        parametersController.initialize();
-        return loader.load();
+    
+    public final void setMouseListener(CollisionMenuController cmc) {
+        this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            cmc.getParametersPane().getChildren().setAll(parameters);
+        });
     }
 
-    public AnchorPane getParameters() {
+    private Pane createParametersPane(CollisionMenuController cmc) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
+        ParametersController pctrl = new ParametersController(this, cmc);
+        loader.setController(pctrl);
+        return loader.load();
+    
+    }
+
+    public Pane getParameters() {
         return parameters;
     }
 
-    public void setParameters(AnchorPane parameters) {
+    public void setParameters(Pane parameters) {
         this.parameters = parameters;
     }
 
@@ -145,7 +155,7 @@ public abstract class CollisionObject {
     }
 
     public Shape getShape() {
-        return shape;
+        return this.shape;
     }
 
     public void setShape(Shape shape) {
