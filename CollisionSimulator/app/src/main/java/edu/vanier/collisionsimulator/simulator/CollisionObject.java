@@ -1,5 +1,6 @@
 package edu.vanier.collisionsimulator.simulator;
 
+import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
@@ -76,7 +77,7 @@ public abstract class CollisionObject {
 
     }
 
-    public void update() {
+    public void update(AnimationPane aPane) {
 
         /*FIXME: issue with border rendering. if velocity is greater than
         the distance to border, then it will send it outside the borders for a frame
@@ -86,9 +87,32 @@ public abstract class CollisionObject {
         */
         double newPosX = posX + vX;
         double newPosY = posY + vY;
-
-        this.setPosX(posX + vX);
-        this.setPosY(posY + vY);
+//        if(!CollisionController.predictIntersectsBorderX(this, aPane) && 0<(newPosX) && (newPosX)< aPane.xMax){
+            this.setPosX(posX + vX);
+//        }
+//        else{
+//                if(vX>0){
+//                    this.setPosX(aPane.xMax - width/2);
+//
+//                } 
+//                else if(vX<0){
+//                    this.setPosX(0 + width/2);
+//
+//                }
+// 
+//        }
+//        if(!CollisionController.predictIntersectsBorderY(this, aPane)){
+            this.setPosY(posY + vY);
+//        }
+//        else{
+//             if(vY>0){
+//                    this.setPosY(aPane.yMax - width/2);
+//                } 
+//            else if(vY<0){
+//                    this.setPosY(0 + width/2);
+//                }
+// 
+//        }
 
     }
 
