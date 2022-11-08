@@ -10,12 +10,12 @@ import javafx.scene.paint.Paint;
  */
 public class AnimationPane extends Pane {
 
-    final double width, height;
+    final double xMax, yMax;
     Bounds bounds;
 
     public AnimationPane(double width, double height) {
-        this.height = height;
-        this.width = width;
+        this.yMax = height;
+        this.xMax = width;
         bounds = this.getBoundsInLocal();
         
         this.setPrefSize(width, height);
@@ -27,6 +27,16 @@ public class AnimationPane extends Pane {
 
     }
 
+    public double getxMax() {
+        return xMax;
+    }
+
+    public double getyMax() {
+        return yMax;
+    }
+
+    
+    
     public Bounds getBounds() {
         return bounds;
     }

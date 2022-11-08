@@ -20,7 +20,7 @@ import javafx.scene.shape.Shape;
 //mostly pulled from Assignment 2
 public abstract class CollisionObject {
 
-    ParametersController parametersController ;
+    ParametersController parametersController;
 
     protected Pane parameters;
     protected double width, height;
@@ -52,7 +52,7 @@ public abstract class CollisionObject {
         double minDist = this.getWidth() + other.getWidth();
 
         return (distance < minDist);
-        
+
         //FIXME: Redefine collision detection by using width/height & most importantly, direct vector distance for circle objects.
         //return collidingShape.getBoundsInParent().intersects(other.shape.getBoundsInParent());
     }
@@ -78,11 +78,20 @@ public abstract class CollisionObject {
 
     public void update() {
 
+        /*FIXME: issue with border rendering. if velocity is greater than
+        the distance to border, then it will send it outside the borders for a frame
+        and bounce it back.
+        
+        check if new position will be within bounds or not and handle accordingly
+        */
+        double newPosX = posX + vX;
+        double newPosY = posY + vY;
+
         this.setPosX(posX + vX);
         this.setPosY(posY + vY);
 
     }
-    
+
     public final void setMouseListener(CollisionMenuController cmc) {
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
             cmc.getParametersPane().getChildren().setAll(parameters);
@@ -94,7 +103,7 @@ public abstract class CollisionObject {
         ParametersController pctrl = new ParametersController(this, cmc);
         loader.setController(pctrl);
         return loader.load();
-    
+
     }
 
     public Pane getParameters() {

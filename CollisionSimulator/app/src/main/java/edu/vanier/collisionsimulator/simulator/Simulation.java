@@ -37,18 +37,18 @@ public class Simulation {
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
 
-        CircleObj c1 = new CircleObj();
+        CircleObject c1 = new CircleObject();
         c1.setMass(69);
-        CircleObj c2 = new CircleObj();
+        CircleObject c2 = new CircleObject();
         c2.setMass(40);
-        CircleObj c3 = new CircleObj();
+        CircleObject c3 = new CircleObject();
         c3.setMass(500);
-        CircleObj c4 = new CircleObj();
+        CircleObject c4 = new CircleObject();
         c4.setMass(10);
 
-        CircleObj c5 = new CircleObj();
+        CircleObject c5 = new CircleObject();
         c3.setMass(10);
-        CircleObj c6 = new CircleObj();
+        CircleObject c6 = new CircleObject();
         c4.setMass(10);
         //this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
         this.animationPane.getChildren().addAll(c5.shape, c6.shape);
@@ -89,31 +89,28 @@ public class Simulation {
 
     }
 
-    
     /**
-     * Creates and runs a simulation with randomized circle objects.
-     * Does not spawn objects that overlap. Takes an integer number of circle objects to be added.
-     * @param numOfObjs 
+     * Creates and runs a simulation with randomized circle objects. Does not
+     * spawn objects that overlap. Takes an integer number of circle objects to
+     * be added.
+     *
+     * @param numOfObjs
      */
     public Simulation(int numOfObjs) throws IOException {
         com = new CollisionObjectManager();
-        this.animationPane = new AnimationPane(900, 350);
-        
+        this.animationPane = new AnimationPane(1800, 1000);
+
         this.animationPane.setBorder(new Border(new BorderStroke(Color.ALICEBLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         loop = setLoop();
         createRandomObjects(numOfObjs);
-        
-
-        //loop.play();
-
     }
-    
+
     //attempt to link simulations and parameters
     public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
         com = new CollisionObjectManager();
         this.animationPane = new AnimationPane(1200, 500);
         this.animationPane.changeBackground("0000FF");
-        
+
         loop = setLoop();
         createRandomObjects2(numOfObjs, cmc);
 
@@ -141,16 +138,18 @@ public class Simulation {
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
         double randX, randY;
+        double bufferX = 100;
+        double bufferY = 100;
 
         for (int i = 0; i < numOfObjs; i++) {
 
             do {
 
-                randX = Math.random() * (1700 - 100) + 100;
-                randY = Math.random() * (900 - 100) + 100;
+                randX = Math.random() * (animationPane.getxMax() - bufferX - 100) + 100;
+                randY = Math.random() * (animationPane.getyMax() - bufferY - 100) + 100;
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
-            CircleObj c = new CircleObj();
+            CircleObject c = new CircleObject();
             c.setPosX(randX);
             c.setPosY(randY);
             c.setMass(Math.random() * (100 - 10) + 10);
@@ -171,47 +170,42 @@ public class Simulation {
 
     private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
 
-        double xLayout = this.animationPane.getMaxHeight();
-        double yLayout = this.animationPane.getMaxWidth();
-        
-        double objectWidth = 100/2;
+        double objectWidth = 100 / 2;
         double bufferDist = 10;
         double minDist = objectWidth * 2 + bufferDist;
         for (CollisionObject obj : objArray) {
-            
-            
+
             if (obj == null) {
                 continue;
             }
             double actualDistance = Math.sqrt(Math.pow((randX - obj.getPosX()), 2) + Math.pow(randY - obj.getPosY(), 2));
-            
+
             animationPane.getBorder();
-            
-            if (actualDistance < minDist) {    
-                return true;    
-                }
-                
+
+            if (actualDistance < minDist) {
+                return true;
             }
-        
+
+        }
+
         return false;
     }
+
     private void createRandomObjects2(int numOfObjs, CollisionMenuController cmc) throws IOException {
 
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
         double randX, randY;
-        double xLayout = this.animationPane.width;
-        double yLayout = this.animationPane.height;
 
         for (int i = 0; i < numOfObjs; i++) {
 
             do {
 
-                randX = (Math.random() * (1000 - 100) + 100) ;   // This Will Create A Random Number Inbetween Your Min And Max.
-                randY = (Math.random() * (400 - 100) + 100) ; 
+                randX = (Math.random() * (1000 - 100) + 100);   // This Will Create A Random Number Inbetween Your Min And Max.
+                randY = (Math.random() * (400 - 100) + 100);
 
-            } while (willSpawnIntersecting(randX, randY, randomObjsToAdd) );
-            CircleObj c = new CircleObj(cmc);
+            } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
+            CircleObject c = new CircleObject(cmc);
             c.setPosX(randX);
             c.setPosY(randY);
             c.setMass(Math.random() * (0.05));
@@ -229,7 +223,6 @@ public class Simulation {
         this.com.addCollisionObjects(randomObjsToAdd);
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
-
 
 }
 

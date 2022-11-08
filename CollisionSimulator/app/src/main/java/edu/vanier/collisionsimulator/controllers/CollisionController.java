@@ -30,12 +30,9 @@ public class CollisionController {
     static boolean handleCollision(CollisionObject colObjA, CollisionObject colObjB) {
         if (colObjA != colObjB) {
             if (colObjA.collide(colObjB)) {
-                
-                
-                
+
                 CustomVector[] velocities = PhysicsController.collidedSpeed(colObjA, colObjB);
-                
-                
+
                 colObjA.setVelocityX(velocities[0].x);
                 colObjA.setVelocityY(velocities[0].y);
                 colObjB.setVelocityX(velocities[1].x);
@@ -63,25 +60,34 @@ public class CollisionController {
 
     //TODO: SOLVE BOUNDS ISSUE (it is 3 am. i am tired.)
     //TODO: Solve top and bottom border bouncing teleportation
+    public static boolean intersectsBorderX(CollisionObject colObj, AnimationPane aPane) {
+        return ((colObj.getShape().getLayoutX() >= (aPane.getxMax() - colObj.getWidth()))
+                || (colObj.getShape().getLayoutX() <= (0 + colObj.getWidth())));
+    }
+
+    public static boolean intersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
+        return ((colObj.getShape().getLayoutY() >= (aPane.getyMax() - colObj.getHeight()))
+                || (colObj.getShape().getLayoutY() <= (0 + colObj.getHeight())));
+    }
+
     public static void bounceOffBorder(CollisionObject colObj, AnimationPane aPane) {
 
         //should be aPane.getBounds().getMinX() instead of "0" and maxX instead of "1800"
-//        if ((colObj.getShape().getLayoutX() >= (1800 - colObj.getWidth()))
-//                || (colObj.getShape().getLayoutX() <= (0 + colObj.getWidth()))) {
-//            colObj.setVelocityX(colObj.getVelocityX() * -1);
-//        }
-//        if ((colObj.getShape().getLayoutY() >= (1000 - colObj.getHeight()))
-//                || (colObj.getShape().getLayoutY() <= (0 + colObj.getHeight()))) {
-//            colObj.setVelocityY(colObj.getVelocityY() * -1);
-//        }
-    if ((colObj.getShape().getLayoutX() >= (aPane.getBoundsInLocal().getMaxX()- (colObj.getWidth())))
-                || (colObj.getShape().getLayoutX() <= (aPane.getBoundsInLocal().getMinX() + (colObj.getWidth())))) {
+        if (intersectsBorderX(colObj, aPane)) {
             colObj.setVelocityX(colObj.getVelocityX() * -1);
         }
-        if ((colObj.getShape().getLayoutY() >= (aPane.getBoundsInLocal().getMaxY() - (colObj.getShape().getLayoutBounds().getHeight())))
-                || (colObj.getShape().getLayoutY() <= (aPane.getBoundsInLocal().getMinY() + (colObj.getShape().getLayoutBounds().getHeight())))) {
+
+        if (intersectsBorderY(colObj, aPane)) {
             colObj.setVelocityY(colObj.getVelocityY() * -1);
         }
+//    if ((colObj.getShape().getLayoutX() >= (aPane.getBoundsInLocal().getMaxX()- (colObj.getWidth())))
+//                || (colObj.getShape().getLayoutX() <= (aPane.getBoundsInLocal().getMinX() + (colObj.getWidth())))) {
+//            colObj.setVelocityX(colObj.getVelocityX() * -1);
+//        }
+//        if ((colObj.getShape().getLayoutY() >= (aPane.getBoundsInLocal().getMaxY() - (colObj.getShape().getLayoutBounds().getHeight())))
+//                || (colObj.getShape().getLayoutY() <= (aPane.getBoundsInLocal().getMinY() + (colObj.getShape().getLayoutBounds().getHeight())))) {
+//            colObj.setVelocityY(colObj.getVelocityY() * -1);
+//        }
 
     }
 

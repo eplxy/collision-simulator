@@ -31,7 +31,7 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media' ]
 }
 application {    
-   //mainClass = 'edu.vanier.collisionsimulator.tests.UIDriver'
-   mainClass = 'edu.vanier.collisionsimulator.tests.AnimationDriver'
+   mainClass = 'edu.vanier.collisionsimulator.tests.UIDriver'
+   //mainClass = 'edu.vanier.collisionsimulator.tests.AnimationDriver'
 
 }

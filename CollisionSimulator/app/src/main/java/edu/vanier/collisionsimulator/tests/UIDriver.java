@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import static javafx.application.Application.launch;
-import edu.vanier.collisionsimulator.simulator.CircleObj;
+import edu.vanier.collisionsimulator.simulator.CircleObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import javafx.scene.layout.BorderPane;
@@ -37,7 +37,7 @@ public class UIDriver extends Application {
             
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.sizeToScene();
+            primaryStage.setFullScreen(true);
             primaryStage.show(); 
         } catch (Exception e) {
             System.out.println(e);
