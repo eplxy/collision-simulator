@@ -21,19 +21,14 @@ public class UIDriver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setTitle("Drag circles around to see collisions");
+        primaryStage.setTitle("Main Menu");
 
-        
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
-            edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            edu.vanier.collisionsimulator.ui.MainMenuController menuController = new edu.vanier.collisionsimulator.ui.MainMenuController(primaryStage);
             loader.setController(menuController);
             BorderPane root = loader.load();
-            Simulation sim = new Simulation(3, menuController);
-            menuController.initialize(sim);
-            
-           
             
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -42,6 +37,8 @@ public class UIDriver extends Application {
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+        
     }
     
 }
