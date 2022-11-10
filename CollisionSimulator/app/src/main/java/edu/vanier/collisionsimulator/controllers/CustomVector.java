@@ -20,6 +20,17 @@ public class CustomVector {
         this.direction = this.computeDirection();
     }
 
+    public CustomVector(boolean isNormAndAngle, double magnitude, double angle) {
+        if (isNormAndAngle) {
+            this.length = magnitude;
+            this.direction = parseDirectionAngle(angle);
+            double[] components = this.computeComponents();
+            this.x = components[0];
+            this.y = components[1];
+        }
+
+    }
+
     public CustomVector(double destX, double destY, double objX, double objY) {
         this.x = deltaX(destX, objX);
         this.y = deltaY(destY, objY);
@@ -38,7 +49,7 @@ public class CustomVector {
      *
      * @return int quadrant number 1 through 4
      */
-    public double quadrant() {
+    private double quadrant() {
         int q = 0;
         if (x > 0 && y > 0) {
             q = 4;
@@ -52,13 +63,86 @@ public class CustomVector {
         return q;
     }
 
+    private double[] quadrantComponentModification(double x, double y) {
+        int q = (int) this.direction[1];
+        switch (q) {
+            case 1:
+                y *= -1;
+                break;
+            case 2:
+                x *= -1;
+                y *= -1;
+                break;
+            case 3:
+                x *= -1;
+                break;
+            case 4:
+                break;
+        }
+        return new double[]{x, y};
+    }
+
     /**
+     * method to use with predefined vector components
      *
      * @return double array, value 1 is angle, value 2 is quadrant
      */
-    public double[] computeDirection() {
+    private double[] computeDirection() {
 
         return new double[]{Math.toDegrees(Math.atan2(Math.abs(y), Math.abs(x))), this.quadrant()};
+    }
+
+    /**
+     * method to use with undefined vector components parse a double value
+     * between -360 and 360
+     *
+     * @return double array, value 1 is angle, value 2 is quadrant
+     */
+    private double[] parseDirectionAngle(double angle) {
+        int q = 0;
+
+        //positive angle
+        if (angle >= 0 && angle <= 90) {
+            return new double[]{angle, 1};
+        }
+
+        if (angle > 90 && angle <= 180) {
+            return new double[]{180 - angle, 2};
+        }
+
+        if (angle > 180 && angle <= 270) {
+            return new double[]{angle - 180, 3};
+        }
+
+        if (angle > 270 && angle <= 360) {
+            return new double[]{360 - angle, 4};
+        }
+
+        //negative angle
+        if (angle < 0 && angle >= -90) {
+            return new double[]{Math.abs(angle), 4};
+        }
+
+        if (angle < -90 && angle >= -180) {
+            return new double[]{180 + angle, 3};
+        }
+
+        if (angle < -180 && angle >= -270) {
+            return new double[]{Math.abs(angle + 180), 2};
+        }
+
+        if (angle < -270 && angle >= -360) {
+            return new double[]{360 + angle, 1};
+        }
+
+        return null;
+    }
+
+    private double[] computeComponents() {
+        double x = this.length * Math.cos(Math.toRadians(this.direction[0]));
+        double y = this.length * Math.sin(Math.toRadians(this.direction[0]));
+        
+        return quadrantComponentModification(x,y);
     }
 
     @Override
