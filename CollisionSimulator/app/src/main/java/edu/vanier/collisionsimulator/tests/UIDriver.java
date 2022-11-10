@@ -30,7 +30,7 @@ public class UIDriver extends Application {
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
             loader.setController(menuController);
             BorderPane root = loader.load();
-            Simulation sim = new Simulation(7, menuController);
+            Simulation sim = new Simulation(3, menuController);
             menuController.initialize(sim);
             
            

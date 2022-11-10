@@ -57,14 +57,14 @@ public class ParametersController {
     private double setVelocityX(double velocity){
         CustomVector cv = new CustomVector(obj.getVelocityX(), obj.getVelocityY());
         double angle = cv.direction[0];
-        return velocity*Math.toDegrees(Math.sin(Math.toRadians(angle)));
+        return velocity*(Math.cos(Math.toRadians(angle)));
         
     }
     
     private double setVelocityY(double velocity){
         CustomVector cv = new CustomVector(obj.getVelocityX(), obj.getVelocityY());
         double angle = cv.direction[0];
-        return velocity*Math.toDegrees(Math.cos(Math.toRadians(angle)));
+        return velocity*(Math.sin(Math.toRadians(angle)));
     }
     
     @FXML
