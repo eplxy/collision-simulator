@@ -36,6 +36,7 @@ public class CollisionMenuController {
     public void initialize(Simulation sim) throws IOException{
         for (CollisionObject obj :  sim.com.getAllColObjs()) {
             obj.setMouseListener(this);
+            obj.setDragListeners(this);
             }
         animationPane.getChildren().add(sim.animationPane);
         btnSave.setOnAction((event) -> {
