@@ -59,6 +59,7 @@ public abstract class CollisionObject {
     public CollisionObject(CollisionMenuController cmc) throws IOException {
         vX = 0;
         vY = 0;
+        VisualVector vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);
         //setMouseListener(cmc);
     }
