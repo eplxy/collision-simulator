@@ -1,12 +1,14 @@
 package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
+import edu.vanier.collisionsimulator.tests.AnimationDriver;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -60,7 +62,6 @@ public abstract class CollisionObject {
         vX = 0;
         vY = 0;
         this.parameters = createParametersPane(cmc);
-        //setMouseListener(cmc);
     }
 
     public CollisionObject() throws IOException {
@@ -118,6 +119,27 @@ public abstract class CollisionObject {
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
             cmc.getParametersPane().getChildren().setAll(parameters);
         });
+    }
+    
+    public final void setDragListeners(CollisionMenuController cmc) {
+        final Delta dragDelta = new Delta();
+        this.shape.setOnMousePressed((MouseEvent mouseEvent) -> {
+            // record a delta distance for the drag and drop operation.
+            dragDelta.x = this.getPosX() - mouseEvent.getSceneX();
+            dragDelta.y = this.getPosY() - mouseEvent.getSceneY();
+            //this.shape.setCursor(Cursor.NONE);
+        });
+        this.shape.setOnMouseReleased((MouseEvent mouseEvent) -> {
+            //this.shape.setCursor(Cursor.HAND);
+        });
+        this.shape.setOnMouseDragged((MouseEvent mouseEvent) -> {
+            this.setPosX(mouseEvent.getSceneX() + dragDelta.x);
+            this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
+        });
+    }
+    class Delta {
+
+        double x, y;
     }
 
     private Pane createParametersPane(CollisionMenuController cmc) throws IOException {
