@@ -2,6 +2,7 @@ package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
+import edu.vanier.sprites.ResourcesManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +38,17 @@ public class Simulation {
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
 
-        CircleObject c1 = new CircleObject();
+        CircleObject c1 = new CircleObject(ResourcesManager.BARREN);
         c1.setMass(69);
-        CircleObject c2 = new CircleObject();
+        CircleObject c2 = new CircleObject(ResourcesManager.CHLORINE);
         c2.setMass(40);
-        CircleObject c3 = new CircleObject();
+        CircleObject c3 = new CircleObject(ResourcesManager.BARREN);
         c3.setMass(500);
-        CircleObject c4 = new CircleObject();
+        CircleObject c4 = new CircleObject(ResourcesManager.BARREN);
         c4.setMass(10);
 
-        CircleObject c5 = new CircleObject();
-        CircleObject c6 = new CircleObject();
+        CircleObject c5 = new CircleObject(ResourcesManager.BARREN);
+        CircleObject c6 = new CircleObject(ResourcesManager.BARREN);
 
         c1.setPosX(1500);
         c1.setPosY(300);
@@ -153,7 +154,7 @@ public class Simulation {
                 randY = Math.random() * (animationPane.getyMax() - bufferY - 100) + 100;
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
-            CircleObject c = new CircleObject();
+            CircleObject c = new CircleObject(ResourcesManager.BARREN);
             c.setPosX(randX);
             c.setPosY(randY);
 //DON'T TOUCH THIS I SWEAR TO GOD IF YOU DO nothing will happen really it's just chaotic            
