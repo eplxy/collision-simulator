@@ -1,6 +1,7 @@
 package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
+import edu.vanier.collisionsimulator.controllers.CustomVector;
 import edu.vanier.collisionsimulator.tests.AnimationDriver;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import edu.vanier.collisionsimulator.ui.ParametersController;
@@ -42,6 +43,8 @@ public abstract class CollisionObject {
     private Image image;
 
     protected double posX, posY, vX, vY, mass;
+    protected double speed;
+    protected double direction;
 
     public boolean collide(CollisionObject other) {
 
@@ -207,7 +210,32 @@ public abstract class CollisionObject {
         this.vY = velocityY;
         this.shape.setTranslateY(vY);
     }
+    
+    public double getSpeed(){
+        return Math.sqrt(Math.pow(this.vX,2)+Math.pow(this.vY,2));
+    }
+    
+    public void setSpeed(double speed){
+        this.speed = speed;
+        CustomVector originalVelocity = new CustomVector(this.vX,this.vY);
+        CustomVector newVelocity = originalVelocity.normalize().scalarMult(speed);
+        setVelocityX(newVelocity.x);
+        setVelocityY(newVelocity.y);
+    }
+    
+    public double getDirection() {
+        return this.direction;
+    }
 
+    public void setDirection(double direction) {
+        this.direction = direction;
+        CustomVector v = new CustomVector(true, this.getSpeed(), direction);
+        setVelocityX(v.x);
+        setVelocityX(v.y);
+    }
+
+    
+    
     public Shape getShape() {
         return this.shape;
     }
