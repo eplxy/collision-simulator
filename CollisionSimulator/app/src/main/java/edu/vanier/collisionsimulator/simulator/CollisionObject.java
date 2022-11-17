@@ -122,6 +122,7 @@ public abstract class CollisionObject {
     public final void setMouseListener(CollisionMenuController cmc) {
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
             cmc.getParametersPane().getChildren().setAll(parameters);
+            parametersController.displayParameters();
         });
     }
     
@@ -150,6 +151,7 @@ public abstract class CollisionObject {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/objectParameters.fxml"));
         ParametersController pctrl = new ParametersController(this, cmc);
         loader.setController(pctrl);
+        this.parametersController = pctrl;
         return loader.load();
 
     }
@@ -224,6 +226,8 @@ public abstract class CollisionObject {
     }
     
     public double getDirection() {
+        CustomVector v = new CustomVector(this.vX, this.vY);
+        
         return this.direction;
     }
 

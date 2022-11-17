@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox prefHeight="216.0" prefWidth="227.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Mass" />
@@ -19,10 +18,10 @@
       <Label text="Position" />
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="posYTxtField" prefHeight="25.0" prefWidth="38.0" />
             <Label text="x" />
-            <TextField fx:id="posXTxtField" prefHeight="25.0" prefWidth="39.0" />
+            <TextField fx:id="posXTxtField" prefHeight="25.0" prefWidth="60.0" />
             <Label text="y" />
+            <TextField fx:id="posYTxtField" prefHeight="25.0" prefWidth="60.0" />
          </children>
       </HBox>
       <Label text="Speed" />
@@ -35,7 +34,7 @@
       <Label text="Direction" />
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="speedTxtField1" prefHeight="25.0" prefWidth="85.0" />
+            <TextField fx:id="directionTxtField" prefHeight="25.0" prefWidth="85.0" />
             <Label text="degreees" />
          </children>
       </HBox>

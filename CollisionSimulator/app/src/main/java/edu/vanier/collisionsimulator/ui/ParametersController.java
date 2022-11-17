@@ -6,6 +6,7 @@ package edu.vanier.collisionsimulator.ui;
 
 import edu.vanier.collisionsimulator.controllers.CustomVector;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import java.text.DecimalFormat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,6 +27,10 @@ public class ParametersController {
     TextField posXTxtField;
     @FXML
     TextField posYTxtField;
+    @FXML
+    TextField directionTxtField;
+    
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     
 //    double massInput;
 //    double speedInput;
@@ -47,11 +52,20 @@ public class ParametersController {
     
     @FXML
     public void handleEnter(ActionEvent event){
-        //obj.setMass(Double.parseDouble(massTxtField.getText()));
+        obj.setMass(Double.parseDouble(massTxtField.getText()));
         obj.setPosY(Double.parseDouble(posYTxtField.getText()));
         obj.setPosX(Double.parseDouble(posXTxtField.getText()));
         obj.setVelocityX(setVelocityX(Double.parseDouble(speedTxtField.getText())));
         obj.setVelocityY(setVelocityY(Double.parseDouble(speedTxtField.getText())));
+        obj.setDirection(Double.parseDouble(directionTxtField.getText()));
+    }
+    
+    public void displayParameters(){
+        posXTxtField.setText(df.format(obj.getPosX()));
+        posYTxtField.setText(df.format(obj.getPosY()));
+        massTxtField.setText(Double.toString(obj.getMass()));
+        speedTxtField.setText(df.format(getNormSpeed()));
+        directionTxtField.setText(df.format(obj.getDirection()));
     }
     
     private double setVelocityX(double velocity){
@@ -59,6 +73,10 @@ public class ParametersController {
         double angle = cv.direction[0];
         return velocity*(Math.cos(Math.toRadians(angle)));
         
+    }
+    
+    public double getNormSpeed() {
+        return (Math.sqrt(Math.pow(obj.getPosX(), 2) + Math.pow(obj.getPosY(), 2)));
     }
     
     private double setVelocityY(double velocity){
