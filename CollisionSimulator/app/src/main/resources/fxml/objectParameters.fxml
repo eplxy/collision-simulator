@@ -35,7 +35,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
             <TextField fx:id="directionTxtField" prefHeight="25.0" prefWidth="85.0" />
-            <Label text="degreees" />
+            <Label text="degrees" />
          </children>
       </HBox>
       <Button fx:id="btnEnter" mnemonicParsing="false" text="Enter" />
