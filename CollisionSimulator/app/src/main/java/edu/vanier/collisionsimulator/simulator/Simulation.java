@@ -26,7 +26,7 @@ import javafx.util.Duration;
  * @author 2186084
  */
 public class Simulation {
-
+    public VisualVectorManager vvm;
     public CollisionObjectManager com;
     public Timeline loop;
     //associated pane
@@ -80,7 +80,7 @@ public class Simulation {
         c6.setVelocityY(0);
 
         com = new CollisionObjectManager();
-
+        vvm = new VisualVectorManager();
         if (option) {
             this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
             com.addCollisionObjects(c1, c2, c3, c4);
@@ -102,6 +102,7 @@ public class Simulation {
      */
     public Simulation(int numOfObjs) throws IOException {
         com = new CollisionObjectManager();
+        vvm = new VisualVectorManager();
         this.animationPane = new AnimationPane(1800, 1000);
 
         this.animationPane.setBorder(new Border(new BorderStroke(Color.ALICEBLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -111,6 +112,7 @@ public class Simulation {
 
     //attempt to link simulations and parameters
     public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
+        vvm = new VisualVectorManager();
         com = new CollisionObjectManager();
         this.animationPane = new AnimationPane(1200, 500);
         this.animationPane.changeBackground("AAAAAA");

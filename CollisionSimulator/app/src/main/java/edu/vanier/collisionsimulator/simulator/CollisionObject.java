@@ -71,6 +71,7 @@ public abstract class CollisionObject {
     public CollisionObject() throws IOException {
         vX = 0;
         vY = 0;
+        VisualVector vv = new VisualVector(this);
     }
 
     public boolean intersects(CollisionObject s) {
