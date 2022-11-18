@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -29,10 +30,12 @@ public class Simulation {
 
     public CollisionObjectManager com;
     public Timeline loop;
+    public int numberOfObj;
+    public CollisionMenuController cmc;
     //associated pane
-    public AnimationPane animationPane;
+    public Pane animationPane;
 
-    //default simulation (test simulation)
+    //test simulation to only be used in animation driver
     public Simulation(boolean option) throws IOException {
 
         this.animationPane = new AnimationPane(1800, 1000);
@@ -103,20 +106,17 @@ public class Simulation {
     public Simulation(int numOfObjs) throws IOException {
         com = new CollisionObjectManager();
         this.animationPane = new AnimationPane(1800, 1000);
-
-        this.animationPane.setBorder(new Border(new BorderStroke(Color.ALICEBLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         loop = setLoop();
-        createRandomObjects(numOfObjs);
+        
     }
 
     //attempt to link simulations and parameters
     public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
-        com = new CollisionObjectManager();
-        this.animationPane = new AnimationPane(1200, 500);
-        this.animationPane.changeBackground("AAAAAA");
-
+        this.numberOfObj = numOfObjs;
+        
+        this.com = new CollisionObjectManager();
+        this.cmc = cmc;
         loop = setLoop();
-        createRandomObjects2(numOfObjs, cmc);
 
     }
 
@@ -137,7 +137,7 @@ public class Simulation {
         return loop;
     }
 
-    private void createRandomObjects(int numOfObjs) throws IOException {
+    public void createRandomObjects(int numOfObjs) throws IOException {
 
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
@@ -149,8 +149,8 @@ public class Simulation {
 
             do {
 
-                randX = Math.random() * (animationPane.getxMax() - bufferX - 100) + 100;
-                randY = Math.random() * (animationPane.getyMax() - bufferY - 100) + 100;
+                randX = Math.random() * (animationPane.getMaxWidth() - bufferX - 100) + 100;
+                randY = Math.random() * (animationPane.getMaxHeight() - bufferY - 100) + 100;
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
             CircleObject c = new CircleObject();
@@ -196,7 +196,7 @@ public class Simulation {
         return false;
     }
 
-    private void createRandomObjects2(int numOfObjs, CollisionMenuController cmc) throws IOException {
+    public void createRandomObjects2(int numOfObjs, CollisionMenuController cmc) throws IOException {
 
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
@@ -227,6 +227,10 @@ public class Simulation {
 
         this.com.addCollisionObjects(randomObjsToAdd);
         this.animationPane.getChildren().addAll(shapesToAdd);
+    }
+    
+    public void setAnimationPane(Pane pane){
+        this.animationPane = pane;
     }
 
 }
