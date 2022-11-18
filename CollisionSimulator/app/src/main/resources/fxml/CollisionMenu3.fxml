@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -55,13 +55,20 @@
          </children>
       </HBox>
    </bottom>
+   <center>
+      <Pane fx:id="animationPane" prefHeight="334.0" prefWidth="303.0" style="-fx-background-color: LIGHTGRAY; -fx-border-color: BLACK;">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </Pane>
+   </center>
    <right>
-      <VBox fx:id="parametersVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="171.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="parametersVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="171.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="186.0" style="-fx-background-color: lilas;" text="Parameters" />
             <Separator prefWidth="200.0" />
             <CheckBox mnemonicParsing="false" text="Friction" />
-            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="164.0">
+            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="164.0" showTickLabels="true" showTickMarks="true">
                <padding>
                   <Insets top="5.0" />
                </padding>
@@ -72,7 +79,7 @@
                </VBox.margin>
             </TextField>
             <CheckBox mnemonicParsing="false" text="Elasticity" />
-            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="164.0">
+            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="164.0" showTickLabels="true" showTickMarks="true">
                <padding>
                   <Insets top="5.0" />
                </padding>
@@ -82,16 +89,12 @@
                   <Insets left="15.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <AnchorPane fx:id="parametersPane" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="171.0" />
+            <AnchorPane fx:id="parametersPane" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="171.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></AnchorPane>
             <HBox prefHeight="32.0" prefWidth="171.0" />
          </children>
       </VBox>
    </right>
-   <left>
-      <Pane fx:id="animationPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="334.0" prefWidth="421.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets right="171.0" />
-         </BorderPane.margin>
-      </Pane>
-   </left>
 </BorderPane>
