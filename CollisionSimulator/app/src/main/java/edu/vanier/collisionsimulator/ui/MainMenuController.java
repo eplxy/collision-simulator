@@ -64,7 +64,7 @@ public class MainMenuController {
             BorderPane root = loader.load();
             Simulation sim = new Simulation(3, menuController);
             menuController.initialize(sim);
-            
+            primaryStage.close();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
