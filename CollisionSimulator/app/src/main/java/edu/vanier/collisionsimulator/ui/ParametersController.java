@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
  * @author sabri
  */
 public class ParametersController {
+
     CollisionObject obj;
     CollisionMenuController cmc;
     @FXML
@@ -29,9 +30,9 @@ public class ParametersController {
     TextField posYTxtField;
     @FXML
     TextField directionTxtField;
-    
+
     private static final DecimalFormat df = new DecimalFormat("0.00");
-    
+
 //    double massInput;
 //    double speedInput;
 //    double posXInput;
@@ -43,64 +44,55 @@ public class ParametersController {
         this.obj = obj;
         this.cmc = cmc;
     }
+
     @FXML
-    public  void initialize() {
-         btnEnter.setOnAction((event) -> {
+    public void initialize() {
+        btnEnter.setOnAction((event) -> {
             handleEnter(event);
         });
-    }      
-    
+    }
+
     @FXML
-    public void handleEnter(ActionEvent event){
+    public void handleEnter(ActionEvent event) {
         obj.setMass(Double.parseDouble(massTxtField.getText()));
         obj.setPosY(Double.parseDouble(posYTxtField.getText()));
         obj.setPosX(Double.parseDouble(posXTxtField.getText()));
-        obj.setVelocityX(setVelocityX(Double.parseDouble(speedTxtField.getText())));
-        obj.setVelocityY(setVelocityY(Double.parseDouble(speedTxtField.getText())));
+        obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
         obj.setDirection(Double.parseDouble(directionTxtField.getText()));
     }
-    
-    public void displayParameters(){
+
+    public void displayParameters() {
         posXTxtField.setText(df.format(obj.getPosX()));
         posYTxtField.setText(df.format(obj.getPosY()));
         massTxtField.setText(Double.toString(obj.getMass()));
         speedTxtField.setText(df.format(getNormSpeed()));
         directionTxtField.setText(df.format(obj.getDirection()));
     }
-    
-    private double setVelocityX(double velocity){
-        CustomVector cv = new CustomVector(obj.getVelocityX(), obj.getVelocityY());
-        double angle = cv.direction[0];
-        return velocity*(Math.cos(Math.toRadians(angle)));
-        
-    }
-    
+
     public double getNormSpeed() {
-        return (Math.sqrt(Math.pow(obj.getPosX(), 2) + Math.pow(obj.getPosY(), 2)));
+        return (Math.sqrt(Math.pow(obj.getVelocityX(), 2) + Math.pow(obj.getVelocityY(), 2)));
     }
-    
-    private double setVelocityY(double velocity){
-        CustomVector cv = new CustomVector(obj.getVelocityX(), obj.getVelocityY());
-        double angle = cv.direction[0];
-        return velocity*(Math.sin(Math.toRadians(angle)));
-    }
-    
+
     @FXML
     public TextField getMassTxtField() {
         return massTxtField;
     }
+
     @FXML
     public void setMassTxtField(TextField massTxtField) {
         this.massTxtField = massTxtField;
     }
+
     @FXML
     public TextField getSpeedTxtField() {
         return speedTxtField;
     }
+
     @FXML
     public void setSpeedTxtField(TextField speedTxtField) {
         this.speedTxtField = speedTxtField;
     }
+
     @FXML
     public TextField getPosXTxtField() {
         return posXTxtField;
@@ -117,5 +109,5 @@ public class ParametersController {
     public void setPosYTxtField(TextField posYTxtField) {
         this.posYTxtField = posYTxtField;
     }
-    
+
 }

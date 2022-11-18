@@ -33,6 +33,7 @@ public class UIDriver extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
+            
             primaryStage.show(); 
         } catch (Exception e) {
             System.out.println(e);

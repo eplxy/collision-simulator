@@ -3,6 +3,7 @@ package edu.vanier.collisionsimulator.controllers;
 import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -48,13 +49,13 @@ public class CollisionController {
         return false;
     }
 
-    public static void handleUpdate(CollisionObject colObj, AnimationPane aPane) {
+    public static void handleUpdate(CollisionObject colObj, Pane aPane) {
         bounceOffBorder(colObj, aPane);
-        colObj.update(aPane);
+        colObj.update();
 
     }
 
-    public static void updateCollisionObjects(CollisionObjectManager com, AnimationPane aPane) {
+    public static void updateCollisionObjects(CollisionObjectManager com, Pane aPane) {
         for (CollisionObject colObj : com.getAllColObjs()) {
             handleUpdate(colObj, aPane);
         }
@@ -62,27 +63,27 @@ public class CollisionController {
 
     //TODO: SOLVE BOUNDS ISSUE (it is 3 am. i am tired.)
     //TODO: Solve top and bottom border bouncing teleportation
-    public static boolean intersectsBorderX(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosX() + BORDER_BUFFER >= (aPane.getxMax() - colObj.getWidth() / 2))
+    public static boolean intersectsBorderX(CollisionObject colObj, Pane aPane) {
+        return ((colObj.getPosX() + BORDER_BUFFER >= (aPane.getWidth() - colObj.getWidth() / 2))
                 || (colObj.getPosX() <= (0 + colObj.getWidth() / 2) + BORDER_BUFFER));
     }
 
-    public static boolean predictIntersectsBorderX(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosX() + colObj.getVelocityX() >= (aPane.getxMax() - colObj.getWidth() / 2))
+    public static boolean predictIntersectsBorderX(CollisionObject colObj, Pane aPane) {
+        return ((colObj.getPosX() + colObj.getVelocityX() >= (aPane.getWidth()- colObj.getWidth() / 2))
                 || (colObj.getPosX() + colObj.getVelocityX() <= (0 + colObj.getWidth() / 2)));
     }
 
-    public static boolean intersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosY() + BORDER_BUFFER >= (aPane.getyMax() - colObj.getHeight() / 2))
+    public static boolean intersectsBorderY(CollisionObject colObj, Pane aPane) {
+        return ((colObj.getPosY() + BORDER_BUFFER >= (aPane.getHeight() - colObj.getHeight() / 2))
                 || (colObj.getPosY() <= (0 + colObj.getHeight() / 2) + BORDER_BUFFER));
     }
 
-    public static boolean predictIntersectsBorderY(CollisionObject colObj, AnimationPane aPane) {
-        return ((colObj.getPosY() + colObj.getVelocityY() >= (aPane.getyMax() - colObj.getHeight() / 2))
+    public static boolean predictIntersectsBorderY(CollisionObject colObj, Pane aPane) {
+        return ((colObj.getPosY() + colObj.getVelocityY() >= (aPane.getHeight() - colObj.getHeight() / 2))
                 || (colObj.getPosY() + colObj.getVelocityY() <= (0 + colObj.getHeight() / 2)));
     }
 
-    public static void bounceOffBorder(CollisionObject colObj, AnimationPane aPane) {
+    public static void bounceOffBorder(CollisionObject colObj, Pane aPane) {
 
         //should be aPane.getBounds().getMinX() instead of "0" and maxX instead of "1800"
         if (intersectsBorderX(colObj, aPane)) {

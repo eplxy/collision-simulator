@@ -42,6 +42,7 @@ public abstract class CollisionObject {
     //FOR FUTURE USE IN APPLYING IMAGES ONTO OBJECTS
     private Image image;
 
+    protected CustomVector v;
     protected double posX, posY, vX, vY, mass;
     protected double speed;
     protected double direction;
@@ -80,7 +81,7 @@ public abstract class CollisionObject {
 
     }
 
-    public void update(AnimationPane aPane) {
+    public void update() {
 
         /*FIXME: issue with border rendering. if velocity is greater than
         the distance to border, then it will send it outside the borders for a frame

@@ -4,6 +4,7 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
+import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
@@ -20,25 +21,28 @@ import javafx.scene.shape.Shape;
  * @author sabri
  */
 public class CollisionMenuController {
+
     @FXML
     private Pane animationPane;
     @FXML
     private AnchorPane parametersPane;
     @FXML
-    private VBox parametersVBox; 
+    private VBox parametersVBox;
     @FXML
     Button btnSave;
     @FXML
     Button btnPlay;
     @FXML
     Button btnPause;
-    
-    public void initialize(Simulation sim) throws IOException{
-        for (CollisionObject obj :  sim.com.getAllColObjs()) {
+
+    public void initialize(Simulation sim) throws IOException {
+        sim.setAnimationPane(animationPane);
+        sim.createRandomObjects2(sim.numberOfObj, sim.cmc);
+        for (CollisionObject obj : sim.com.getAllColObjs()) {
             obj.setMouseListener(this);
             obj.setDragListeners(this);
-            }
-        animationPane.getChildren().add(sim.animationPane);
+        }
+
         btnSave.setOnAction((event) -> {
             handleSave(event);
         });
@@ -48,25 +52,23 @@ public class CollisionMenuController {
         btnPause.setOnAction((event) -> {
             handlePause(event, sim);
         });
-    }   
-    
-    public void handleSave(ActionEvent event){
+    }
+
+    public void handleSave(ActionEvent event) {
         System.out.println("save pressed");
     }
-    
+
     private void handlePlay(ActionEvent event, Simulation sim) {
         sim.loop.play();
     }
-    
+
     private void handlePause(ActionEvent event, Simulation sim) {
         sim.loop.pause();
     }
-    
-    public void updateParameters(){
-        
+
+    public void updateParameters() {
+
     }
-    
-    
 
     public Pane getAnimationPane() {
         return animationPane;
@@ -92,7 +94,4 @@ public class CollisionMenuController {
         this.parametersVBox = parametersVBox;
     }
 
-
-
-    
 }

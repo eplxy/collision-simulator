@@ -19,6 +19,11 @@ public class AnimationPane extends Pane {
         bounds = this.getBoundsInLocal();
         
         this.setPrefSize(width, height);
+        this.setMaxWidth(USE_COMPUTED_SIZE);
+        this.setMinWidth(USE_COMPUTED_SIZE);
+        
+        this.setMaxHeight(USE_COMPUTED_SIZE);
+        this.setMinHeight(USE_COMPUTED_SIZE);
     }
 
     public void changeBackground(String colorCode) {
