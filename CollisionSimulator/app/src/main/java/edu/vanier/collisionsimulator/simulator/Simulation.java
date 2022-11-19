@@ -35,6 +35,8 @@ public class Simulation {
     //associated pane
     public Pane animationPane;
 
+    
+
     //test simulation to only be used in animation driver
     public Simulation(boolean option) throws IOException {
 
@@ -167,11 +169,13 @@ public class Simulation {
         for (CollisionObject obj : randomObjsToAdd) {
 
             shapesToAdd.add(obj.getShape());
+            
 
         }
 
         this.com.addCollisionObjects(randomObjsToAdd);
         this.animationPane.getChildren().addAll(shapesToAdd);
+        
     }
 
     private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
@@ -223,6 +227,8 @@ public class Simulation {
         for (CollisionObject obj : randomObjsToAdd) {
 
             shapesToAdd.add(obj.getShape());
+            obj.setDragListeners(cmc);
+            obj.setMouseListener(cmc);
 
         }
 
@@ -232,6 +238,13 @@ public class Simulation {
     
     public void setAnimationPane(Pane pane){
         this.animationPane = pane;
+    }
+    public CollisionObjectManager getCom() {
+        return com;
+    }
+
+    public void setCom(CollisionObjectManager com) {
+        this.com = com;
     }
 
 }
