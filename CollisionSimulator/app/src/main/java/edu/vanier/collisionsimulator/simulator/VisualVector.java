@@ -22,10 +22,15 @@ public class VisualVector{
         
         visVector.setStartX( colObj.getPosX());
         visVector.setStartY( colObj.getPosY());
-        visVector.setEndX(visVector.getStartX()+ 50);
-        visVector.setEndY(visVector.getStartY()+ 50);
+        visVector.setEndX(visVector.getStartX()+ owner.getVelocityX()*20);
+        visVector.setEndY(visVector.getStartY()+ owner.getVelocityY()*20);
     }
-
+    public void update(){
+        this.visVector.setStartX( this.owner.getPosX());
+        this.visVector.setStartY( this.owner.getPosY());
+        this.visVector.setEndX(visVector.getStartX()+ this.owner.getVelocityX()*20);
+        this.visVector.setEndY(visVector.getStartY()+ this.owner.getVelocityY()*20);
+    }
     public Line getVisVector() {
         return visVector;
     }

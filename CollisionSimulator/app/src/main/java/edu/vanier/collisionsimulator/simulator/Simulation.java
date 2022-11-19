@@ -6,6 +6,7 @@ import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -114,7 +115,7 @@ public class Simulation {
     //attempt to link simulations and parameters
     public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
         this.numberOfObj = numOfObjs;
-        vvm = new VisualVectorManager();
+        this.vvm = new VisualVectorManager();
         this.com = new CollisionObjectManager();
         this.cmc = cmc;
         loop = setLoop();
@@ -128,8 +129,12 @@ public class Simulation {
             CollisionController.checkCollisions(com);
             // update actors
             CollisionController.updateCollisionObjects(com, this.animationPane);
+            com.getAllColObjs().forEach((t) -> {
+                t.getVv().update();
+            });
             // removed dead sprites.
             com.cleanupCollisionObjects();
+            
         };
 
         final KeyFrame kf = new KeyFrame(Duration.millis((1000 / (float) 60)), onFinished);
@@ -167,10 +172,13 @@ public class Simulation {
         for (CollisionObject obj : randomObjsToAdd) {
 
             shapesToAdd.add(obj.getShape());
-
+            shapesToAdd.add(obj.getVv().getVisVector());
         }
-
+        
         this.com.addCollisionObjects(randomObjsToAdd);
+        this.com.getAllColObjs().forEach((CollisionObject c) -> {
+            this.vvm.addVisVectors(c.getVv().getVisVector());
+        });
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
 
@@ -223,10 +231,13 @@ public class Simulation {
         for (CollisionObject obj : randomObjsToAdd) {
 
             shapesToAdd.add(obj.getShape());
-
+            shapesToAdd.add(obj.getVv().getVisVector());
         }
 
         this.com.addCollisionObjects(randomObjsToAdd);
+         this.com.getAllColObjs().forEach((CollisionObject c) -> {
+            this.vvm.addVisVectors(c.getVv().getVisVector());
+        });
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
     

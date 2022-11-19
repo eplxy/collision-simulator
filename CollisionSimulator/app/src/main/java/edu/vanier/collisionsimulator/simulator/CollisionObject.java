@@ -37,7 +37,7 @@ public abstract class CollisionObject {
 
     //FOR FUTURE USE IN APPLYING IMAGES ONTO OBJECTS
     private Image image;
-
+    private VisualVector vv;
     protected CustomVector v;
     protected double posX, posY, mass;
     protected double speed;
@@ -60,7 +60,7 @@ public abstract class CollisionObject {
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
         v = new CustomVector(0, 0);
-        VisualVector vv = new VisualVector(this);
+        this.vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);
     }
 
@@ -116,6 +116,14 @@ public abstract class CollisionObject {
 
     }
 
+    public VisualVector getVv() {
+        return vv;
+    }
+
+    public void setVv(VisualVector vv) {
+        this.vv = vv;
+    }
+    
     public Pane getParameters() {
         return parameters;
     }
