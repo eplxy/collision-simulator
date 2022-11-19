@@ -8,6 +8,8 @@ import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,13 +36,18 @@ public class CollisionMenuController {
     Button btnPlay;
     @FXML
     Button btnPause;
+    @FXML
+    Button btnAddObj;
+    
+    Simulation sim;
 
     public void initialize(Simulation sim) throws IOException {
+        this.sim = sim;
         sim.setAnimationPane(animationPane);
         sim.createRandomObjects2(sim.numberOfObj, sim.cmc, sim.animationPane);
         for (CollisionObject obj : sim.com.getAllColObjs()) {
-            obj.setMouseListener(this);
-            obj.setDragListeners(this);
+            //obj.setMouseListener(this);
+            //obj.setDragListeners(this);
         }
 
         btnSave.setOnAction((event) -> {
@@ -51,6 +58,13 @@ public class CollisionMenuController {
         });
         btnPause.setOnAction((event) -> {
             handlePause(event, sim);
+        });
+        btnAddObj.setOnAction((event) -> {
+            try {
+                handleAddObj(event, sim);
+            } catch (IOException ex) {
+                Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -64,6 +78,11 @@ public class CollisionMenuController {
 
     private void handlePause(ActionEvent event, Simulation sim) {
         sim.loop.pause();
+    }
+    
+    public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
+        sim.createRandomObjects2(1, this, animationPane);
+        
     }
 
     public void updateParameters() {
@@ -93,5 +112,15 @@ public class CollisionMenuController {
     public void setParametersVBox(VBox parametersVBox) {
         this.parametersVBox = parametersVBox;
     }
+
+    public Simulation getSim() {
+        return sim;
+    }
+
+    public void setSim(Simulation sim) {
+        this.sim = sim;
+    }
+    
+    
 
 }

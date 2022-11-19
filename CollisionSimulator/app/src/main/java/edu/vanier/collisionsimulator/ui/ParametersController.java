@@ -30,6 +30,8 @@ public class ParametersController {
     TextField posYTxtField;
     @FXML
     TextField directionTxtField;
+    @FXML 
+    Button btnRemoveObj;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -50,6 +52,9 @@ public class ParametersController {
         btnEnter.setOnAction((event) -> {
             handleEnter(event);
         });
+        btnRemoveObj.setOnAction((event) -> {
+            handleRemove(event);
+        });
     }
 
     @FXML
@@ -60,6 +65,14 @@ public class ParametersController {
         obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
         obj.setDirection(Double.parseDouble(directionTxtField.getText()));
     }
+    
+    public void handleRemove(ActionEvent event) {
+        cmc.getSim().getCom().addCollisionObjectsToBeRemoved(obj);
+        cmc.getSim().getCom().cleanupCollisionObjects();
+        //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
+        cmc.getAnimationPane().getChildren().remove(obj.getShape());
+    }
+
 
     public void displayParameters() {
         posXTxtField.setText(df.format(obj.getPosX()));

@@ -62,7 +62,7 @@ public class MainMenuController {
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
             loader.setController(menuController);
             BorderPane root = loader.load();
-            Simulation sim = new Simulation(6, menuController);
+            Simulation sim = new Simulation(2, menuController);
             menuController.initialize(sim);
             
             primaryStage.close();
