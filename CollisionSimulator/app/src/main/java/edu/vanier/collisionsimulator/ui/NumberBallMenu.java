@@ -15,10 +15,10 @@ public class NumberBallMenu {
     @FXML
     Button btnEnter;
     @FXML
-    ComboBox comboBox;
+    //ComboBox comboBox;
     
     public void initialize(){
-        comboBox.getItems().addAll("Option A", "Option B", "Option C");
+      //  comboBox.getItems().addAll("Option A", "Option B", "Option C");
     }
     
 }

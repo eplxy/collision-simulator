@@ -197,7 +197,7 @@ public class Simulation {
         return false;
     }
 
-    public void createRandomObjects2(int numOfObjs, CollisionMenuController cmc) throws IOException {
+    public void createRandomObjects2(int numOfObjs, CollisionMenuController cmc, Pane aPane) throws IOException {
 
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
@@ -208,7 +208,7 @@ public class Simulation {
             do {
 
                 randX = (Math.random() * (1000 - 100) + 100);   // This Will Create A Random Number Inbetween Your Min And Max.
-                randY = (Math.random() * (400 - 100) + 100);
+                randY = (Math.random() * (800 - 100) + 100);
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
             CircleObject c = new CircleObject(cmc);

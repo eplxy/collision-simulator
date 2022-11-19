@@ -5,6 +5,7 @@ public class CustomVector {
     //TODO:find angles
     //TODO:resolve issue with JavaFX positive Y pointing to bottom of screen
     public double[] direction;
+    public double conventionalAngle;
     public double x, destX, y, destY, length;
 
     /**
@@ -63,6 +64,24 @@ public class CustomVector {
         return q;
     }
 
+    private void quadrantAngleModification(){
+        int q = (int) this.direction[1];
+        double a = this.direction[0];
+        switch(q){
+            case 1:
+                this.conventionalAngle = a;
+                break;
+            case 2:
+                this.conventionalAngle = 180-a;
+                break;
+            case 3:
+                this.conventionalAngle = 180+a;
+                break;
+            case 4:
+                this.conventionalAngle = 360-a;
+        }
+    }
+    
     private double[] quadrantComponentModification(double x, double y) {
         int q = (int) this.direction[1];
         switch (q) {
@@ -87,9 +106,11 @@ public class CustomVector {
      *
      * @return double array, value 1 is angle, value 2 is quadrant
      */
-    private double[] computeDirection() {
+    public double[] computeDirection() {
 
-        return new double[]{Math.toDegrees(Math.atan2(Math.abs(y), Math.abs(x))), this.quadrant()};
+        double[] a = new double[]{Math.toDegrees(Math.atan2(Math.abs(y), Math.abs(x))), this.quadrant()};
+        
+        return a;
     }
 
     /**
@@ -141,8 +162,8 @@ public class CustomVector {
     private double[] computeComponents() {
         double x = this.length * Math.cos(Math.toRadians(this.direction[0]));
         double y = this.length * Math.sin(Math.toRadians(this.direction[0]));
-        
-        return quadrantComponentModification(x,y);
+
+        return quadrantComponentModification(x, y);
     }
 
     @Override
@@ -156,6 +177,7 @@ public class CustomVector {
 
     public CustomVector normalize() {
 
+        this.length = this.computeLength();
         if (this.length == 0) {
             return new CustomVector(0, 0);
         }
@@ -171,6 +193,15 @@ public class CustomVector {
         return new CustomVector(this.x * scalar, this.y * scalar);
     }
 
+    
+    public double getAngle(){
+        this.direction = this.computeDirection();
+        this.quadrantAngleModification();
+        return conventionalAngle;
+    }
+
+    
+    
     /**
      * Converts point's X screen coordinate into a Cartesian system.
      *

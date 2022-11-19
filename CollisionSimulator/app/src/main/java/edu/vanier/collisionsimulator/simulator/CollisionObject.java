@@ -24,15 +24,11 @@ import javafx.scene.shape.Shape;
 //mostly pulled from Assignment 2
 public abstract class CollisionObject {
 
-    ParametersController parametersController;
+    protected ParametersController parametersController;
 
     protected Pane parameters;
     protected double width, height;
     protected int index;
-
-    //TODO: define these as position values, replace usage of getShape().LayoutX/Y
-    protected double centerX;
-    protected double centerY;
 
     protected Shape shape;
     protected Shape collidingShape;
@@ -43,7 +39,7 @@ public abstract class CollisionObject {
     private Image image;
 
     protected CustomVector v;
-    protected double posX, posY, vX, vY, mass;
+    protected double posX, posY, mass;
     protected double speed;
     protected double direction;
 
@@ -63,61 +59,22 @@ public abstract class CollisionObject {
     }
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
-        vX = 0;
-        vY = 0;
+        v = new CustomVector(0, 0);
         VisualVector vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);
     }
 
     public CollisionObject() throws IOException {
-        vX = 0;
-        vY = 0;
+        v = new CustomVector(0, 0);
         VisualVector vv = new VisualVector(this);
-    }
-
-    public boolean intersects(CollisionObject s) {
-        //return s.getBoundary().intersects(this.getBoundary());        
-        Bounds sBounds = s.getShape().localToScene(s.getShape().getBoundsInLocal());
-        return shape.intersects(sBounds);
-
     }
 
     public void update() {
 
-        /*FIXME: issue with border rendering. if velocity is greater than
-        the distance to border, then it will send it outside the borders for a frame
-        and bounce it back.
-        
-        check if new position will be within bounds or not and handle accordingly
-         */
-        double newPosX = posX + vX;
-        double newPosY = posY + vY;
+        double newPosX = posX + v.x;
+        double newPosY = posY + v.y;
         this.setPosX(newPosX);
         this.setPosY(newPosY);
-//        if(!CollisionController.predictIntersectsBorderX(this, aPane) && 0<(newPosX) && (newPosX)< aPane.xMax){
-//        }
-//        else{
-//                if(vX>0){
-//                    this.setPosX(aPane.xMax - width/2);
-//
-//                } 
-//                else if(vX<0){
-//                    this.setPosX(0 + width/2);
-//
-//                }
-// 
-//        }
-//        if(!CollisionController.predictIntersectsBorderY(this, aPane)){
-//        }
-//        else{
-//             if(vY>0){
-//                    this.setPosY(aPane.yMax - width/2);
-//                } 
-//            else if(vY<0){
-//                    this.setPosY(0 + width/2);
-//                }
-// 
-//        }
 
     }
 
@@ -127,7 +84,7 @@ public abstract class CollisionObject {
             parametersController.displayParameters();
         });
     }
-    
+
     public final void setDragListeners(CollisionMenuController cmc) {
         final Delta dragDelta = new Delta();
         this.shape.setOnMousePressed((MouseEvent mouseEvent) -> {
@@ -144,6 +101,7 @@ public abstract class CollisionObject {
             this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
         });
     }
+
     class Delta {
 
         double x, y;
@@ -196,52 +154,55 @@ public abstract class CollisionObject {
         this.mass = mass;
     }
 
+    public CustomVector getV() {
+        return this.v;
+    }
+
+    public void setV(CustomVector v) {
+        this.v = v;
+    }
+
     public double getVelocityX() {
-        return vX;
+        return v.x;
     }
 
     public void setVelocityX(double velocityX) {
-        this.vX = velocityX;
-        this.shape.setTranslateX(vX);
+        this.v.x = velocityX;
+        this.shape.setTranslateX(v.x);
     }
 
     public double getVelocityY() {
-        return vY;
+        return v.y;
 
     }
 
     public void setVelocityY(double velocityY) {
-        this.vY = velocityY;
-        this.shape.setTranslateY(vY);
+        this.v.y = velocityY;
+        this.shape.setTranslateY(v.y);
     }
-    
-    public double getSpeed(){
-        return Math.sqrt(Math.pow(this.vX,2)+Math.pow(this.vY,2));
+
+    public double getSpeed() {
+        return Math.sqrt(Math.pow(this.v.x, 2) + Math.pow(this.v.y, 2));
     }
-    
-    public void setSpeed(double speed){
+
+    public void setSpeed(double speed) {
         this.speed = speed;
-        CustomVector originalVelocity = new CustomVector(this.vX,this.vY);
-        CustomVector newVelocity = originalVelocity.normalize().scalarMult(speed);
-        setVelocityX(newVelocity.x);
-        setVelocityY(newVelocity.y);
+        this.v = v.normalize().scalarMult(speed);
+
     }
-    
+
     public double getDirection() {
-        CustomVector v = new CustomVector(this.vX, this.vY);
-        
+        this.direction = v.getAngle();
+
         return this.direction;
     }
 
     public void setDirection(double direction) {
         this.direction = direction;
-        CustomVector v = new CustomVector(true, this.getSpeed(), direction);
-        setVelocityX(v.x);
-        setVelocityX(v.y);
+        CustomVector newV = new CustomVector(true, this.getSpeed(), direction);
+        this.v = newV;
     }
 
-    
-    
     public Shape getShape() {
         return this.shape;
     }
