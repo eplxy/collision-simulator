@@ -69,6 +69,7 @@ public class ParametersController {
     public void handleRemove(ActionEvent event) {
         cmc.getSim().getCom().addCollisionObjectsToBeRemoved(obj);
         cmc.getSim().getCom().cleanupCollisionObjects();
+        cmc.getAnimationPane().getChildren().remove(obj.getVv().getVisVector());
         //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
         cmc.getAnimationPane().getChildren().remove(obj.getShape());
     }

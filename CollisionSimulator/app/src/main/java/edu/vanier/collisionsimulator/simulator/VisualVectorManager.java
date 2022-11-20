@@ -28,7 +28,7 @@ public class VisualVectorManager {
     public void addVisVectors(Line... invisVectors) {
         visVectors.addAll(Arrays.asList(invisVectors));
     }
-            
+    
     public void removeVisVectors(Line... invisVectors) {
         visVectors.removeAll(Arrays.asList(invisVectors));
     }

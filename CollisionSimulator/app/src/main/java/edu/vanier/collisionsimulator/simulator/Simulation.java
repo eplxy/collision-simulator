@@ -259,6 +259,14 @@ public class Simulation {
         this.com = com;
     }
 
+    public VisualVectorManager getVvm() {
+        return vvm;
+    }
+
+    public void setVvm(VisualVectorManager vvm) {
+        this.vvm = vvm;
+    }
+    
 }
 
 
