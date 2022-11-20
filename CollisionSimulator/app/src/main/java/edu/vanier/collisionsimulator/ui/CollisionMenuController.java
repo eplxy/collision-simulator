@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -38,7 +39,8 @@ public class CollisionMenuController {
     Button btnPause;
     @FXML
     Button btnAddObj;
-    
+    @FXML
+    ToggleButton btnToggleVisVector;
     Simulation sim;
 
     public void initialize(Simulation sim) throws IOException {
@@ -64,6 +66,18 @@ public class CollisionMenuController {
                 handleAddObj(event, sim);
             } catch (IOException ex) {
                 Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnToggleVisVector.setOnAction((event)->{
+            if(btnToggleVisVector.isSelected()){
+               sim.getCom().getAllColObjs().forEach((t)->{
+                   animationPane.getChildren().add(t.getVv().getVisVector());
+               });
+            }
+            else{
+               sim.getCom().getAllColObjs().forEach((t)->{
+                   animationPane.getChildren().remove(t.getVv().getVisVector());
+               });
             }
         });
     }
