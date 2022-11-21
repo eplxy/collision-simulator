@@ -3,8 +3,11 @@ package edu.vanier.collisionsimulator.controllers;
 import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
+import edu.vanier.collisionsimulator.simulator.ResourcesManager;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 /**
  *
@@ -41,8 +44,19 @@ public class CollisionController {
                 colObjB.setVelocityX(velocities[1].x);
                 colObjB.setVelocityY(velocities[1].y);
                 Color color = new Color(Math.random(), Math.random(), Math.random(), 1);
-                colObjA.getShape().setFill(color);
-                colObjB.getShape().setFill(color);
+                
+                Image map = new Image("images/desert.png");
+                ImagePattern pattern = new ImagePattern(map);
+                colObjA.getShape().setFill(pattern);
+                colObjA.getShape().setStrokeWidth(1);
+                colObjA.getShape().setStroke(color);
+                
+                Image map2 = new Image("images/methane-ice.png");
+                ImagePattern pattern2 = new ImagePattern(map2);
+                colObjB.getShape().setFill(pattern2);
+                colObjB.getShape().setStrokeWidth(1);
+                colObjB.getShape().setStroke(color);
+                
 
             }
         }
