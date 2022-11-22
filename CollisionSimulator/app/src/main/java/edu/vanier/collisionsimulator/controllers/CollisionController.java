@@ -45,16 +45,22 @@ public class CollisionController {
                 colObjB.setVelocityY(velocities[1].y);
                 Color color = new Color(Math.random(), Math.random(), Math.random(), 1);
                 
+                /** 
+                 * Change image while bouncing.
+                 */
+                /*
                 Image map = new Image("images/desert.png");
                 ImagePattern pattern = new ImagePattern(map);
                 colObjA.getShape().setFill(pattern);
-                colObjA.getShape().setStrokeWidth(1);
-                colObjA.getShape().setStroke(color);
                 
                 Image map2 = new Image("images/methane-ice.png");
                 ImagePattern pattern2 = new ImagePattern(map2);
                 colObjB.getShape().setFill(pattern2);
-                colObjB.getShape().setStrokeWidth(1);
+                */
+                colObjA.getShape().setStrokeWidth(5);
+                colObjA.getShape().setStroke(color);
+
+                colObjB.getShape().setStrokeWidth(5);
                 colObjB.getShape().setStroke(color);
                 
 

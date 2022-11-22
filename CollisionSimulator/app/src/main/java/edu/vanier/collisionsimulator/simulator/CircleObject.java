@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
@@ -59,11 +60,6 @@ public class CircleObject extends CollisionObject {
     
     public CircleObject(CollisionMenuController cmc, String imagePath) throws IOException {
         super(cmc);
-        ImageView newCircle = new ImageView();
-        Image circleImage = new Image(imagePath);
-        newCircle.setImage(circleImage);
-        
-        this.node = newCircle;
         this.shape = new Circle(30);
         this.collidingShape = this.shape;
         this.radius = 30;
@@ -71,6 +67,9 @@ public class CircleObject extends CollisionObject {
         this.width = radius*2;
         this.mass = 5;
         
+        Image map = new Image("images/Capture.PNG");
+        ImagePattern pattern = new ImagePattern(map);
+        shape.setFill(pattern);
 
     }
 
