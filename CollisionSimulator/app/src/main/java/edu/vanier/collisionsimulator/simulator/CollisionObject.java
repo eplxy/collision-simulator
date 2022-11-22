@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
@@ -59,6 +60,9 @@ public abstract class CollisionObject {
     }
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
+        
+        
+        
         v = new CustomVector(0, 0);
         this.vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);

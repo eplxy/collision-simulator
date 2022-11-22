@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -21,6 +22,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
@@ -163,11 +165,15 @@ public class Simulation {
                 randY = Math.random() * (animationPane.getMaxHeight() - bufferY - 100) + 100;
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
+            
+            
             CircleObject c = new CircleObject();
             c.setPosX(randX);
             c.setPosY(randY);
 //DON'T TOUCH THIS I SWEAR TO GOD IF YOU DO nothing will happen really it's just chaotic            
 //c.setMass(Math.random() * (100 - 10) + 10);
+            
+            
             c.setVelocityX(Math.random() * (10 + 10) - 10);
             c.setVelocityY(Math.random() * (10 + 10) - 10);
             randomObjsToAdd[i] = c;
@@ -227,14 +233,10 @@ public class Simulation {
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
             CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
-            ImageView CircleImage = c.getImageViewNode();
+            
             
             c.setPosX(randX);
             c.setPosY(randY);
-            CircleImage.setVisible(true);
-            CircleImage.setCache(true);
-            CircleImage.setCacheHint(CacheHint.SPEED);
-            CircleImage.setManaged(false);
             //c.setMass(Math.random() * (0.05));
             c.setVelocityX(Math.random() * (10 + 5) - 10);
             c.setVelocityY(Math.random() * (10 + 5) - 10);
