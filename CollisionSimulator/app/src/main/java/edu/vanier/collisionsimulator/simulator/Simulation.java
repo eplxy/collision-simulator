@@ -247,6 +247,7 @@ public class Simulation {
             obj.setDragListeners(cmc);
             obj.setMouseListener(cmc);
             shapesToAdd.add(obj.getVv().getVisVector());
+            obj.getVv().setDragListeners();
         }
 
         this.com.addCollisionObjects(randomObjsToAdd);
