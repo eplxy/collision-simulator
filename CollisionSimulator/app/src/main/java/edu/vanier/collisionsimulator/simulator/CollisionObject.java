@@ -101,12 +101,21 @@ public abstract class CollisionObject {
             //this.shape.setCursor(Cursor.HAND);
         });
         this.shape.setOnMouseDragged((MouseEvent mouseEvent) -> {
+            //stops dragging if the object is about to leave the animation pane
+            if(mouseEvent.getSceneX() + dragDelta.x +width> cmc.getAnimationPane().getLayoutBounds().getMaxX()
+                    || mouseEvent.getSceneX() + dragDelta.x - width< cmc.getAnimationPane().getLayoutBounds().getMinX() 
+                    || mouseEvent.getSceneY() + dragDelta.y +height > cmc.getAnimationPane().getLayoutBounds().getMaxY() 
+                    || mouseEvent.getSceneY() + dragDelta.y -height<  cmc.getAnimationPane().getLayoutBounds().getMinY())
+            {
+                return;
+            }
+           
             this.setPosX(mouseEvent.getSceneX() + dragDelta.x);
             this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
             this.getVv().getVisVector().setStartX( this.getPosX());
             this.getVv().getVisVector().setStartY( this.getPosY());
             this.getVv().getVisVector().setEndX(  this.getVv().getVisVector().getStartX()+this.getVelocityX()*20);
-            this.getVv().getVisVector().setEndY(  this.getVv().getVisVector().getStartY()+this.getVelocityY()*20);
+            this.getVv().getVisVector().setEndY(  this.getVv().getVisVector().getStartY()+this.getVelocityY()*20);    
         });
     }
 
