@@ -16,8 +16,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -40,78 +41,72 @@
       </MenuBar>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <ToggleButton fx:id="btnToggleVisVector" mnemonicParsing="false" text="Show direction" textAlignment="CENTER" translateX="-150.0">
+            <ToggleButton fx:id="btnToggleVisVector" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="30.0" prefWidth="113.0" text="Show Direction" translateX="-335.0">
                <padding>
                   <Insets right="15.0" />
                </padding>
             </ToggleButton>
-            <Button fx:id="btnPlay" mnemonicParsing="false" text="Play" />
-            <Button fx:id="btnPause" mnemonicParsing="false" text="Pause">
-               <HBox.margin>
-                  <Insets left="10.0" right="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="btnSave" graphicTextGap="0.0" mnemonicParsing="false" text="Save">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </Button>
+            <Button fx:id="btnPlay" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Play" translateX="-100.0" />
+            <Button fx:id="btnPause" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Pause" translateX="-100.0" />
+            <Button fx:id="btnSave" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Save" translateX="118.0" />
          </children>
       </HBox>
    </bottom>
    <center>
-      <Pane fx:id="animationPane" prefHeight="334.0" prefWidth="303.0" style="-fx-background-color: LIGHTGRAY; -fx-border-color: BLACK;">
+      <Pane fx:id="animationPane" prefHeight="334.0" prefWidth="303.0" style="-fx-background-color: DARKGRAY; -fx-border-color: BLACK;">
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
       </Pane>
    </center>
    <right>
-      <VBox fx:id="parametersVBox" minWidth="-Infinity" prefHeight="331.0" prefWidth="171.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="parametersVBox" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="200.0" spacing="10.0" style="-fx-border-insets: 0; -fx-border-color: DIMGREY; -fx-background-color: #424242;" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="186.0" style="-fx-background-color: lilas;" text="Parameters" />
+            <Button fx:id="btnAddObj" mnemonicParsing="false" text="Add an object" />
             <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="186.0" style="-fx-background-color: lilas;" text="General Parameters">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Separator prefWidth="200.0" />
+            <HBox prefHeight="14.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="btnAddObj" mnemonicParsing="false" text="Add an object" />
+                  <CheckBox mnemonicParsing="false" text="Friction" />
+                  <TextField alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0" />
                </children>
             </HBox>
-            <CheckBox mnemonicParsing="false" text="Friction" />
-            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="164.0" showTickLabels="true" showTickMarks="true">
+            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="190.0" showTickLabels="true" showTickMarks="true">
                <padding>
                   <Insets top="5.0" />
                </padding>
             </Slider>
-            <TextField alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0">
-               <VBox.margin>
-                  <Insets left="15.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <CheckBox mnemonicParsing="false" text="Elasticity" />
-            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="164.0" showTickLabels="true" showTickMarks="true">
+            <HBox prefHeight="14.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" text="Elasticity" />
+                  <TextField alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0" />
+               </children>
+            </HBox>
+            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="190.0" showTickLabels="true" showTickMarks="true">
                <padding>
                   <Insets top="5.0" />
                </padding>
             </Slider>
-            <TextField alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0">
-               <VBox.margin>
-                  <Insets left="15.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <AnchorPane fx:id="parametersPane" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="171.0">
+            <AnchorPane fx:id="parametersPane" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin></AnchorPane>
-            <HBox prefHeight="32.0" prefWidth="171.0" />
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <BorderPane.margin>
-            <Insets top="10.0" />
+            <Insets left="5.0" right="10.0" top="5.0" />
          </BorderPane.margin>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
       </VBox>
    </right>
 </BorderPane>
