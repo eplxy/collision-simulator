@@ -32,6 +32,7 @@ import javafx.util.Duration;
  * @author 2186084
  */
 public class Simulation {
+
     public VisualVectorManager vvm;
     public CollisionObjectManager com;
     public Timeline loop;
@@ -39,8 +40,6 @@ public class Simulation {
     public CollisionMenuController cmc;
     //associated pane
     public Pane animationPane;
-
-    
 
     //test simulation to only be used in animation driver
     public Simulation(boolean option) throws IOException {
@@ -115,7 +114,7 @@ public class Simulation {
         vvm = new VisualVectorManager();
         this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
-        
+
     }
 
     //attempt to link simulations and parameters
@@ -140,7 +139,7 @@ public class Simulation {
             });
             // removed dead sprites.
             com.cleanupCollisionObjects();
-            
+
         };
 
         final KeyFrame kf = new KeyFrame(Duration.millis((1000 / (float) 60)), onFinished);
@@ -154,7 +153,7 @@ public class Simulation {
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
         double randX, randY;
-        double bufferX = 100;
+        double bufferX = 200;
         double bufferY = 100;
 
         for (int i = 0; i < numOfObjs; i++) {
@@ -165,15 +164,13 @@ public class Simulation {
                 randY = Math.random() * (animationPane.getMaxHeight() - bufferY - 100) + 100;
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
-            
-            
+
             CircleObject c = new CircleObject();
             c.setPosX(randX);
             c.setPosY(randY);
 //DON'T TOUCH THIS I SWEAR TO GOD IF YOU DO nothing will happen really it's just chaotic            
 //c.setMass(Math.random() * (100 - 10) + 10);
-            
-            
+
             c.setVelocityX(Math.random() * (10 + 10) - 10);
             c.setVelocityY(Math.random() * (10 + 10) - 10);
             randomObjsToAdd[i] = c;
@@ -182,17 +179,16 @@ public class Simulation {
         for (CollisionObject obj : randomObjsToAdd) {
 
             shapesToAdd.add(obj.getShape());
-            
 
             shapesToAdd.add(obj.getVv().getVisVector());
         }
-        
+
         this.com.addCollisionObjects(randomObjsToAdd);
         this.com.getAllColObjs().forEach((CollisionObject c) -> {
             this.vvm.addVisVectors(c.getVv().getVisVector());
         });
         this.animationPane.getChildren().addAll(shapesToAdd);
-        
+
     }
 
     private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
@@ -223,18 +219,19 @@ public class Simulation {
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
         double randX, randY;
+        double bufferX = 150;
+        double bufferY = 150;
 
         for (int i = 0; i < numOfObjs; i++) {
 
             do {
 
-                randX = (Math.random() * (1000 - 100) + 100);   // This Will Create A Random Number Inbetween Your Min And Max.
-                randY = (Math.random() * (800 - 100) + 100);
+                randX = (Math.random() * (aPane.getWidth() - bufferX) + 100);   // This Will Create A Random Number Inbetween Your Min And Max.
+                randY = (Math.random() * (aPane.getHeight() - bufferY) + 100);
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
             CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
-            
-            
+
             c.setPosX(randX);
             c.setPosY(randY);
             //c.setMass(Math.random() * (0.05));
@@ -253,15 +250,16 @@ public class Simulation {
         }
 
         this.com.addCollisionObjects(randomObjsToAdd);
-         this.com.getAllColObjs().forEach((CollisionObject c) -> {
+        this.com.getAllColObjs().forEach((CollisionObject c) -> {
             this.vvm.addVisVectors(c.getVv().getVisVector());
         });
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
-    
-    public void setAnimationPane(Pane pane){
+
+    public void setAnimationPane(Pane pane) {
         this.animationPane = pane;
     }
+
     public CollisionObjectManager getCom() {
         return com;
     }
@@ -277,7 +275,7 @@ public class Simulation {
     public void setVvm(VisualVectorManager vvm) {
         this.vvm = vvm;
     }
-    
+
 }
 
 
