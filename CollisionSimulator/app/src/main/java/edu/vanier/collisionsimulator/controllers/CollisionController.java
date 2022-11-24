@@ -1,13 +1,9 @@
 package edu.vanier.collisionsimulator.controllers;
 
-import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
-import edu.vanier.collisionsimulator.simulator.ResourcesManager;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 
 /**
  *

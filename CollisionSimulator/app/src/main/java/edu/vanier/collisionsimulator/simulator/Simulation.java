@@ -5,25 +5,12 @@ import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 //import edu.vanier.sprites.ResourcesManager;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.CacheHint;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
@@ -44,7 +31,6 @@ public class Simulation {
     //test simulation to only be used in animation driver
     public Simulation(boolean option) throws IOException {
 
-        this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
 
         CircleObject c1 = new CircleObject();
@@ -112,7 +98,6 @@ public class Simulation {
     public Simulation(int numOfObjs) throws IOException {
         com = new CollisionObjectManager();
         vvm = new VisualVectorManager();
-        this.animationPane = new AnimationPane(1800, 1000);
         loop = setLoop();
 
     }
