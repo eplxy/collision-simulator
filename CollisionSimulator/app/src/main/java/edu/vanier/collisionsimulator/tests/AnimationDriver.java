@@ -1,3 +1,8 @@
+//
+//FOR TEST PURPOSES ONLY. NEW MAIN CLASS -> UI.COLLISIONSIMULATORAPP
+//
+//
+
 package edu.vanier.collisionsimulator.tests;
 
 import edu.vanier.collisionsimulator.simulator.Simulation;
