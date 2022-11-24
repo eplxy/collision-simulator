@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
@@ -46,11 +47,13 @@ public class CollisionMenuController {
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
         sim.setAnimationPane(animationPane);
-        
-        for (CollisionObject obj : sim.com.getAllColObjs()) {
-            //obj.setMouseListener(this);
-            //obj.setDragListeners(this);
-        }
+
+        animationPane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            recenterObjects();
+        });
+        animationPane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            recenterObjects();
+        });
 
         btnSave.setOnAction((event) -> {
             handleSave(event);
@@ -68,16 +71,15 @@ public class CollisionMenuController {
                 Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        btnToggleVisVector.setOnAction((event)->{
-            if(btnToggleVisVector.isSelected()){
-               sim.getCom().getAllColObjs().forEach((t)->{
-                   animationPane.getChildren().add(t.getVv().getVisVector());
-               });
-            }
-            else{
-               sim.getCom().getAllColObjs().forEach((t)->{
-                   animationPane.getChildren().remove(t.getVv().getVisVector());
-               });
+        btnToggleVisVector.setOnAction((event) -> {
+            if (btnToggleVisVector.isSelected()) {
+                sim.getCom().getAllColObjs().forEach((t) -> {
+                    animationPane.getChildren().add(t.getVv().getVisVector());
+                });
+            } else {
+                sim.getCom().getAllColObjs().forEach((t) -> {
+                    animationPane.getChildren().remove(t.getVv().getVisVector());
+                });
             }
         });
     }
@@ -93,10 +95,10 @@ public class CollisionMenuController {
     private void handlePause(ActionEvent event, Simulation sim) {
         sim.loop.pause();
     }
-    
+
     public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
         sim.createRandomObjects2(1, this, animationPane);
-        
+
     }
 
     public void updateParameters() {
@@ -134,7 +136,25 @@ public class CollisionMenuController {
     public void setSim(Simulation sim) {
         this.sim = sim;
     }
-    
-    
+
+    private void recenterObjects() {
+        final Bounds bounds = animationPane.getLayoutBounds();
+        double paneWidth = animationPane.getWidth();
+        //double paneWidth = bounds.getMaxX();
+        double paneHeight = animationPane.getHeight();
+        //double paneHeight = bounds.getMaxY();
+
+        for (CollisionObject obj : sim.com.getAllColObjs()) {
+            if (obj.getPosX() + obj.getWidth() > paneWidth) {
+                obj.setPosX(paneWidth - 2 * obj.getWidth());
+                System.out.println(paneWidth);
+            }
+            if (obj.getPosY() + obj.getHeight() > paneHeight) {
+                obj.setPosY(paneHeight - 2 * obj.getHeight());
+                System.out.println(paneHeight);
+            }
+        }
+
+    }
 
 }
