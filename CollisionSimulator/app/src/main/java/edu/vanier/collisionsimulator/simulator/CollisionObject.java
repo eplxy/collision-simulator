@@ -6,6 +6,11 @@ import edu.vanier.collisionsimulator.tests.AnimationDriver;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
+import java.util.stream.Stream;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -14,9 +19,15 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 
 /**
  *
@@ -60,9 +71,7 @@ public abstract class CollisionObject {
     }
 
     public CollisionObject(CollisionMenuController cmc) throws IOException {
-        
-        
-        
+
         v = new CustomVector(0, 0);
         this.vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);
@@ -79,11 +88,14 @@ public abstract class CollisionObject {
         double newPosY = posY + v.y;
         this.setPosX(newPosX);
         this.setPosY(newPosY);
+        this.getVv().update();
 
     }
 
     public final void setMouseListener(CollisionMenuController cmc) {
+
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            this.highlight();
             cmc.getParametersPane().getChildren().setAll(parameters);
             parametersController.displayParameters();
         });
@@ -102,20 +114,19 @@ public abstract class CollisionObject {
         });
         this.shape.setOnMouseDragged((MouseEvent mouseEvent) -> {
             //stops dragging if the object is about to leave the animation pane
-            if(mouseEvent.getSceneX() + dragDelta.x +width> cmc.getAnimationPane().getLayoutBounds().getMaxX()
-                    || mouseEvent.getSceneX() + dragDelta.x - width< cmc.getAnimationPane().getLayoutBounds().getMinX() 
-                    || mouseEvent.getSceneY() + dragDelta.y +height > cmc.getAnimationPane().getLayoutBounds().getMaxY() 
-                    || mouseEvent.getSceneY() + dragDelta.y -height<  cmc.getAnimationPane().getLayoutBounds().getMinY())
-            {
+            if (mouseEvent.getSceneX() + dragDelta.x + width > cmc.getAnimationPane().getLayoutBounds().getMaxX()
+                    || mouseEvent.getSceneX() + dragDelta.x - width < cmc.getAnimationPane().getLayoutBounds().getMinX()
+                    || mouseEvent.getSceneY() + dragDelta.y + height > cmc.getAnimationPane().getLayoutBounds().getMaxY()
+                    || mouseEvent.getSceneY() + dragDelta.y - height < cmc.getAnimationPane().getLayoutBounds().getMinY()) {
                 return;
             }
-           
+
             this.setPosX(mouseEvent.getSceneX() + dragDelta.x);
             this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
-            this.getVv().getVisVector().setStartX( this.getPosX());
-            this.getVv().getVisVector().setStartY( this.getPosY());
-            this.getVv().getVisVector().setEndX(  this.getVv().getVisVector().getStartX()+this.getVelocityX()*20);
-            this.getVv().getVisVector().setEndY(  this.getVv().getVisVector().getStartY()+this.getVelocityY()*20);    
+            this.getVv().getVisVector().setStartX(this.getPosX());
+            this.getVv().getVisVector().setStartY(this.getPosY());
+            this.getVv().getVisVector().setEndX(this.getVv().getVisVector().getStartX() + this.getVelocityX() * 20);
+            this.getVv().getVisVector().setEndY(this.getVv().getVisVector().getStartY() + this.getVelocityY() * 20);
         });
     }
 
@@ -140,7 +151,7 @@ public abstract class CollisionObject {
     public void setVv(VisualVector vv) {
         this.vv = vv;
     }
-    
+
     public Pane getParameters() {
         return parameters;
     }
@@ -260,12 +271,29 @@ public abstract class CollisionObject {
         this.height = height;
     }
 
-//    public ParametersController getParametersController() {
-//        return parametersController;
-//    }
-//
-//    public void setParametersController(ParametersController parametersController) {
-//        this.parametersController = parametersController;
-//    }
-//    
+    public void highlight() {
+        Stop[] stops = new Stop[]{
+            new Stop(0, Color.AQUA),
+            new Stop(0.25, Color.RED),
+            new Stop(0.5, Color.GREEN),
+            new Stop(0.75, Color.YELLOW),
+            new Stop(1, Color.AQUAMARINE)
+        };
+
+        RadialGradient rg = new RadialGradient(0.0, 0.0, this.posX, this.posY, this.width, true, CycleMethod.NO_CYCLE, stops);
+        this.shape.setStroke(rg);
+
+        this.shape.setStrokeWidth(4);
+        EventHandler<ActionEvent> onFinished = (event) -> {
+            this.shape.setStroke(Color.TRANSPARENT);
+            this.shape.setStrokeWidth(1);
+        };
+        KeyFrame kf1 = new KeyFrame(Duration.millis(3000), onFinished);
+
+        Timeline t = new Timeline(kf1);
+
+        t.play();
+    }
+;
+
 }

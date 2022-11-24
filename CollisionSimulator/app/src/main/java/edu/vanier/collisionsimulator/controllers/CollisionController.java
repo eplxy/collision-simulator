@@ -72,6 +72,7 @@ public class CollisionController {
     public static void handleUpdate(CollisionObject colObj, Pane aPane) {
         bounceOffBorder(colObj, aPane);
         colObj.update();
+        
 
     }
 

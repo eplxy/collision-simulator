@@ -4,7 +4,6 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
-import edu.vanier.collisionsimulator.simulator.AnimationPane;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Shape;
 
 /**
  *

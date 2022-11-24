@@ -134,9 +134,6 @@ public class Simulation {
             CollisionController.checkCollisions(com);
             // update actors
             CollisionController.updateCollisionObjects(com, this.animationPane);
-            com.getAllColObjs().forEach((t) -> {
-                t.getVv().update();
-            });
             // removed dead sprites.
             com.cleanupCollisionObjects();
 
