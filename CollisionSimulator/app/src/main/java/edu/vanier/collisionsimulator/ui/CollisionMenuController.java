@@ -13,7 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -39,6 +41,8 @@ public class CollisionMenuController {
     @FXML
     Button btnAddObj;
     @FXML
+    Slider timeLineSlider;   
+    @FXML
     ToggleButton btnToggleVisVector;
     Simulation sim;
 
@@ -53,6 +57,9 @@ public class CollisionMenuController {
             recenterObjects();
         });
 
+         timeLineSlider.setOnMouseDragReleased((event) -> {
+             handleTimeline(event, sim);
+        });
         btnSave.setOnAction((event) -> {
             handleSave(event);
         });
@@ -86,6 +93,10 @@ public class CollisionMenuController {
         System.out.println("save pressed");
     }
 
+    private void handleTimeline(MouseDragEvent event, Simulation sim) {
+        System.out.println("yes");
+    }
+    
     private void handlePlay(ActionEvent event, Simulation sim) {
         sim.loop.play();
     }
