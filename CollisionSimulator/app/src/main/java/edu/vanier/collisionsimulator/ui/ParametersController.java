@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -32,6 +33,8 @@ public class ParametersController {
     TextField directionTxtField;
     @FXML 
     Button btnRemoveObj;
+    @FXML
+    Label lblError;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -59,13 +62,27 @@ public class ParametersController {
 
     @FXML
     public void handleEnter(ActionEvent event) {
+        if(inputValidationSpeed(Double.parseDouble(speedTxtField.getText()))){
         obj.setMass(Double.parseDouble(massTxtField.getText()));
         obj.setPosY(Double.parseDouble(posYTxtField.getText()));
         obj.setPosX(Double.parseDouble(posXTxtField.getText()));
         obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
         obj.setDirection(Double.parseDouble(directionTxtField.getText()));
+        }
+        else{
+            lblError.setText("The speed must be between -50 and 50 m/s.");
+        }
     }
+   
     
+    public boolean inputValidationSpeed(double input){
+        if(input >= -50 && input <=50){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public void handleRemove(ActionEvent event) {
         cmc.getSim().getCom().addCollisionObjectsToBeRemoved(obj);
         cmc.getSim().getCom().cleanupCollisionObjects();
