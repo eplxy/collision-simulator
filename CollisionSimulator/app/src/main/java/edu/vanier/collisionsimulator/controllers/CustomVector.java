@@ -64,24 +64,24 @@ public class CustomVector {
         return q;
     }
 
-    private void quadrantAngleModification(){
+    private void quadrantAngleModification() {
         int q = (int) this.direction[1];
         double a = this.direction[0];
-        switch(q){
+        switch (q) {
             case 1:
                 this.conventionalAngle = a;
                 break;
             case 2:
-                this.conventionalAngle = 180-a;
+                this.conventionalAngle = 180 - a;
                 break;
             case 3:
-                this.conventionalAngle = 180+a;
+                this.conventionalAngle = 180 + a;
                 break;
             case 4:
-                this.conventionalAngle = 360-a;
+                this.conventionalAngle = 360 - a;
         }
     }
-    
+
     private double[] quadrantComponentModification(double x, double y) {
         int q = (int) this.direction[1];
         switch (q) {
@@ -109,7 +109,7 @@ public class CustomVector {
     public double[] computeDirection() {
 
         double[] a = new double[]{Math.toDegrees(Math.atan2(Math.abs(y), Math.abs(x))), this.quadrant()};
-        
+
         return a;
     }
 
@@ -193,15 +193,12 @@ public class CustomVector {
         return new CustomVector(this.x * scalar, this.y * scalar);
     }
 
-    
-    public double getAngle(){
+    public double getAngle() {
         this.direction = this.computeDirection();
         this.quadrantAngleModification();
         return conventionalAngle;
     }
 
-    
-    
     /**
      * Converts point's X screen coordinate into a Cartesian system.
      *
