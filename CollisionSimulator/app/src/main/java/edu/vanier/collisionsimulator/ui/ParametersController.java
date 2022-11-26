@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
@@ -34,14 +35,12 @@ public class ParametersController {
     @FXML 
     Button btnRemoveObj;
     @FXML
-    Label lblError;
+    TextArea txtAreaError;
+    
+    String errorMsg = "";
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
-//    double massInput;
-//    double speedInput;
-//    double posXInput;
-//    double posYInput;
     @FXML
     Button btnEnter;
 
@@ -62,27 +61,80 @@ public class ParametersController {
 
     @FXML
     public void handleEnter(ActionEvent event) {
-        if(inputValidationSpeed(Double.parseDouble(speedTxtField.getText()))){
-        obj.setMass(Double.parseDouble(massTxtField.getText()));
-        obj.setPosY(Double.parseDouble(posYTxtField.getText()));
-        obj.setPosX(Double.parseDouble(posXTxtField.getText()));
-        obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
-        obj.setDirection(Double.parseDouble(directionTxtField.getText()));
+        boolean[] validation = {inputValidationSpeed(Double.parseDouble(speedTxtField.getText())),
+                inputValidationMass(Double.parseDouble(massTxtField.getText())),
+                inputValidationPosX(Double.parseDouble(posXTxtField.getText())),
+                inputValidationPosY(Double.parseDouble(posYTxtField.getText())),
+                inputValidationDirection(Double.parseDouble(directionTxtField.getText()))
+        }; 
+        if(areAllTrue(validation)){
+            obj.setMass(Double.parseDouble(massTxtField.getText()));
+            obj.setPosY(Double.parseDouble(posYTxtField.getText()));
+            obj.setPosX(Double.parseDouble(posXTxtField.getText()));
+            obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
+            obj.setDirection(Double.parseDouble(directionTxtField.getText()));
         }
-        else{
-            lblError.setText("The speed must be between -50 and 50 m/s.");
-        }
+        txtAreaError.setText(errorMsg);
+        errorMsg = "";
     }
-   
+    
+    //https://stackoverflow.com/questions/8260881/what-is-the-most-elegant-way-to-check-if-all-values-in-a-boolean-array-are-true
+    public static boolean areAllTrue(boolean[] array)
+    {
+        for (boolean b : array) {
+            if (!b) {
+                return false;
+            }
+        }
+        return true;
+    }
     
     public boolean inputValidationSpeed(double input){
         if(input >= -50 && input <=50){
             return true;
         }
         else{
+            errorMsg += ("\nThe speed must be between -50 and 50 m/s.");
             return false;
         }
     }
+    public boolean inputValidationMass(double input){
+        if(input > 0 && input <=1000){
+            return true;
+        }
+        else{
+            errorMsg += ("\nThe mass must be between 0 and 1000 kg.");
+            return false;
+        }
+    }
+    public boolean inputValidationPosX (double input){
+        if(input >=0  && input <= cmc.getAnimationPane().getWidth()){
+            return true;
+        }
+        else{
+            errorMsg += ("\nInvalid position x.");
+            return false;
+        }
+    }
+    public boolean inputValidationPosY (double input){
+        if(input >=0  && input <= cmc.getAnimationPane().getHeight()){
+            return true;
+        }
+        else{
+            errorMsg += ("\nInvalid position y.");
+            return false;
+        }
+    }
+    public boolean inputValidationDirection (double input){
+        if(input >= -360 && input <=360){
+            return true;
+        }
+        else{
+            errorMsg += ("\nThe direction must be between -360 and 360 degrees");
+            return false;
+        }
+    }
+    
     public void handleRemove(ActionEvent event) {
         cmc.getSim().getCom().addCollisionObjectsToBeRemoved(obj);
         cmc.getSim().getCom().cleanupCollisionObjects();
@@ -95,7 +147,7 @@ public class ParametersController {
     public void displayParameters() {
         posXTxtField.setText(df.format(obj.getPosX()));
         posYTxtField.setText(df.format(obj.getPosY()));
-        massTxtField.setText(Double.toString(obj.getMass()));
+        massTxtField.setText(df.format(obj.getMass()));
         speedTxtField.setText(df.format(getNormSpeed()));
         directionTxtField.setText(df.format(obj.getDirection()));
     }
