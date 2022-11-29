@@ -106,7 +106,7 @@ public class CollisionMenuController {
     }
 
     public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
-        sim.createRandomObjects2(1, this, animationPane);
+        sim.addObject(this, animationPane);
 
     }
 

@@ -238,6 +238,39 @@ public class Simulation {
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
 
+    public void addObject(CollisionMenuController cmc, Pane aPane) throws IOException {
+
+        CollisionObject[] currentObjs = new CollisionObject[this.com.getAllColObjs().size()];
+        this.com.getAllColObjs().toArray(currentObjs);
+        ArrayList<Shape> shapesToAdd = new ArrayList<>();
+        double randX, randY;
+        double bufferX = 150;
+        double bufferY = 150;
+
+        do {
+
+            randX = (Math.random() * (aPane.getWidth() - bufferX) + 100);   // This Will Create A Random Number Inbetween Your Min And Max.
+            randY = (Math.random() * (aPane.getHeight() - bufferY) + 100);
+
+        } while (willSpawnIntersecting(randX, randY, currentObjs));
+        CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
+
+        c.setPosX(randX);
+        c.setPosY(randY);
+        c.setVelocityX(Math.random() * (10 + 5) - 10);
+        c.setVelocityY(Math.random() * (10 + 5) - 10);
+
+        shapesToAdd.add(c.getShape());
+        c.setDragListeners(cmc);
+        c.setMouseListener(cmc);
+        shapesToAdd.add(c.getVv().getVisVector());
+        c.getVv().setDragListeners();
+
+        this.com.addCollisionObjects(c);
+        this.vvm.addVisVectors(c.getVv().getVisVector());
+        this.animationPane.getChildren().addAll(shapesToAdd);
+    }
+
     public void setAnimationPane(Pane pane) {
         this.animationPane = pane;
     }
