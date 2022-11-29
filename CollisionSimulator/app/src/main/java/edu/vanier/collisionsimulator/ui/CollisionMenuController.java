@@ -6,26 +6,40 @@ package edu.vanier.collisionsimulator.ui;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
+import edu.vanier.collisionsimulator.tests.UIDriver;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  *
  * @author sabri
  */
 public class CollisionMenuController {
+    Stage primaryStage;
+    
+    //Stage primaryStage;
+    public CollisionMenuController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    };
 
+    
+    
     @FXML
     private Pane animationPane;
     @FXML
@@ -45,6 +59,10 @@ public class CollisionMenuController {
     @FXML
     ToggleButton btnToggleVisVector;
     Simulation sim;
+    @FXML
+    Button btnReturnMenu;
+    @FXML 
+    CheckBox checkBoxShowDirection;
 
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
@@ -77,8 +95,8 @@ public class CollisionMenuController {
                 Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        btnToggleVisVector.setOnAction((event) -> {
-            if (btnToggleVisVector.isSelected()) {
+        checkBoxShowDirection.setOnAction((event) -> {
+            if (checkBoxShowDirection.isSelected()) {
                 sim.getCom().getAllColObjs().forEach((t) -> {
                     animationPane.getChildren().add(t.getVv().getVisVector());
                 });
@@ -88,10 +106,27 @@ public class CollisionMenuController {
                 });
             }
         });
+        btnReturnMenu.setOnAction((event) -> {
+            try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            MainMenuController menuController = new MainMenuController(primaryStage);
+            loader.setController(menuController);
+            
+            BorderPane root = loader.load();
+
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setMaximized(true);
+
+            primaryStage.show();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        });
     }
 
     public void handleSave(ActionEvent event) {
-        System.out.println("save pressed");
     }
 
     private void handleTimeline(Simulation sim, double value) {
