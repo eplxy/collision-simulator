@@ -25,6 +25,7 @@ public class Simulation {
     public Timeline loop;
     public int numberOfObj;
     public CollisionMenuController cmc;
+    private double frameRate = 60;
     //associated pane
     public Pane animationPane;
 
@@ -124,10 +125,16 @@ public class Simulation {
 
         };
 
-        final KeyFrame kf = new KeyFrame(Duration.millis((1000 / (float) 60)), onFinished);
+        final KeyFrame kf = new KeyFrame(Duration.millis((1000 / (float) this.frameRate)), onFinished);
         loop = new Timeline(kf);
         loop.setCycleCount(Animation.INDEFINITE);
         return loop;
+    }
+
+    public void setFrameRate(double frameRate) {
+        this.loop.stop();
+        this.frameRate = frameRate;
+        this.loop = this.setLoop();
     }
 
     public void createRandomObjects(int numOfObjs) throws IOException {

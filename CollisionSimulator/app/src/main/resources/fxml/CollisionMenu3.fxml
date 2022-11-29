@@ -48,7 +48,7 @@
                   <Insets right="15.0" />
                </padding>
             </ToggleButton>
-            <Slider fx:id="timeLineSlider" translateX="-200.0" />
+            <Slider fx:id="timelineSlider" blockIncrement="1.0" majorTickUnit="0.5" max="2.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" translateX="-200.0" value="1.0" />
             <Button fx:id="btnPlay" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Play" translateX="-100.0" />
             <Button fx:id="btnPause" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Pause" translateX="-100.0" />
             <Button fx:id="btnSave" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" text="Save" translateX="118.0" />

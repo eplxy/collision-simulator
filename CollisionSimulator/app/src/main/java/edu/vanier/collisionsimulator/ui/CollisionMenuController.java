@@ -41,7 +41,7 @@ public class CollisionMenuController {
     @FXML
     Button btnAddObj;
     @FXML
-    Slider timeLineSlider;   
+    Slider timelineSlider;
     @FXML
     ToggleButton btnToggleVisVector;
     Simulation sim;
@@ -57,8 +57,9 @@ public class CollisionMenuController {
             recenterObjects();
         });
 
-         timeLineSlider.setOnMouseDragReleased((event) -> {
-             handleTimeline(event, sim);
+        timelineSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            handleTimeline(sim, timelineSlider.getValue());
+            System.out.println(timelineSlider.getValue());
         });
         btnSave.setOnAction((event) -> {
             handleSave(event);
@@ -93,10 +94,10 @@ public class CollisionMenuController {
         System.out.println("save pressed");
     }
 
-    private void handleTimeline(MouseDragEvent event, Simulation sim) {
-        System.out.println("yes");
+    private void handleTimeline(Simulation sim, double value) {
+        sim.setFrameRate(60 * value);
     }
-    
+
     private void handlePlay(ActionEvent event, Simulation sim) {
         sim.loop.play();
     }
