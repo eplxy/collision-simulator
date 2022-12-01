@@ -59,7 +59,7 @@ public class MainMenuController {
             System.out.println("hehe");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
-            edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController();
+            edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
             loader.setController(menuController);
             BorderPane root = loader.load();
             Simulation sim = new Simulation(2, menuController);

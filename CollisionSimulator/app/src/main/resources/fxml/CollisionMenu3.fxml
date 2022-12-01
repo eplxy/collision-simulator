@@ -24,7 +24,7 @@
                </HBox.margin>
             </CheckBox>
             <Label text="Animation speed" />
-            <Slider fx:id="timeLineSlider">
+            <Slider fx:id="timelineSlider">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin></Slider>
