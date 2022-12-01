@@ -16,7 +16,7 @@
 
 <BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="758.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="758.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <CheckBox fx:id="checkBoxShowDirection" mnemonicParsing="false" text="Show direction vectors">
                <HBox.margin>
@@ -24,7 +24,7 @@
                </HBox.margin>
             </CheckBox>
             <Label text="Animation speed" />
-            <Slider fx:id="timelineSlider">
+            <Slider fx:id="timelineSlider" majorTickUnit="0.5" max="2.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin></Slider>
