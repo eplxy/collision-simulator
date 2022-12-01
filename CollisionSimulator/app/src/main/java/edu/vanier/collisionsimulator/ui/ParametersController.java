@@ -73,6 +73,7 @@ public class ParametersController {
             obj.setPosX(Double.parseDouble(posXTxtField.getText()));
             obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
             obj.setDirection(Double.parseDouble(directionTxtField.getText()));
+            obj.getVv().update();
         }
         txtAreaError.setText(errorMsg);
         errorMsg = "";
