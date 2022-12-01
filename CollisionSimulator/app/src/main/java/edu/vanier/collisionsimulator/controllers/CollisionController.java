@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 public class CollisionController {
 
     final static double BORDER_BUFFER = 10;
-    private static final String SOUNDS = "/sounds/laser_2.mp3";
+    private static final String SOUNDS = "/sounds/ball_collision.mp3";
     
     
     public static void checkCollisions(CollisionObjectManager com) {
