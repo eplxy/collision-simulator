@@ -2,11 +2,7 @@ package edu.vanier.collisionsimulator.controllers;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
-import edu.vanier.collisionsimulator.simulator.ResourcesManager;
-import edu.vanier.collisionsimulator.simulator.SoundManager;
-import java.nio.file.Paths;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -18,7 +14,7 @@ import javafx.scene.paint.Color;
 public class CollisionController {
 
     final static double BORDER_BUFFER = 10;
-    
+    private static final String SOUNDS = "/sounds/laser_2.mp3";
     
     
     public static void checkCollisions(CollisionObjectManager com) {
@@ -61,7 +57,9 @@ public class CollisionController {
                 ImagePattern pattern2 = new ImagePattern(map2);
                 colObjB.getShape().setFill(pattern2);
                 */
-                Media m = new Media(Paths.get("C:\\Users\\2148289\\Documents\\NetBeansProjects\\collision-simulator\\CollisionSimulator\\app\\build\\resources\\main\\sounds\\laser_2.mp3").toUri().toString());
+                Media m;
+                //m = new Media(CollisionController.class.getResource(ResourcesManager.SOUND_LASER).getPath());
+                m = new Media(CollisionController.class.getResource(SOUNDS).toExternalForm());
                 new MediaPlayer(m).play();
                 
                 colObjA.getShape().setStrokeWidth(5);
