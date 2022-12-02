@@ -15,7 +15,6 @@ import javafx.util.Duration;
 public class CollisionController {
 
     final static double BORDER_BUFFER = 10;
-    private static final String SOUNDS = "/sounds/ball_collision.mp3";
     private static final String BOING = "/sounds/boing.mp3";
     public static boolean boingEnabled;
 
@@ -72,16 +71,32 @@ public class CollisionController {
         }
         return false;
     }
+    
+    
+    private static void applyFriction(CollisionObject colObj, double friction){
+        
+        double speedMult = colObj.getV().computeLength()-friction*0.0001*colObj.getMass();
+        if(speedMult > 0){
+            colObj.setV(colObj.getV().normalize().scalarMult(speedMult));
+        } else {
+            colObj.setV(new CustomVector(0, 0));
+        }
+        
+        
+        
+    }
 
-    public static void handleUpdate(CollisionObject colObj, Pane aPane) {
+    public static void handleUpdate(CollisionObject colObj, Pane aPane, double friction) {
         bounceOffBorder(colObj, aPane);
+        applyFriction(colObj, friction);
+        
         colObj.update();
 
     }
 
-    public static void updateCollisionObjects(CollisionObjectManager com, Pane aPane) {
+    public static void updateCollisionObjects(CollisionObjectManager com, Pane aPane, double friction) {
         for (CollisionObject colObj : com.getAllColObjs()) {
-            handleUpdate(colObj, aPane);
+            handleUpdate(colObj, aPane, friction);
         }
     }
 
@@ -124,7 +139,7 @@ public class CollisionController {
     
     private static void boing() {
         if (boingEnabled) {
-            if (Math.random() <= 0.5) {
+            if (Math.random() <= 0.1) {
                 Media a = new Media(CollisionController.class.getResource(BOING).toExternalForm());
                 MediaPlayer m = new MediaPlayer(a);
                 m.play();

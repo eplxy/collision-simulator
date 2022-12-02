@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -37,6 +38,7 @@ public class CircleObject extends CollisionObject {
     public CircleObject() throws IOException {
         super();
         this.shape = new Circle(50.0f);
+        this.shape.setStroke(Color.TRANSPARENT);
         this.collidingShape = this.shape;
         this.radius = 50;
         this.height = this.radius*2;

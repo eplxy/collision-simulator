@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -60,22 +59,17 @@
             <Separator prefWidth="200.0" />
             <HBox prefHeight="14.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="Friction" />
-                  <TextField alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0" />
+                  <Label text="Friction">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </HBox>
-            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="190.0" showTickLabels="true" showTickMarks="true">
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </Slider>
-            <HBox prefHeight="14.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <CheckBox mnemonicParsing="false" text="Elasticity" />
-                  <TextField alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="50.0" />
-               </children>
-            </HBox>
-            <Slider maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="190.0" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="sliderFriction" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="190.0" showTickLabels="true" showTickMarks="true">
                <padding>
                   <Insets top="5.0" />
                </padding>
@@ -97,14 +91,18 @@
       </VBox>
    </right>
    <top>
-      <HBox prefHeight="23.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+      <AnchorPane>
          <children>
-            <Button fx:id="btnReturnMenu" mnemonicParsing="false" text="&lt; Return to main menu">
-               <HBox.margin>
-                  <Insets left="5.0" top="3.0" />
-               </HBox.margin>
-            </Button>
+            <Button fx:id="btnReturnMenu" mnemonicParsing="false" text="&lt; Return to main menu" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="5.0" />
+            <CheckBox fx:id="checkBoing" mnemonicParsing="false" text="boing" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </CheckBox>
          </children>
-      </HBox>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </AnchorPane>
    </top>
 </BorderPane>

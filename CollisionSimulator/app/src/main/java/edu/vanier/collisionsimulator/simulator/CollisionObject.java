@@ -7,7 +7,9 @@ import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
 import java.util.stream.Stream;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,6 +18,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -98,8 +101,25 @@ public abstract class CollisionObject {
             this.highlight();
             cmc.getParametersPane().getChildren().setAll(parameters);
             parametersController.displayParameters();
+
+            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+
+                this.shape.getParent().setOnMouseClicked((MouseEvent event2) -> {
+                    if (!this.getShape().getStroke().equals(Color.TRANSPARENT)) {
+                        if (Math.sqrt(Math.pow(event2.getX() - this.getPosX(), 2) + (Math.pow(event2.getY() - this.getPosY(), 2))) < this.width) {
+                        } else if (event2.getButton() == MouseButton.SECONDARY) {
+                            this.setV(new CustomVector((event2.getSceneX() - this.getPosX()) * 0.05, (event2.getSceneY() - this.getPosY()) * 0.05));
+                            this.vv.update();
+                        };
+                    };
+                });
+            };
+
         });
+
     }
+
+    ;
 
     public final void setDragListeners(CollisionMenuController cmc) {
         final Delta dragDelta = new Delta();
@@ -113,21 +133,24 @@ public abstract class CollisionObject {
             //this.shape.setCursor(Cursor.HAND);
         });
         this.shape.setOnMouseDragged((MouseEvent mouseEvent) -> {
-            //stops dragging if the object is about to leave the animation pane
-            if (mouseEvent.getSceneX() + dragDelta.x + width > cmc.getAnimationPane().getLayoutBounds().getMaxX()
-                    || mouseEvent.getSceneX() + dragDelta.x - width < cmc.getAnimationPane().getLayoutBounds().getMinX()
-                    || mouseEvent.getSceneY() + dragDelta.y + height > cmc.getAnimationPane().getLayoutBounds().getMaxY()
-                    || mouseEvent.getSceneY() + dragDelta.y - height < cmc.getAnimationPane().getLayoutBounds().getMinY()) {
-                return;
-            }
+            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                //stops dragging if the object is about to leave the animation pane
+                if (mouseEvent.getSceneX() + dragDelta.x + width > cmc.getAnimationPane().getLayoutBounds().getMaxX()
+                        || mouseEvent.getSceneX() + dragDelta.x - width < cmc.getAnimationPane().getLayoutBounds().getMinX()
+                        || mouseEvent.getSceneY() + dragDelta.y + height > cmc.getAnimationPane().getLayoutBounds().getMaxY()
+                        || mouseEvent.getSceneY() + dragDelta.y - height < cmc.getAnimationPane().getLayoutBounds().getMinY()) {
+                    return;
+                }
 
-            this.setPosX(mouseEvent.getSceneX() + dragDelta.x);
-            this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
-            this.getVv().getVisVector().setStartX(this.getPosX());
-            this.getVv().getVisVector().setStartY(this.getPosY());
-            this.getVv().getVisVector().setEndX(this.getVv().getVisVector().getStartX() + this.getVelocityX() * 20);
-            this.getVv().getVisVector().setEndY(this.getVv().getVisVector().getStartY() + this.getVelocityY() * 20);
+                this.setPosX(mouseEvent.getSceneX() + dragDelta.x);
+                this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
+                this.getVv().getVisVector().setStartX(this.getPosX());
+                this.getVv().getVisVector().setStartY(this.getPosY());
+                this.getVv().getVisVector().setEndX(this.getVv().getVisVector().getStartX() + this.getVelocityX() * 20);
+                this.getVv().getVisVector().setEndY(this.getVv().getVisVector().getStartY() + this.getVelocityY() * 20);
+            };
         });
+
     }
 
     class Delta {
@@ -272,27 +295,15 @@ public abstract class CollisionObject {
     }
 
     public void highlight() {
-        Stop[] stops = new Stop[]{
-            new Stop(0, Color.AQUA),
-            new Stop(0.25, Color.RED),
-            new Stop(0.5, Color.GREEN),
-            new Stop(0.75, Color.YELLOW),
-            new Stop(1, Color.AQUAMARINE)
-        };
-
-        RadialGradient rg = new RadialGradient(0.0, 0.0, this.posX, this.posY, this.width, true, CycleMethod.NO_CYCLE, stops);
-        this.shape.setStroke(rg);
 
         this.shape.setStrokeWidth(4);
-        EventHandler<ActionEvent> onFinished = (event) -> {
-            this.shape.setStroke(Color.TRANSPARENT);
-            this.shape.setStrokeWidth(1);
-        };
-        KeyFrame kf1 = new KeyFrame(Duration.millis(3000), onFinished);
+        this.shape.setStroke(Color.valueOf("55CCFF"));
+
+        KeyFrame kf1 = new KeyFrame(Duration.millis(3000), new KeyValue(this.shape.strokeProperty(), Color.TRANSPARENT, Interpolator.LINEAR));
 
         Timeline t = new Timeline(kf1);
-
         t.play();
+
     }
 ;
 

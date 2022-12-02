@@ -60,6 +60,8 @@ public class CollisionMenuController {
     @FXML
     Slider timelineSlider;
     @FXML
+    Slider sliderFriction;
+    @FXML
     ToggleButton btnToggleVisVector;
     Simulation sim;
     @FXML
@@ -68,6 +70,7 @@ public class CollisionMenuController {
     CheckBox checkBoxShowDirection;
     @FXML
     CheckBox checkBoing;
+    
 
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
@@ -82,8 +85,12 @@ public class CollisionMenuController {
 
         timelineSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             handleTimeline(sim, timelineSlider.getValue());
-            System.out.println(timelineSlider.getValue());
         });
+        
+        sliderFriction.valueProperty().addListener((obs,oldVal,newVal)->{
+            updateFriction(sim, sliderFriction.getValue());
+        });
+        
         btnSave.setOnAction((event) -> {
             handleSave(event);
         });
@@ -130,6 +137,7 @@ public class CollisionMenuController {
                 BorderPane root = loader.load();
 
                 Scene scene = new Scene(root);
+                primaryStage.close();
                 primaryStage.setScene(scene);
                 primaryStage.setMaximized(true);
 
@@ -164,6 +172,10 @@ public class CollisionMenuController {
         return checkBoing.isSelected();
     }
 
+    public void updateFriction(Simulation sim, double friction){
+        sim.setFriction(friction);
+    }
+    
     public void updateParameters() {
 
     }

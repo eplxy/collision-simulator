@@ -29,6 +29,7 @@ public class Simulation {
     public int numberOfObj;
     public CollisionMenuController cmc;
     private double frameRate = 60;
+    public double friction = 0;
     //associated pane
     public Pane animationPane;
 
@@ -65,7 +66,7 @@ public class Simulation {
             // check for collision.
             CollisionController.checkCollisions(com);
             // update actors
-            CollisionController.updateCollisionObjects(com, this.animationPane);
+            CollisionController.updateCollisionObjects(com, this.animationPane, this.friction);
             // removed dead sprites.
             com.cleanupCollisionObjects();
 
@@ -82,49 +83,12 @@ public class Simulation {
         this.frameRate = frameRate;
         this.loop = this.setLoop();
     }
-
-    public void createRandomObjects(int numOfObjs) throws IOException {
-
-        CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
-        ArrayList<Shape> shapesToAdd = new ArrayList<>();
-        double randX, randY;
-        double bufferX = 200;
-        double bufferY = 100;
-
-        for (int i = 0; i < numOfObjs; i++) {
-
-            do {
-
-                randX = Math.random() * (animationPane.getMaxWidth() - bufferX - 100) + 100;
-                randY = Math.random() * (animationPane.getMaxHeight() - bufferY - 100) + 100;
-
-            } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
-
-            CircleObject c = new CircleObject();
-            c.setPosX(randX);
-            c.setPosY(randY);
-//DON'T TOUCH THIS I SWEAR TO GOD IF YOU DO nothing will happen really it's just chaotic            
-//c.setMass(Math.random() * (100 - 10) + 10);
-
-            c.setVelocityX(Math.random() * (10 + 10) - 10);
-            c.setVelocityY(Math.random() * (10 + 10) - 10);
-            randomObjsToAdd[i] = c;
-        }
-
-        for (CollisionObject obj : randomObjsToAdd) {
-
-            shapesToAdd.add(obj.getShape());
-
-            shapesToAdd.add(obj.getVv().getVisVector());
-        }
-
-        this.com.addCollisionObjects(randomObjsToAdd);
-        this.com.getAllColObjs().forEach((CollisionObject c) -> {
-            this.vvm.addVisVectors(c.getVv().getVisVector());
-        });
-        this.animationPane.getChildren().addAll(shapesToAdd);
-
+    
+    public void setFriction(double friction){
+        this.friction = friction;
     }
+
+
 
     private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
 
