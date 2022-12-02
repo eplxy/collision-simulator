@@ -108,7 +108,13 @@ public abstract class CollisionObject {
                     if (!this.getShape().getStroke().equals(Color.TRANSPARENT)) {
                         if (Math.sqrt(Math.pow(event2.getX() - this.getPosX(), 2) + (Math.pow(event2.getY() - this.getPosY(), 2))) < this.width) {
                         } else if (event2.getButton() == MouseButton.SECONDARY) {
-                            this.setV(new CustomVector((event2.getSceneX() - this.getPosX()) * 0.05, (event2.getSceneY() - this.getPosY()) * 0.05));
+                            CustomVector newVel = new CustomVector((event2.getSceneX() - this.getPosX()) * 0.05, (event2.getSceneY() - this.getPosY()) * 0.05);
+                            if(newVel.computeLength()>50){
+                                this.setV(newVel.normalize().scalarMult(50));
+                            } else { 
+                                this.setV(newVel);
+                            };
+                            
                             this.vv.update();
                         };
                     };
