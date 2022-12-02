@@ -17,6 +17,7 @@ public class CollisionController {
     final static double BORDER_BUFFER = 10;
     private static final String SOUNDS = "/sounds/ball_collision.mp3";
     private static final String BOING = "/sounds/boing.mp3";
+    public static boolean boingEnabled;
 
     public static void checkCollisions(CollisionObjectManager com) {
         com.resetCollisionsToCheck();
@@ -56,14 +57,8 @@ public class CollisionController {
                 colObjB.getShape().setFill(pattern2);
                  */
                 //m = new Media(CollisionController.class.getResource(ResourcesManager.SOUND_LASER).getPath());
-                
-                //double x = Math.random();
-//                if(x < 0.5){
-//                    Media a =new Media(CollisionController.class.getResource(BOING).toExternalForm());
-//                    MediaPlayer m = new MediaPlayer(a);
-//                    m.play();
-//                }
-                
+                boing();
+
                 com.mp.play();
                 com.mp.seek(Duration.ZERO);
 
@@ -122,15 +117,18 @@ public class CollisionController {
         if (intersectsBorderY(colObj, aPane)) {
             colObj.setVelocityY(colObj.getVelocityY() * -1);
         }
-//    if ((colObj.getShape().getLayoutX() >= (aPane.getBoundsInLocal().getMaxX()- (colObj.getWidth())))
-//                || (colObj.getShape().getLayoutX() <= (aPane.getBoundsInLocal().getMinX() + (colObj.getWidth())))) {
-//            colObj.setVelocityX(colObj.getVelocityX() * -1);
-//        }
-//        if ((colObj.getShape().getLayoutY() >= (aPane.getBoundsInLocal().getMaxY() - (colObj.getShape().getLayoutBounds().getHeight())))
-//                || (colObj.getShape().getLayoutY() <= (aPane.getBoundsInLocal().getMinY() + (colObj.getShape().getLayoutBounds().getHeight())))) {
-//            colObj.setVelocityY(colObj.getVelocityY() * -1);
-//        }
 
     }
 
+    
+    
+    private static void boing() {
+        if (boingEnabled) {
+            if (Math.random() <= 0.5) {
+                Media a = new Media(CollisionController.class.getResource(BOING).toExternalForm());
+                MediaPlayer m = new MediaPlayer(a);
+                m.play();
+            }
+        }
+    }
 }

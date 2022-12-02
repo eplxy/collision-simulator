@@ -4,6 +4,7 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
+import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import edu.vanier.collisionsimulator.tests.UIDriver;
@@ -31,12 +32,14 @@ import javafx.stage.Stage;
  * @author sabri
  */
 public class CollisionMenuController {
+
     Stage primaryStage;
-    
+
     //Stage primaryStage;
     public CollisionMenuController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-    };
+    }
+    ;
 
     
     
@@ -61,8 +64,10 @@ public class CollisionMenuController {
     Simulation sim;
     @FXML
     Button btnReturnMenu;
-    @FXML 
+    @FXML
     CheckBox checkBoxShowDirection;
+    @FXML
+    CheckBox checkBoing;
 
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
@@ -106,23 +111,32 @@ public class CollisionMenuController {
                 });
             }
         });
+
+        checkBoing.setOnAction((event) -> {
+            if (checkBoing.isSelected()) {
+                CollisionController.boingEnabled = true;
+            } else {
+                CollisionController.boingEnabled = false;
+            }
+        });
+
         btnReturnMenu.setOnAction((event) -> {
             try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-            MainMenuController menuController = new MainMenuController(primaryStage);
-            loader.setController(menuController);
-            
-            BorderPane root = loader.load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+                MainMenuController menuController = new MainMenuController(primaryStage);
+                loader.setController(menuController);
 
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setMaximized(true);
+                BorderPane root = loader.load();
 
-            primaryStage.show();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                primaryStage.setMaximized(true);
+
+                primaryStage.show();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         });
     }
 
@@ -144,6 +158,10 @@ public class CollisionMenuController {
     public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
         sim.addObject(this, animationPane);
 
+    }
+
+    public boolean getBoing() {
+        return checkBoing.isSelected();
     }
 
     public void updateParameters() {
