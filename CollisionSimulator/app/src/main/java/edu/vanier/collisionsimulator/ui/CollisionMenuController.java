@@ -7,7 +7,6 @@ package edu.vanier.collisionsimulator.ui;
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
-import edu.vanier.collisionsimulator.tests.UIDriver;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -70,7 +68,6 @@ public class CollisionMenuController {
     CheckBox checkBoxShowDirection;
     @FXML
     CheckBox checkBoing;
-    
 
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
@@ -86,11 +83,11 @@ public class CollisionMenuController {
         timelineSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             handleTimeline(sim, timelineSlider.getValue());
         });
-        
-        sliderFriction.valueProperty().addListener((obs,oldVal,newVal)->{
+
+        sliderFriction.valueProperty().addListener((obs, oldVal, newVal) -> {
             updateFriction(sim, sliderFriction.getValue());
         });
-        
+
         btnSave.setOnAction((event) -> {
             handleSave(event);
         });
@@ -137,11 +134,14 @@ public class CollisionMenuController {
                 BorderPane root = loader.load();
 
                 Scene scene = new Scene(root);
+
+                sim.loop.stop();
                 primaryStage.close();
                 primaryStage.setScene(scene);
                 primaryStage.setMaximized(true);
 
                 primaryStage.show();
+
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -172,10 +172,10 @@ public class CollisionMenuController {
         return checkBoing.isSelected();
     }
 
-    public void updateFriction(Simulation sim, double friction){
+    public void updateFriction(Simulation sim, double friction) {
         sim.setFriction(friction);
     }
-    
+
     public void updateParameters() {
 
     }
@@ -222,11 +222,9 @@ public class CollisionMenuController {
         for (CollisionObject obj : sim.com.getAllColObjs()) {
             if (obj.getPosX() + obj.getWidth() > paneWidth) {
                 obj.setPosX(paneWidth - 2 * obj.getWidth());
-                System.out.println(paneWidth);
             }
             if (obj.getPosY() + obj.getHeight() > paneHeight) {
                 obj.setPosY(paneHeight - 2 * obj.getHeight());
-                System.out.println(paneHeight);
             }
         }
 
