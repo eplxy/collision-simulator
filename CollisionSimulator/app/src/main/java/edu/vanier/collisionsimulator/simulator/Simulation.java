@@ -11,6 +11,8 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
@@ -22,6 +24,7 @@ public class Simulation {
 
     public VisualVectorManager vvm;
     public CollisionObjectManager com;
+    public MediaPlayer mp;
     public Timeline loop;
     public int numberOfObj;
     public CollisionMenuController cmc;
@@ -29,65 +32,7 @@ public class Simulation {
     //associated pane
     public Pane animationPane;
 
-    //test simulation to only be used in animation driver
-    public Simulation(boolean option) throws IOException {
-
-        loop = setLoop();
-
-        CircleObject c1 = new CircleObject();
-        c1.setMass(69);
-        CircleObject c2 = new CircleObject();
-        c2.setMass(40);
-        CircleObject c3 = new CircleObject();
-        c3.setMass(500);
-        CircleObject c4 = new CircleObject();
-        c4.setMass(10);
-
-        CircleObject c5 = new CircleObject();
-        CircleObject c6 = new CircleObject();
-        c1.setPosX(1500);
-        c1.setPosY(300);
-        c1.setVelocityX(-6);
-        c1.setVelocityY(2);
-
-        c2.setPosX(300);
-        c2.setPosY(300);
-        c2.setVelocityX(6);
-        c2.setVelocityY(2);
-
-        c3.setPosX(300);
-        c3.setPosY(700);
-        c3.setVelocityX(6);
-        c3.setVelocityY(-2);
-
-        c4.setPosX(1500);
-        c4.setPosY(700);
-        c4.setVelocityX(-6);
-        c4.setVelocityY(-2);
-
-        c5.setPosX(1300);
-        c5.setPosY(500);
-        c5.setVelocityX(5);
-        c5.setVelocityY(0);
-
-        c6.setPosX(1500);
-        c6.setPosY(500);
-        c6.setVelocityX(0);
-        c6.setVelocityY(0);
-
-        com = new CollisionObjectManager();
-        vvm = new VisualVectorManager();
-        if (option) {
-            this.animationPane.getChildren().addAll(c1.shape, c2.shape, c3.shape, c4.shape);
-            com.addCollisionObjects(c1, c2, c3, c4);
-
-        } else {
-            com.addCollisionObjects(c5, c6);
-            this.animationPane.getChildren().addAll(c5.shape, c6.shape);
-
-        }
-
-    }
+    
 
     /**
      * Creates and runs a simulation with randomized circle objects. Does not
@@ -109,6 +54,7 @@ public class Simulation {
         this.vvm = new VisualVectorManager();
         this.com = new CollisionObjectManager();
         this.cmc = cmc;
+        
         loop = setLoop();
 
     }
