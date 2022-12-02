@@ -12,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.opencsv/opencsv
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.6'
+
     // The following .jars are pulled from:
     // https://repo.maven.apache.org/maven2/org/openjfx/    
     compileOnly  "org.openjfx:javafx-base:18.0.2:sources"
@@ -31,5 +34,5 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media' ]
 }
 application {    
-   mainClass = 'edu.vanier.collisionsimulator.ui.CollisionSimulatorApp'
+    mainClass = 'edu.vanier.collisionsimulator.ui.CollisionSimulatorApp'
 }
