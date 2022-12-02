@@ -3,6 +3,8 @@ package edu.vanier.collisionsimulator.simulator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -10,10 +12,14 @@ import java.util.List;
  */
 public class CollisionObjectManager {
 
+    private static final String SOUNDS = "/sounds/ball_collision.mp3";
+    private static final String BOING = "/sounds/boing.mp3";
+    public MediaPlayer mp;
     
     //deferring from assignment 2's code to implement a manager
     //used simulation by simulation instance rather than globally
     public CollisionObjectManager() {
+        this.mp = new MediaPlayer(new Media(Simulation.class.getResource(SOUNDS).toExternalForm()));
     }
     
 

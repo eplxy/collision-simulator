@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 /**
  *
@@ -15,25 +16,22 @@ public class CollisionController {
 
     final static double BORDER_BUFFER = 10;
     private static final String SOUNDS = "/sounds/ball_collision.mp3";
-    
-    
+    private static final String BOING = "/sounds/boing.mp3";
+
     public static void checkCollisions(CollisionObjectManager com) {
         com.resetCollisionsToCheck();
         // check each sprite against other sprite objects.
         for (CollisionObject colObjA : com.getCollisionsToCheck()) {
             for (CollisionObject colObjB : com.getAllColObjs()) {
-                if (handleCollision(colObjA, colObjB)) {
-                    // The break helps optimize the collisions
-                    //  The break statement means one object only hits another
-                    // object as opposed to one hitting many objects.
-                    // To be more accurate comment out the break statement.
+                if (handleCollision(colObjA, colObjB, com)) {
+
                     break;
                 }
             }
         }
     }
 
-    static boolean handleCollision(CollisionObject colObjA, CollisionObject colObjB) {
+    static boolean handleCollision(CollisionObject colObjA, CollisionObject colObjB, CollisionObjectManager com) {
         if (colObjA != colObjB) {
             if (colObjA.collide(colObjB)) {
 
@@ -44,8 +42,8 @@ public class CollisionController {
                 colObjB.setVelocityX(velocities[1].x);
                 colObjB.setVelocityY(velocities[1].y);
                 Color color = new Color(Math.random(), Math.random(), Math.random(), 1);
-                
-                /** 
+
+                /**
                  * Change image while bouncing.
                  */
                 /*
@@ -56,18 +54,24 @@ public class CollisionController {
                 Image map2 = new Image("images/methane-ice.png");
                 ImagePattern pattern2 = new ImagePattern(map2);
                 colObjB.getShape().setFill(pattern2);
-                */
-                Media m;
+                 */
                 //m = new Media(CollisionController.class.getResource(ResourcesManager.SOUND_LASER).getPath());
-                m = new Media(CollisionController.class.getResource(SOUNDS).toExternalForm());
-                new MediaPlayer(m).play();
                 
+                //double x = Math.random();
+//                if(x < 0.5){
+//                    Media a =new Media(CollisionController.class.getResource(BOING).toExternalForm());
+//                    MediaPlayer m = new MediaPlayer(a);
+//                    m.play();
+//                }
+                
+                com.mp.play();
+                com.mp.seek(Duration.ZERO);
+
                 colObjA.getShape().setStrokeWidth(5);
                 colObjA.getShape().setStroke(color);
 
                 colObjB.getShape().setStrokeWidth(5);
                 colObjB.getShape().setStroke(color);
-                
 
             }
         }
@@ -77,7 +81,6 @@ public class CollisionController {
     public static void handleUpdate(CollisionObject colObj, Pane aPane) {
         bounceOffBorder(colObj, aPane);
         colObj.update();
-        
 
     }
 
@@ -95,7 +98,7 @@ public class CollisionController {
     }
 
     public static boolean predictIntersectsBorderX(CollisionObject colObj, Pane aPane) {
-        return ((colObj.getPosX() + colObj.getVelocityX() >= (aPane.getWidth()- colObj.getWidth() / 2))
+        return ((colObj.getPosX() + colObj.getVelocityX() >= (aPane.getWidth() - colObj.getWidth() / 2))
                 || (colObj.getPosX() + colObj.getVelocityX() <= (0 + colObj.getWidth() / 2)));
     }
 
