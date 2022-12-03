@@ -8,19 +8,29 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
  * @author sabri
  */
 public class SavedSim {
-    int count = 0;
+
+    static private String filePath = null;
+    static private List<String> SavedSimNamesList = new ArrayList<>();
 
     //https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/#:~:text=Writing%20a%20CSV%20file%20is,()%20method%20of%20CSVWriter%20class.
-    public static void newSavedSim(String filePath) {
-        
+    public static void savedSimulation(Simulation sim, String fileName) {
+        SavedSimNamesList.add(fileName);
         // first create file object for file placed at location
         // specified by filepath
+        filePath = "src/main/resources/savedSim/"+ fileName + ".csv";
         File file = new File(filePath);
         try {
             // create FileWriter object with file as parameter
@@ -29,45 +39,15 @@ public class SavedSim {
             // create CSVWriter object filewriter object as parameter
             CSVWriter writer = new CSVWriter(outputfile);
 
-            // adding header to csv
-            String[] header = {"Name", "Class", "Marks"};
-            writer.writeNext(header);
-
-            // add data to csv
-            String[] data1 = {"Aman", "10", "620"};
-            writer.writeNext(data1);
-            String[] data2 = {"Suraj", "10", "630"};
-            writer.writeNext(data2);
-
+            List<CollisionObject> colObjs = sim.getCom().getAllColObjs();
+            for (CollisionObject obj : colObjs) {
+                String[] parametersArr = {Double.toString(obj.getPosX()), Double.toString(obj.getPosY()), Double.toString(obj.getMass()), Double.toString(obj.getSpeed()), Double.toString(obj.getDirection())};
+                writer.writeNext(parametersArr);
+            }
             // closing writer connection
             writer.close();
-            System.out.println(file.getAbsolutePath());
         } catch (IOException e) {
             System.out.println(e);
         }
-    }
-
-    //http://www.infybuzz.com/2019/06/how-to-create-csv-file-in-java.html
-    public class CreateCsvFile {
-
-        public static void main(String[] args) {
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.append("Name").append(",").append("Website").append(",").append("Country").append("\n");
-
-            stringBuilder.append("Raj").append(",").append("www.infybuzz.com").append(",").append("India").append("\n");
-
-            stringBuilder.append("John").append(",").append("www.infybuzz.com").append(",").append("USA");
-
-            try ( FileWriter fileWriter = new FileWriter("D:\\hello.csv")) {
-
-                fileWriter.write(stringBuilder.toString());
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
     }
 }
