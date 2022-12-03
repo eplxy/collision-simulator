@@ -7,10 +7,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="159.0" prefWidth="397.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <HBox alignment="CENTER" prefHeight="134.0" prefWidth="449.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="397.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <Button fx:id="btnSave" mnemonicParsing="false" text="Save" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin></Button>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" prefHeight="69.0" prefWidth="397.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Enter the name of your new simulation">
                <HBox.margin>
@@ -20,8 +25,8 @@
             <TextField fx:id="txtFieldName" />
          </children>
       </HBox>
+   </top>
+   <center>
+      <Label fx:id="labelError" BorderPane.alignment="CENTER" />
    </center>
-   <bottom>
-      <Button fx:id="btnSave" mnemonicParsing="false" text="Save" BorderPane.alignment="CENTER" />
-   </bottom>
 </BorderPane>

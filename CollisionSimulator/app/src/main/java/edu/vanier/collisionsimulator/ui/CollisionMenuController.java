@@ -153,6 +153,7 @@ public class CollisionMenuController {
             }
         });
     }
+    
 
     //https://stackoverflow.com/questions/22166610/how-to-create-a-popup-window-in-javafx
     public void handleSave(ActionEvent event) throws IOException {
@@ -160,7 +161,7 @@ public class CollisionMenuController {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/savePrompt.fxml"));
-        SaveDialogController saveDialogController = new SaveDialogController();
+        SaveDialogController saveDialogController = new SaveDialogController(this);
         loader.setController(saveDialogController);
         saveDialogController.setSim(sim);
         BorderPane root = loader.load();

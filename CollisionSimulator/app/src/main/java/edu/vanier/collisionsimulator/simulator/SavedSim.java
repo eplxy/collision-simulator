@@ -50,4 +50,13 @@ public class SavedSim {
             System.out.println(e);
         }
     }
+
+    public static List<String> getSavedSimNamesList() {
+        return SavedSimNamesList;
+    }
+
+    public static void setSavedSimNamesList(List<String> SavedSimNamesList) {
+        SavedSim.SavedSimNamesList = SavedSimNamesList;
+    }
+    
 }
