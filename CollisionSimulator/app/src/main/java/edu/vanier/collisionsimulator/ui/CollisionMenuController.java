@@ -6,6 +6,7 @@ package edu.vanier.collisionsimulator.ui;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import edu.vanier.collisionsimulator.simulator.SavedSim;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -89,7 +91,11 @@ public class CollisionMenuController {
         });
 
         btnSave.setOnAction((event) -> {
-            handleSave(event);
+            try {
+                handleSave(event);
+            } catch (IOException ex) {
+                Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         btnPlay.setOnAction((event) -> {
             handlePlay(event, sim);
@@ -148,7 +154,22 @@ public class CollisionMenuController {
         });
     }
 
-    public void handleSave(ActionEvent event) {
+    //https://stackoverflow.com/questions/22166610/how-to-create-a-popup-window-in-javafx
+    public void handleSave(ActionEvent event) throws IOException {
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/savePrompt.fxml"));
+        SaveDialogController saveDialogController = new SaveDialogController();
+        loader.setController(saveDialogController);
+        saveDialogController.setSim(sim);
+        BorderPane root = loader.load();
+        Scene dialogScene = new Scene(root);
+        dialog.setScene(dialogScene);
+        dialog.show();
+
+        
+        //display a msg that says it has been saved?
     }
 
     private void handleTimeline(Simulation sim, double value) {
