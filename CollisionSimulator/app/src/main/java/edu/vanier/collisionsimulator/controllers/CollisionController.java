@@ -2,6 +2,10 @@ package edu.vanier.collisionsimulator.controllers;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
+import javafx.animation.PauseTransition;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -60,13 +64,20 @@ public class CollisionController {
 
                 com.mp.play();
                 com.mp.seek(Duration.ZERO);
-
+                DropShadow ds1 = new DropShadow();
+                ds1.setOffsetY(4.0f);
+                ds1.setOffsetX(4.0f);
+                ds1.setColor(color);
+                
                 colObjA.getShape().setStrokeWidth(5);
                 colObjA.getShape().setStroke(color);
-
+                colObjA.getShape().setEffect(ds1);
+                
                 colObjB.getShape().setStrokeWidth(5);
                 colObjB.getShape().setStroke(color);
-
+                colObjB.getShape().setEffect(ds1);
+                
+                
             }
         }
         return false;
