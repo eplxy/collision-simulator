@@ -29,17 +29,12 @@ public class MainMenuController {
         this.primaryStage = primaryStage;
     }
     
-    
-    
     @FXML
     Button btnCollision;
     @FXML
     Button btnPresetSim;
     @FXML
-    Button btnSavedSim;
-    @FXML
-    Button btnPool;
-    
+    Button btnSavedSim;    
    
     public void initialize() throws IOException{
         btnCollision.setOnAction((event) -> {
@@ -54,9 +49,6 @@ public class MainMenuController {
             } catch (IOException ex) {
                 Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-        btnPool.setOnAction((event) -> {
-            handlePool(event);
         });
     }   
     
@@ -98,9 +90,5 @@ public class MainMenuController {
         dialog.show();
     }
     
-    public void handlePool(ActionEvent event){
-
-    }
     
-
 }
