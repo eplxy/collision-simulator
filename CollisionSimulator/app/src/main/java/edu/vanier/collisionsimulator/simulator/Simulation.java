@@ -112,6 +112,26 @@ public class Simulation {
 
         return false;
     }
+    
+    public void loadSavedSim(ArrayList<CollisionObject> objects, CollisionMenuController cmc, Pane aPane) throws IOException {
+        ArrayList<Shape> shapesToAdd = new ArrayList<>();
+        CollisionObject[] objectsArr = new CollisionObject[objects.size()];
+
+        for (CollisionObject obj : objects) {
+            shapesToAdd.add(obj.getShape());
+            obj.setDragListeners(cmc);
+            obj.setMouseListener(cmc);
+            shapesToAdd.add(obj.getVv().getVisVector());
+            obj.getVv().setDragListeners();
+            objectsArr[objects.indexOf(obj)] = obj;
+        }
+        
+        this.com.addCollisionObjects(objectsArr);
+        this.com.getAllColObjs().forEach((CollisionObject c) -> {
+            this.vvm.addVisVectors(c.getVv().getVisVector());
+        });
+        this.animationPane.getChildren().addAll(shapesToAdd);
+    }
 
     public void createRandomObjects2(int numOfObjs, CollisionMenuController cmc, Pane aPane) throws IOException {
 

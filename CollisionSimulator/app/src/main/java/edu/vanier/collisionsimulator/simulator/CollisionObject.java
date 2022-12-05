@@ -258,7 +258,6 @@ public abstract class CollisionObject {
 
     public double getDirection() {
         this.direction = v.getAngle();
-
         return this.direction;
     }
 

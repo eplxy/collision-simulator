@@ -161,16 +161,13 @@ public class CollisionMenuController {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/savePrompt.fxml"));
-        SaveDialogController saveDialogController = new SaveDialogController(this);
+        SaveDialogController saveDialogController = new SaveDialogController(this, dialog);
         loader.setController(saveDialogController);
         saveDialogController.setSim(sim);
         BorderPane root = loader.load();
         Scene dialogScene = new Scene(root);
         dialog.setScene(dialogScene);
         dialog.show();
-
-        
-        //display a msg that says it has been saved?
     }
 
     private void handleTimeline(Simulation sim, double value) {

@@ -4,12 +4,20 @@
  */
 package edu.vanier.collisionsimulator.simulator;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
+import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -23,11 +31,12 @@ import javafx.stage.Stage;
 public class SavedSim {
 
     static private String filePath = null;
-    static private List<String> SavedSimNamesList = new ArrayList<>();
+    //static private List<String> SavedSimNamesList = new ArrayList<>();
+    private static ObservableList savedSimList = FXCollections.observableArrayList();
 
     //https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/#:~:text=Writing%20a%20CSV%20file%20is,()%20method%20of%20CSVWriter%20class.
     public static void savedSimulation(Simulation sim, String fileName) {
-        SavedSimNamesList.add(fileName);
+        savedSimList.add(fileName);
         // first create file object for file placed at location
         // specified by filepath
         filePath = "src/main/resources/savedSim/"+ fileName + ".csv";
@@ -50,13 +59,45 @@ public class SavedSim {
             System.out.println(e);
         }
     }
-
-    public static List<String> getSavedSimNamesList() {
-        return SavedSimNamesList;
-    }
-
-    public static void setSavedSimNamesList(List<String> SavedSimNamesList) {
-        SavedSim.SavedSimNamesList = SavedSimNamesList;
+    
+    public static ArrayList<CollisionObject> load(String fileName, CollisionMenuController cmc) throws FileNotFoundException, IOException, CsvValidationException {
+        ArrayList<CollisionObject> objects = new ArrayList<>();
+        // first create file object for file placed at location
+        // specified by filepath
+        filePath = "src/main/resources/savedSim/"+ fileName + ".csv" ;
+        File file = new File(filePath);
+        
+        CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).build();
+        String [] objectParametersArr;
+        
+        while ((objectParametersArr = reader.readNext()) != null) {
+            CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
+            c.setPosX(Double.parseDouble(objectParametersArr[0]));
+            c.setPosY(Double.parseDouble(objectParametersArr[1]));
+            c.setMass(Double.parseDouble(objectParametersArr[2]));
+            double speed = Double.parseDouble(objectParametersArr[3]);
+            double direction = Double.parseDouble(objectParametersArr[4]);
+            
+            c.setVelocityX(speed*Math.cos(Math.toRadians(direction)));
+            c.setVelocityY(speed*Math.sin(Math.toRadians(direction)));
+            c.getVv().update();
+            objects.add(c);
+        }
+        return objects;
     }
     
+    public static void delete(String fileName){
+        filePath = "src/main/resources/savedSim/"+ fileName + ".csv" ;
+        File file = new File(filePath);
+        file.delete();
+        savedSimList.remove(fileName);
+    }
+        
+    public static ObservableList getSavedSimList() {
+        return savedSimList;
+    }
+
+    public static void setSavedSimList(ObservableList savedSimList) {
+        SavedSim.savedSimList = savedSimList;
+    }
 }

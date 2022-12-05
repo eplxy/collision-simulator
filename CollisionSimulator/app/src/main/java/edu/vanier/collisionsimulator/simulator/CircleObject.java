@@ -84,10 +84,10 @@ public class CircleObject extends CollisionObject {
         ImagePattern pattern = new ImagePattern(map);
         shape.setFill(pattern);
         
-        
         setEffect(this.shape);
-
     }
+    
+    
 
     ImageView getImageViewNode() {
         return (ImageView) getNode();

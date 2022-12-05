@@ -24,9 +24,11 @@ import javafx.stage.Stage;
 public class SaveDialogController {
     Simulation sim;
     CollisionMenuController cmc;
+    Stage stage;
 
-    public SaveDialogController(CollisionMenuController cmc) {
+    public SaveDialogController(CollisionMenuController cmc, Stage stage) {
         this.cmc = cmc;
+        this.stage = stage;
     }
     
     
@@ -46,12 +48,13 @@ public class SaveDialogController {
     
     public void handleSave(ActionEvent event){
         String fileName = txtFieldName.getText();
-        if(SavedSim.getSavedSimNamesList().contains(fileName)){
+        if(SavedSim.getSavedSimList().contains(fileName)){
             labelError.setText("This simulation already exists");
         }else if(checkFileName(fileName)){
             labelError.setText("Invalid name");
         }else{
             SavedSim.savedSimulation(this.sim, fileName);
+            stage.close();
         }
     }
     

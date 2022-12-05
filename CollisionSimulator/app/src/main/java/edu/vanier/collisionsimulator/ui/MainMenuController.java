@@ -7,12 +7,15 @@ package edu.vanier.collisionsimulator.ui;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -46,7 +49,11 @@ public class MainMenuController {
             handlePresetSim(event);
         });
         btnSavedSim.setOnAction((event) -> {
-            handleSavedSim(event);
+            try {
+                handleSavedSim(event, this.primaryStage);
+            } catch (IOException ex) {
+                Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         btnPool.setOnAction((event) -> {
             handlePool(event);
@@ -55,9 +62,7 @@ public class MainMenuController {
     
     public void handleCollision(ActionEvent event, Stage primaryStage){
         try {
-            
-            System.out.println("hehe");
-
+           
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
             loader.setController(menuController);
@@ -71,7 +76,7 @@ public class MainMenuController {
             primaryStage.setMaximized(true);
             primaryStage.show(); 
             sim.createRandomObjects2(sim.numberOfObj, sim.cmc, sim.animationPane);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
 
@@ -80,9 +85,19 @@ public class MainMenuController {
     public void handlePresetSim(ActionEvent event){
 
     }
-    public void handleSavedSim(ActionEvent event){
-
+    public void handleSavedSim(ActionEvent event, Stage primaryStage) throws IOException{
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/savedSimMenu.fxml"));
+        SavedSimMenuController savedsimMenuController = new SavedSimMenuController(this, primaryStage);
+        loader.setController(savedsimMenuController);
+        BorderPane root = loader.load();
+        Scene dialogScene = new Scene(root);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
+    
     public void handlePool(ActionEvent event){
 
     }
