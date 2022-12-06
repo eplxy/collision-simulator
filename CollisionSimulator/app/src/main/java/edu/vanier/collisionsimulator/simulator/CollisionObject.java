@@ -79,7 +79,7 @@ public abstract class CollisionObject {
         v = new CustomVector(0, 0);
         this.vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);
-        
+
     }
 
     public CollisionObject() throws IOException {
@@ -90,7 +90,7 @@ public abstract class CollisionObject {
     public void update() {
 
         double newPosX = posX + v.x;
-        
+
         double newPosY = posY + v.y;
         this.setPosX(newPosX);
         this.setPosY(newPosY);
@@ -104,15 +104,14 @@ public abstract class CollisionObject {
 
     public void setSize(double size) {
         this.size = size;
-        this.shape.setScaleX((60+(size-1)*40)/width);
-        this.shape.setScaleY((60+(size-1)*40)/height);
-        this.width = 60+(size-1)*40;
-        this.height = 60+(size-1)*40;
+        //this.shape.setScaleX((60 + (size - 1) * 40) / width);
+        //this.shape.setScaleY((60 + (size - 1) * 40) / height);
+        this.width = 60 + (size - 1) * 40;
+        this.height = 60 + (size - 1) * 40;
+        this.shape.resize(width, height);
         
     }
 
-    
-    
     public final void setMouseListener(CollisionMenuController cmc) {
 
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
@@ -127,12 +126,12 @@ public abstract class CollisionObject {
                         if (Math.sqrt(Math.pow(event2.getX() - this.getPosX(), 2) + (Math.pow(event2.getY() - this.getPosY(), 2))) < this.width) {
                         } else if (event2.getButton() == MouseButton.SECONDARY) {
                             CustomVector newVel = new CustomVector((event2.getSceneX() - this.getPosX()) * 0.05, (event2.getSceneY() - this.getPosY()) * 0.05);
-                            if(newVel.computeLength()>50){
+                            if (newVel.computeLength() > 50) {
                                 this.setV(newVel.normalize().scalarMult(50));
-                            } else { 
+                            } else {
                                 this.setV(newVel);
                             };
-                            
+
                             this.vv.update();
                         };
                     };

@@ -23,11 +23,9 @@ import javafx.scene.shape.Circle;
 public class CircleObject extends CollisionObject {
 
     private double radius;
-    private Image image; 
+    private Image image;
     protected Node node;
 
-    
-    
     public Node getNode() {
         return node;
     }
@@ -35,28 +33,26 @@ public class CircleObject extends CollisionObject {
     @Override
     public void setSize(double size) {
         this.size = size;
-        this.shape.setScaleX((60+(size-1)*40)/width);
-        this.shape.setScaleY((60+(size-1)*40)/height);
-        this.width = 60+(size-1)*40;
-        this.height = 60+(size-1)*40;
-        this.radius = this.width/2;
-        
+        this.width = 60 + (size - 1) * 40;
+        this.height = 60 + (size - 1) * 40;
+        this.radius = this.width / 2;
+        Circle c = (Circle) this.shape;
+        c.setRadius(radius);
     }
 
-    
     public void setNode(Node node) {
         this.node = node;
     }
-    
-    public void setEffect(Node node){
+
+    public void setEffect(Node node) {
         DropShadow ds1 = new DropShadow();
         ds1.setOffsetY(4.0f);
         ds1.setOffsetX(4.0f);
         ds1.setColor(Color.BLACK);
-        
+
         node.setEffect(ds1);
     }
-    
+
     //default circle object for animation
     public CircleObject() throws IOException {
         super();
@@ -64,15 +60,15 @@ public class CircleObject extends CollisionObject {
         this.shape.setStroke(Color.TRANSPARENT);
         this.collidingShape = this.shape;
         this.radius = 50;
-        this.height = this.radius*2;
-        this.width = this.radius*2;
+        this.height = this.radius * 2;
+        this.width = this.radius * 2;
         this.mass = 5;
-        
 
     }
 //    //default circle object for ui testing
 //
-     public void setImage(Image inImage) {
+
+    public void setImage(Image inImage) {
         image = inImage;
         width = inImage.getWidth();
         height = inImage.getHeight();
@@ -82,28 +78,25 @@ public class CircleObject extends CollisionObject {
         Image image = new Image(filename);
         setImage(image);
     }
-    
+
     public CircleObject(CollisionMenuController cmc, String imagePath) throws IOException {
         super(cmc);
         this.shape = new Circle(30);
         this.collidingShape = this.shape;
         this.radius = 30;
-        this.height = radius*2;
-        this.width = radius*2;
+        this.height = radius * 2;
+        this.width = radius * 2;
         this.mass = 5;
-        
+
         Image map = new Image("images/Capture.PNG");
         ImagePattern pattern = new ImagePattern(map);
         shape.setFill(pattern);
-        
+
         setEffect(this.shape);
     }
-    
-    
 
     ImageView getImageViewNode() {
         return (ImageView) getNode();
     }
-
 
 }
