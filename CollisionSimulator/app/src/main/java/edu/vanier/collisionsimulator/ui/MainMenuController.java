@@ -68,6 +68,7 @@ public class MainMenuController {
             primaryStage.setMaximized(true);
             primaryStage.show(); 
             sim.createRandomObjects2(sim.numberOfObj, sim.cmc, sim.animationPane);
+            Simulation.isSavedSim = false;
         } catch (IOException e) {
             System.out.println(e);
         }
