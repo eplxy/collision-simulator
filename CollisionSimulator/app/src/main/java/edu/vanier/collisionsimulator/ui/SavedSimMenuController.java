@@ -74,7 +74,6 @@ public class SavedSimMenuController {
             filePath = (String) SavedSim.getSavedSimList().get(index);
         
         try {
-           
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
             loader.setController(menuController);
@@ -89,6 +88,8 @@ public class SavedSimMenuController {
             primaryStage.setMaximized(true);
             primaryStage.show(); 
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
+            sim.isSavedSim = true;
+            sim.lastLoaded = filePath;
         } catch (IOException e) {
             System.out.println(e);
         }

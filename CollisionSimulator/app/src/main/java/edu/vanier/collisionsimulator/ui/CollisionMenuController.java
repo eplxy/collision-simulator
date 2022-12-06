@@ -4,10 +4,13 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
+import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
 import edu.vanier.collisionsimulator.simulator.SavedSim;
 import edu.vanier.collisionsimulator.simulator.Simulation;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,6 +73,8 @@ public class CollisionMenuController {
     CheckBox checkBoxShowDirection;
     @FXML
     CheckBox checkBoing;
+    @FXML
+    Button btnReset;
 
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
@@ -102,6 +107,15 @@ public class CollisionMenuController {
         });
         btnPause.setOnAction((event) -> {
             handlePause(event, sim);
+        });
+        btnReset.setOnAction((event) -> {
+            try {
+                handleReset(event, sim);
+            } catch (IOException ex) {
+                Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CsvValidationException ex) {
+                Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         btnAddObj.setOnAction((event) -> {
             try {
@@ -176,6 +190,24 @@ public class CollisionMenuController {
 
     private void handlePlay(ActionEvent event, Simulation sim) {
         sim.loop.play();
+    }
+    
+    private void handleReset(ActionEvent event, Simulation sim) throws IOException, FileNotFoundException, CsvValidationException {
+        if(sim.isSavedSim){
+           ///idkkkkkkk
+            
+        }else{
+        for(CollisionObject obj : sim.getCom().getAllColObjs()){
+            sim.getCom().addCollisionObjectsToBeRemoved(obj); animationPane.getChildren().remove(obj.getVv().getVisVector());
+        //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
+        animationPane.getChildren().remove(obj.getShape());
+        }
+        
+        sim.getCom().cleanupCollisionObjects();
+        
+        
+        sim.createRandomObjects2(2, this, this.animationPane);
+        }
     }
 
     private void handlePause(ActionEvent event, Simulation sim) {

@@ -32,6 +32,8 @@ public class Simulation {
     public double friction = 0;
     //associated pane
     public Pane animationPane;
+    public static boolean isSavedSim = false;
+    public static String lastLoaded="";
 
     
 
