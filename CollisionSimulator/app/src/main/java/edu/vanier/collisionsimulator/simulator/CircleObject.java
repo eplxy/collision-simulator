@@ -23,9 +23,29 @@ import javafx.scene.shape.Circle;
 public class CircleObject extends CollisionObject {
 
     private double radius;
-    private Image image;
     protected Node node;
 
+    private Image map = new Image("images/protagonist.PNG");
+    private ImagePattern pattern = new ImagePattern(map);
+
+    public ImagePattern getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(ImagePattern pattern) {
+        this.pattern = pattern;
+    }
+     
+    
+    
+   public Image getMap() {
+        return map;
+    }
+
+    public void setMap(Image map) {
+        this.map = map;
+    }
+    
     public Node getNode() {
         return node;
     }
@@ -68,16 +88,9 @@ public class CircleObject extends CollisionObject {
 //    //default circle object for ui testing
 //
 
-    public void setImage(Image inImage) {
-        image = inImage;
-        width = inImage.getWidth();
-        height = inImage.getHeight();
-    }
-
-    public void setImage(String filename) {
-        Image image = new Image(filename);
-        setImage(image);
-    }
+   
+    
+    
 
     public CircleObject(CollisionMenuController cmc, String imagePath) throws IOException {
         super(cmc);
@@ -88,8 +101,6 @@ public class CircleObject extends CollisionObject {
         this.width = radius * 2;
         this.mass = 5;
 
-        Image map = new Image("images/Capture.PNG");
-        ImagePattern pattern = new ImagePattern(map);
         shape.setFill(pattern);
 
         setEffect(this.shape);

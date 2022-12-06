@@ -19,6 +19,7 @@ public class CollisionSimulatorApp extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Main Menu");
         initializeSavedSimsList();
+        initializeImageList();
 
         try {
 
@@ -48,6 +49,18 @@ public class CollisionSimulatorApp extends Application {
         for (File file : files) {
             if (file.isFile()) {
                 SavedSim.getSavedSimList().add(file.getName().substring(0, file.getName().length()-4));
+            }
+        }
+    }
+    
+    private void initializeImageList() {
+
+        File[] files = new File("src/main/resources/images/").listFiles();
+//If this pathname does not denote a directory, then listFiles() returns null. 
+
+        for (File file : files) {
+            if (file.isFile()) {
+                ParametersController.getSavedImageList().add(file.getName().substring(0, file.getName().length()-4));
             }
         }
     }

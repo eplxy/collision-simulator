@@ -4,17 +4,29 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
+import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collisionsimulator.controllers.CustomVector;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import edu.vanier.collisionsimulator.simulator.SavedSim;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 
 /**
  *
@@ -22,6 +34,18 @@ import javafx.scene.control.TextField;
  */
 public class ParametersController {
 
+    private static ObservableList savedImageList = FXCollections.observableArrayList();
+
+    public static ObservableList getSavedImageList() {
+        return savedImageList;
+    }
+
+    public static void setSavedImageList(ObservableList savedImageList) {
+        ParametersController.savedImageList = savedImageList;
+    }
+    
+    
+    
     CollisionObject obj;
     CollisionMenuController cmc;
     @FXML
@@ -42,9 +66,14 @@ public class ParametersController {
     Slider sizeSlider;
     @FXML
     TextArea txtAreaError;
+    @FXML
+    Button imageButton1;
 
     String errorMsg = "";
 
+    @FXML
+    ListView listViewImages;
+    
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     @FXML
@@ -64,13 +93,22 @@ public class ParametersController {
         btnRemoveObj.setOnAction((event) -> {
             handleRemove(event);
         });
+        imageButton1.setOnAction((event) -> {
+            handleImage1(event);
+        });
         
         sizeCheck.selectedProperty().addListener((obs, oldVal, newVal) -> {
             handleSizeCheck(sizeCheck.isSelected());
         });
-
+        
+        listViewImages.setItems(savedImageList);
+        imageButton1.setOnAction((event) -> {
+            handleImage1(event);
+        });
     }
 
+    
+    
     @FXML
     public void handleEnter(ActionEvent event) {
         boolean[] validation = {inputValidationSpeed(Double.parseDouble(speedTxtField.getText())),
@@ -107,7 +145,25 @@ public class ParametersController {
         }
         return true;
     }
+    
+    public void handleImage1(ActionEvent event){
+        ObservableList selectedIndices = listViewImages.getSelectionModel().getSelectedIndices();
+        ArrayList<CollisionObject> objects = new ArrayList<>();
+        String filePath;
 
+        for (Object o : selectedIndices) {
+            int index = (int) o;
+            filePath = (String) savedImageList.get(index);
+            
+            Image im = new Image("images/" + filePath + ".png");
+            this.obj.setMap(im);
+            this.obj.setPattern(new ImagePattern(im));
+            this.obj.getShape().setFill(this.obj.getPattern());
+        }
+    }
+    
+    
+    
     public boolean inputValidationSpeed(double input) {
         if (input >= -50 && input <= 50) {
             return true;
