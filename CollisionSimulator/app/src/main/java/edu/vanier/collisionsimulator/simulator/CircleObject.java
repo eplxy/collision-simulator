@@ -32,6 +32,18 @@ public class CircleObject extends CollisionObject {
         return node;
     }
 
+    @Override
+    public void setSize(double size) {
+        this.size = size;
+        this.shape.setScaleX((60+(size-1)*40)/width);
+        this.shape.setScaleY((60+(size-1)*40)/height);
+        this.width = 60+(size-1)*40;
+        this.height = 60+(size-1)*40;
+        this.radius = this.width/2;
+        
+    }
+
+    
     public void setNode(Node node) {
         this.node = node;
     }

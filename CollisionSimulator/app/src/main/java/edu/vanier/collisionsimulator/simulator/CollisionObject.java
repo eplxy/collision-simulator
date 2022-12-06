@@ -57,6 +57,7 @@ public abstract class CollisionObject {
     protected double posX, posY, mass;
     protected double speed;
     protected double direction;
+    protected double size;
 
     public boolean collide(CollisionObject other) {
 
@@ -78,6 +79,7 @@ public abstract class CollisionObject {
         v = new CustomVector(0, 0);
         this.vv = new VisualVector(this);
         this.parameters = createParametersPane(cmc);
+        
     }
 
     public CollisionObject() throws IOException {
@@ -88,6 +90,7 @@ public abstract class CollisionObject {
     public void update() {
 
         double newPosX = posX + v.x;
+        
         double newPosY = posY + v.y;
         this.setPosX(newPosX);
         this.setPosY(newPosY);
@@ -95,6 +98,21 @@ public abstract class CollisionObject {
 
     }
 
+    public double getSize() {
+        return this.size;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
+        this.shape.setScaleX((60+(size-1)*40)/width);
+        this.shape.setScaleY((60+(size-1)*40)/height);
+        this.width = 60+(size-1)*40;
+        this.height = 60+(size-1)*40;
+        
+    }
+
+    
+    
     public final void setMouseListener(CollisionMenuController cmc) {
 
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {

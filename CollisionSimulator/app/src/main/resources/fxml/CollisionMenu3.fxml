@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1200.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -48,7 +48,7 @@
       </Pane>
    </center>
    <right>
-      <VBox fx:id="parametersVBox" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="200.0" spacing="10.0" style="-fx-border-insets: 0; -fx-border-color: DIMGREY; -fx-background-color: #424242;" BorderPane.alignment="TOP_CENTER">
+      <VBox fx:id="parametersVBox" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="200.0" spacing="10.0" style="-fx-border-insets: 0; -fx-border-color: DIMGREY; -fx-background-color: #424242;" BorderPane.alignment="TOP_CENTER">
          <children>
             <Button fx:id="btnAddObj" mnemonicParsing="false" text="Add an object" />
             <Separator prefWidth="200.0" />
@@ -74,7 +74,7 @@
                   <Insets top="5.0" />
                </padding>
             </Slider>
-            <AnchorPane fx:id="parametersPane" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="301.0" prefWidth="198.0">
+            <AnchorPane fx:id="parametersPane" maxWidth="-Infinity" minWidth="0.0" prefHeight="780.0" prefWidth="198.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin></AnchorPane>
