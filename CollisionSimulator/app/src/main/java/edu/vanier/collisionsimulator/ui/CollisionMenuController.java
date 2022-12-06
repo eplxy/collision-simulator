@@ -7,11 +7,14 @@ package edu.vanier.collisionsimulator.ui;
 import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
+import edu.vanier.collisionsimulator.simulator.SavedSim;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -159,7 +162,6 @@ public class CollisionMenuController {
             }
         });
     }
-    
 
     //https://stackoverflow.com/questions/22166610/how-to-create-a-popup-window-in-javafx
     public void handleSave(ActionEvent event) throws IOException {
@@ -183,22 +185,40 @@ public class CollisionMenuController {
     private void handlePlay(ActionEvent event, Simulation sim) {
         sim.loop.play();
     }
-    
+
     private void handleReset(ActionEvent event, Simulation sim) throws IOException, FileNotFoundException, CsvValidationException {
-        if(sim.isSavedSim){
-           ///idkkkkkkk
+        if (sim.isSavedSim) {
+            for (CollisionObject obj : sim.getCom().getAllColObjs()) {
+                sim.getCom().addCollisionObjectsToBeRemoved(obj);
+                animationPane.getChildren().remove(obj.getVv().getVisVector());
+                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
+                animationPane.getChildren().remove(obj.getShape());
+            }
+
+            sim.getCom().cleanupCollisionObjects();
+        ArrayList<CollisionObject> objects = new ArrayList<>();
+      
+        
+            objects = SavedSim.load(Simulation.lastLoaded, this);
+            sim = new Simulation(0, this);
+            this.initialize(sim);
             
-        }else{
-        for(CollisionObject obj : sim.getCom().getAllColObjs()){
-            sim.getCom().addCollisionObjectsToBeRemoved(obj); animationPane.getChildren().remove(obj.getVv().getVisVector());
-        //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
-        animationPane.getChildren().remove(obj.getShape());
-        }
-        
-        sim.getCom().cleanupCollisionObjects();
-        
-        
-        sim.createRandomObjects2(2, this, this.animationPane);
+            
+            sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
+            sim.setFriction(SavedSim.frictionToPass);
+            sim.isSavedSim = true;
+ 
+        } else {
+            for (CollisionObject obj : sim.getCom().getAllColObjs()) {
+                sim.getCom().addCollisionObjectsToBeRemoved(obj);
+                animationPane.getChildren().remove(obj.getVv().getVisVector());
+                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
+                animationPane.getChildren().remove(obj.getShape());
+            }
+
+            sim.getCom().cleanupCollisionObjects();
+
+            sim.createRandomObjects2(2, this, this.animationPane);
         }
     }
 
@@ -208,7 +228,7 @@ public class CollisionMenuController {
 
     public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
         sim.addObject(this, animationPane);
-        if(sim.com.getAllColObjs().size()==30){
+        if (sim.com.getAllColObjs().size() == 30) {
             this.btnAddObj.setDisable(true);
         }
 
