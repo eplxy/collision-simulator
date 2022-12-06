@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -18,6 +19,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 
 /**
@@ -207,6 +209,11 @@ public class ParametersController {
         cmc.getAnimationPane().getChildren().remove(obj.getVv().getVisVector());
         //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
         cmc.getAnimationPane().getChildren().remove(obj.getShape());
+        
+        if(cmc.getSim().getCom().getAllColObjs().size()<30){
+            cmc.btnAddObj.setDisable(false);
+        }
+        this.cmc.getParametersPane().getChildren().setAll(new Pane());
     }
 
     public void displayParameters() {

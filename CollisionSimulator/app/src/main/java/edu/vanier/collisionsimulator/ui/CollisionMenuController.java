@@ -7,8 +7,6 @@ package edu.vanier.collisionsimulator.ui;
 import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
-import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
-import edu.vanier.collisionsimulator.simulator.SavedSim;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,7 +57,7 @@ public class CollisionMenuController {
     @FXML
     Button btnPause;
     @FXML
-    Button btnAddObj;
+    public Button btnAddObj;
     @FXML
     Slider timelineSlider;
     @FXML
@@ -111,9 +109,7 @@ public class CollisionMenuController {
         btnReset.setOnAction((event) -> {
             try {
                 handleReset(event, sim);
-            } catch (IOException ex) {
-                Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CsvValidationException ex) {
+            } catch (IOException | CsvValidationException ex) {
                 Logger.getLogger(CollisionMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
@@ -137,11 +133,7 @@ public class CollisionMenuController {
         });
 
         checkBoing.setOnAction((event) -> {
-            if (checkBoing.isSelected()) {
-                CollisionController.boingEnabled = true;
-            } else {
-                CollisionController.boingEnabled = false;
-            }
+            CollisionController.boingEnabled = checkBoing.isSelected();
         });
 
         btnReturnMenu.setOnAction((event) -> {
@@ -162,7 +154,7 @@ public class CollisionMenuController {
 
                 primaryStage.show();
 
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println(e);
             }
         });
@@ -216,6 +208,9 @@ public class CollisionMenuController {
 
     public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
         sim.addObject(this, animationPane);
+        if(sim.com.getAllColObjs().size()==30){
+            this.btnAddObj.setDisable(true);
+        }
 
     }
 
