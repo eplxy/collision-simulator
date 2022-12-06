@@ -38,8 +38,8 @@ public class VisualVector {
     public void update() {
         this.visVector.setStartX(this.owner.getPosX());
         this.visVector.setStartY(this.owner.getPosY());
-        this.visVector.setEndX(visVector.getStartX() + this.owner.getVelocityX() * 20);
-        this.visVector.setEndY(visVector.getStartY() + this.owner.getVelocityY() * 20);
+        this.visVector.setEndX(visVector.getStartX() + this.owner.getVelocityX() * 20-5);
+        this.visVector.setEndY(visVector.getStartY() + this.owner.getVelocityY() * 20-35);
 
     }
 
@@ -53,9 +53,9 @@ public class VisualVector {
         });
         this.visVector.setOnMouseDragged((MouseEvent mouseEvent) -> {
             //this.visVector.setEndX(mouseEvent.getSceneX() + dragDelta.x);
-            this.visVector.setEndX(mouseEvent.getSceneX());
+            this.visVector.setEndX(mouseEvent.getSceneX()-5);
             //this.visVector.setEndY(mouseEvent.getSceneY() + dragDelta.y);
-            this.visVector.setEndY(mouseEvent.getSceneY());
+            this.visVector.setEndY(mouseEvent.getSceneY()-35);
 
             this.visVector.setOnMouseReleased((MouseEvent mE) -> {
                 this.getOwner().setVelocityX((this.getVisVector().getEndX() - this.getVisVector().getStartX()) / 20);
