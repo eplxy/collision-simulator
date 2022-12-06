@@ -33,9 +33,7 @@ public class Simulation {
     //associated pane
     public Pane animationPane;
     public static boolean isSavedSim = false;
-    public static String lastLoaded="";
-
-    
+    public static String lastLoaded = "";
 
     /**
      * Creates and runs a simulation with randomized circle objects. Does not
@@ -57,7 +55,7 @@ public class Simulation {
         this.vvm = new VisualVectorManager();
         this.com = new CollisionObjectManager();
         this.cmc = cmc;
-        
+
         loop = setLoop();
 
     }
@@ -85,12 +83,15 @@ public class Simulation {
         this.frameRate = frameRate;
         this.loop = this.setLoop();
     }
-    
-    public void setFriction(double friction){
+
+    public void setFriction(double friction) {
         this.friction = friction;
+        cmc.sliderFriction.setValue(friction);
     }
 
-
+    public double getFriction() {
+        return friction;
+    }
 
     private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
 
@@ -114,7 +115,7 @@ public class Simulation {
 
         return false;
     }
-    
+
     public void loadSavedSim(ArrayList<CollisionObject> objects, CollisionMenuController cmc, Pane aPane) throws IOException {
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
         CollisionObject[] objectsArr = new CollisionObject[objects.size()];
@@ -127,7 +128,7 @@ public class Simulation {
             obj.getVv().setDragListeners();
             objectsArr[objects.indexOf(obj)] = obj;
         }
-        
+
         this.com.addCollisionObjects(objectsArr);
         this.com.getAllColObjs().forEach((CollisionObject c) -> {
             this.vvm.addVisVectors(c.getVv().getVisVector());
@@ -231,47 +232,3 @@ public class Simulation {
     }
 
 }
-
-
-/*
-Circle circle = new Circle(10, 10, 10);
-            circle.setLayoutX(20);
-            circle.setLayoutY(20);
-            shapes.add(circle);
-            root.getChildren().add(circle);
-
-            
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
-
-                double deltaX = 2;
-                double deltaY = 2;
-                Bounds bounds = root.getBoundsInLocal();
-                
-                
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    circle.setLayoutX(circle.getLayoutX() + deltaX);
-                    circle.setLayoutY(circle.getLayoutY() + deltaY);
-
-                    boolean rightBorder = circle.getLayoutX() >= (bounds.getMaxX() - circle.getRadius());
-                    boolean leftBorder = circle.getLayoutX() <= (bounds.getMinX() + circle.getRadius());
-                    boolean bottomBorder = circle.getLayoutY() <= (bounds.getMinY() - circle.getRadius());
-                    boolean topBorder = circle.getLayoutY() >= (bounds.getMaxY() + circle.getRadius());
-
-                    /*debug
-                    System.out.println("boundsXmin=" + bounds.getMinX() + " ,boundsXmax=" + bounds.getMaxX() + " ,boundsYmin=" + bounds.getMinY() + " ,boundsYmax=" + bounds.getMaxY());
-                    System.out.println("cX=" + circle.getLayoutX() + " ,cY=" + circle.getLayoutY() + " ,radius=" + circle.getRadius());
-                    System.out.println("top=" + topBorder + " ,bottom=" + bottomBorder + " ,left=" + leftBorder + " ,right=" + rightBorder);
- */
- /*
-                    if (rightBorder || leftBorder) {
-                        deltaX *= -1;
-                    }
-                    if (bottomBorder || topBorder) {
-                        deltaY *= -1;
-                    }
-                }
-            }));
-            timeline.setCycleCount(Animation.INDEFINITE);
-            timeline.play();
- */

@@ -18,11 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  *
@@ -30,6 +25,7 @@ import javafx.stage.Stage;
  */
 public class SavedSim {
 
+    static public double frictionToPass;
     static private String filePath = null;
     //static private List<String> SavedSimNamesList = new ArrayList<>();
     private static ObservableList savedSimList = FXCollections.observableArrayList();
@@ -39,7 +35,7 @@ public class SavedSim {
         savedSimList.add(fileName);
         // first create file object for file placed at location
         // specified by filepath
-        filePath = "src/main/resources/savedSim/"+ fileName + ".csv";
+        filePath = "src/main/resources/savedSim/" + fileName + ".csv";
         File file = new File(filePath);
         try {
             // create FileWriter object with file as parameter
@@ -49,8 +45,9 @@ public class SavedSim {
             CSVWriter writer = new CSVWriter(outputfile);
 
             List<CollisionObject> colObjs = sim.getCom().getAllColObjs();
+            writer.writeNext(new String[]{Double.toString(sim.getFriction())});
             for (CollisionObject obj : colObjs) {
-                String[] parametersArr = {Double.toString(obj.getPosX()), Double.toString(obj.getPosY()), Double.toString(obj.getMass()), Double.toString(obj.getSpeed()), Double.toString(obj.getDirection())};
+                String[] parametersArr = {Double.toString(obj.getPosX()), Double.toString(obj.getPosY()), Double.toString(obj.getMass()), Double.toString(obj.getSpeed()), Double.toString(obj.getDirection()), Boolean.toString(obj.isSizeScaling()), Double.toString(obj.getSize()), obj.getImgFilePath()};
                 writer.writeNext(parametersArr);
             }
             // closing writer connection
@@ -59,17 +56,19 @@ public class SavedSim {
             System.out.println(e);
         }
     }
-    
+
     public static ArrayList<CollisionObject> load(String fileName, CollisionMenuController cmc) throws FileNotFoundException, IOException, CsvValidationException {
         ArrayList<CollisionObject> objects = new ArrayList<>();
         // first create file object for file placed at location
         // specified by filepath
-        filePath = "src/main/resources/savedSim/"+ fileName + ".csv" ;
+        filePath = "src/main/resources/savedSim/" + fileName + ".csv";
         File file = new File(filePath);
-        
+
         CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).build();
-        String [] objectParametersArr;
-        
+        String[] objectParametersArr;
+
+        frictionToPass = Double.parseDouble(reader.readNext()[0]);
+
         while ((objectParametersArr = reader.readNext()) != null) {
             CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
             c.setPosX(Double.parseDouble(objectParametersArr[0]));
@@ -77,22 +76,31 @@ public class SavedSim {
             c.setMass(Double.parseDouble(objectParametersArr[2]));
             double speed = Double.parseDouble(objectParametersArr[3]);
             double direction = Double.parseDouble(objectParametersArr[4]);
-            
-            c.setVelocityX(speed*Math.cos(Math.toRadians(direction)));
-            c.setVelocityY(speed*Math.sin(Math.toRadians(direction)));
+            if (objectParametersArr[5].equals("TRUE")) {
+                c.setSizeScaling(true);
+            } else {
+                c.setSizeScaling(false);
+            }
+            c.setSize(Double.parseDouble(objectParametersArr[6]));
+            if (!objectParametersArr[7].equals("")) {
+                c.updateImage(objectParametersArr[7]);
+            }
+
+            c.setVelocityX(speed * Math.cos(Math.toRadians(direction)));
+            c.setVelocityY(speed * Math.sin(Math.toRadians(direction)));
             c.getVv().update();
             objects.add(c);
         }
         return objects;
     }
-    
-    public static void delete(String fileName){
-        filePath = "src/main/resources/savedSim/"+ fileName + ".csv" ;
+
+    public static void delete(String fileName) {
+        filePath = "src/main/resources/savedSim/" + fileName + ".csv";
         File file = new File(filePath);
         file.delete();
         savedSimList.remove(fileName);
     }
-        
+
     public static ObservableList getSavedSimList() {
         return savedSimList;
     }

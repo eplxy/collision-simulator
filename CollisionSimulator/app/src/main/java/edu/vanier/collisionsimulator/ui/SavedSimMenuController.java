@@ -8,7 +8,6 @@ import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.SavedSim;
 import edu.vanier.collisionsimulator.simulator.Simulation;
-import static edu.vanier.collisionsimulator.ui.ParametersController.areAllTrue;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,6 +87,7 @@ public class SavedSimMenuController {
             primaryStage.setMaximized(true);
             primaryStage.show(); 
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
+            sim.setFriction(SavedSim.frictionToPass);
             sim.isSavedSim = true;
             sim.lastLoaded = filePath;
         } catch (IOException e) {

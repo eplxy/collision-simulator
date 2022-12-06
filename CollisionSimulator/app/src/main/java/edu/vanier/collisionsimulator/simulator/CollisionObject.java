@@ -1,34 +1,22 @@
 package edu.vanier.collisionsimulator.simulator;
 
-import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.controllers.CustomVector;
-import edu.vanier.collisionsimulator.tests.AnimationDriver;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import edu.vanier.collisionsimulator.ui.ParametersController;
 import java.io.IOException;
-import java.util.stream.Stream;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
@@ -51,13 +39,15 @@ public abstract class CollisionObject {
     protected Paint color;
 
     //FOR FUTURE USE IN APPLYING IMAGES ONTO OBJECTS
+    private String imgFilePath;
     private Image image;
     private VisualVector vv;
     protected CustomVector v;
     protected double posX, posY, mass;
     protected double speed;
     protected double direction;
-    protected double size;
+    protected double size = 1;
+    protected boolean sizeScaling;
 
     public boolean collide(CollisionObject other) {
 
@@ -87,6 +77,11 @@ public abstract class CollisionObject {
         VisualVector vv = new VisualVector(this);
     }
 
+    public void updateImage(String filePath){
+        this.setImgFilePath(filePath);
+        this.getShape().setFill(new ImagePattern(new Image("images/" + filePath + ".png")));
+    }
+    
     public void update() {
 
         double newPosX = posX + v.x;
@@ -176,17 +171,7 @@ public abstract class CollisionObject {
 
     }
 
-    public void setMap(Image image) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    public Paint getPattern() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void setPattern(ImagePattern imagePattern) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     class Delta {
 
@@ -200,6 +185,24 @@ public abstract class CollisionObject {
         this.parametersController = pctrl;
         return loader.load();
 
+    }
+
+    public String getImgFilePath() {
+        return imgFilePath;
+    }
+
+    public void setImgFilePath(String imgFilePath) {
+        this.imgFilePath = imgFilePath;
+    }
+    
+    
+    
+     public boolean isSizeScaling() {
+        return sizeScaling;
+    }
+
+    public void setSizeScaling(boolean sizeScaling) {
+        this.sizeScaling = sizeScaling;
     }
 
     public VisualVector getVv() {

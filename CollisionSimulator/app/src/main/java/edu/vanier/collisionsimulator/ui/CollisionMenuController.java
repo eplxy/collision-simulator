@@ -63,7 +63,7 @@ public class CollisionMenuController {
     @FXML
     Slider timelineSlider;
     @FXML
-    Slider sliderFriction;
+    public Slider sliderFriction;
     @FXML
     ToggleButton btnToggleVisVector;
     Simulation sim;

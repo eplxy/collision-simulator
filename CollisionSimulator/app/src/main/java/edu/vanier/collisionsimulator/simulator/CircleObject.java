@@ -1,17 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -28,23 +22,8 @@ public class CircleObject extends CollisionObject {
     private Image map = new Image("images/protagonist.PNG");
     private ImagePattern pattern = new ImagePattern(map);
 
-    public ImagePattern getPattern() {
-        return pattern;
-    }
 
-    public void setPattern(ImagePattern pattern) {
-        this.pattern = pattern;
-    }
-     
     
-    
-   public Image getMap() {
-        return map;
-    }
-
-    public void setMap(Image map) {
-        this.map = map;
-    }
     
     public Node getNode() {
         return node;
@@ -95,13 +74,15 @@ public class CircleObject extends CollisionObject {
     public CircleObject(CollisionMenuController cmc, String imagePath) throws IOException {
         super(cmc);
         this.shape = new Circle(30);
+        this.shape.setFill(Color.valueOf("303030"));
         this.collidingShape = this.shape;
         this.radius = 30;
         this.height = radius * 2;
         this.width = radius * 2;
         this.mass = 5;
 
-        shape.setFill(pattern);
+        //NO DEFAULT WASSIMS REST IN PEACE WASSIM.
+        //shape.setFill(pattern);
 
         setEffect(this.shape);
     }

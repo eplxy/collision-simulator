@@ -4,28 +4,20 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
-import com.opencsv.exceptions.CsvValidationException;
-import edu.vanier.collisionsimulator.controllers.CustomVector;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
-import edu.vanier.collisionsimulator.simulator.SavedSim;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 
 /**
@@ -43,9 +35,7 @@ public class ParametersController {
     public static void setSavedImageList(ObservableList savedImageList) {
         ParametersController.savedImageList = savedImageList;
     }
-    
-    
-    
+
     CollisionObject obj;
     CollisionMenuController cmc;
     @FXML
@@ -73,7 +63,7 @@ public class ParametersController {
 
     @FXML
     ListView listViewImages;
-    
+
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     @FXML
@@ -96,19 +86,18 @@ public class ParametersController {
         imageButton1.setOnAction((event) -> {
             handleImage1(event);
         });
-        
+
+        handleSizeCheck(sizeCheck.isSelected());
         sizeCheck.selectedProperty().addListener((obs, oldVal, newVal) -> {
             handleSizeCheck(sizeCheck.isSelected());
         });
-        
+
         listViewImages.setItems(savedImageList);
         imageButton1.setOnAction((event) -> {
             handleImage1(event);
         });
     }
 
-    
-    
     @FXML
     public void handleEnter(ActionEvent event) {
         boolean[] validation = {inputValidationSpeed(Double.parseDouble(speedTxtField.getText())),
@@ -126,9 +115,11 @@ public class ParametersController {
             obj.getVv().update();
 
             if (sizeCheck.isSelected()) {
+                obj.setSizeScaling(true);
                 obj.setSize((obj.getMass() / 1000) * 2 + 1);
                 sizeSlider.setValue(obj.getSize());
             } else {
+                obj.setSizeScaling(false);
                 obj.setSize(sizeSlider.getValue());
             };
         }
@@ -145,25 +136,16 @@ public class ParametersController {
         }
         return true;
     }
-    
-    public void handleImage1(ActionEvent event){
+
+    public void handleImage1(ActionEvent event) {
         ObservableList selectedIndices = listViewImages.getSelectionModel().getSelectedIndices();
-        ArrayList<CollisionObject> objects = new ArrayList<>();
-        String filePath;
 
         for (Object o : selectedIndices) {
             int index = (int) o;
-            filePath = (String) savedImageList.get(index);
-            
-            Image im = new Image("images/" + filePath + ".png");
-            this.obj.setMap(im);
-            this.obj.setPattern(new ImagePattern(im));
-            this.obj.getShape().setFill(this.obj.getPattern());
+            this.obj.updateImage((String) savedImageList.get(index));
         }
     }
-    
-    
-    
+
     public boolean inputValidationSpeed(double input) {
         if (input >= -50 && input <= 50) {
             return true;
@@ -173,15 +155,16 @@ public class ParametersController {
         }
     }
 
-    private void handleSizeCheck(boolean isSelected){
-        if(isSelected == true){
+    private void handleSizeCheck(boolean isSelected) {
+        if (isSelected == true || obj.isSizeScaling()) {
+            sizeCheck.setSelected(true);
             sizeSlider.setDisable(true);
-        } else {
+        } else if (isSelected == false || !obj.isSizeScaling()) {
+            sizeCheck.setSelected(false);
             sizeSlider.setDisable(false);
         }
-        
     }
-    
+
     public boolean inputValidationMass(double input) {
         if (input > 0 && input <= 1000) {
             return true;
