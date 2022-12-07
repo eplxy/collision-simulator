@@ -2,7 +2,6 @@ package edu.vanier.collisionsimulator.simulator;
 
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
-//import edu.vanier.sprites.ResourcesManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.animation.Animation;
@@ -11,7 +10,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;

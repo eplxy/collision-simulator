@@ -38,8 +38,8 @@ public class VisualVector {
     public void update() {
         this.visVector.setStartX(this.owner.getPosX());
         this.visVector.setStartY(this.owner.getPosY());
-        this.visVector.setEndX(visVector.getStartX() + this.owner.getVelocityX() * 20-5);
-        this.visVector.setEndY(visVector.getStartY() + this.owner.getVelocityY() * 20-35);
+        this.visVector.setEndX(visVector.getStartX() + this.owner.getVelocityX() * 20);
+        this.visVector.setEndY(visVector.getStartY() + this.owner.getVelocityY() * 20);
 
     }
 

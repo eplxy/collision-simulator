@@ -4,6 +4,8 @@ import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -43,15 +45,9 @@ public class CircleObject extends CollisionObject {
         this.node = node;
     }
 
-    public void setEffect(Node node) {
-        DropShadow ds1 = new DropShadow();
-        ds1.setOffsetY(4.0f);
-        ds1.setOffsetX(4.0f);
-        ds1.setColor(Color.BLACK);
-
-        node.setEffect(ds1);
-    }
-
+    
+    
+    
     //default circle object for animation
     public CircleObject() throws IOException {
         super();
