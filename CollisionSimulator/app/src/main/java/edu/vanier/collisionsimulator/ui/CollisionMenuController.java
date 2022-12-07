@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,14 +39,10 @@ public class CollisionMenuController {
 
     Stage primaryStage;
 
-    //Stage primaryStage;
     public CollisionMenuController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-    ;
 
-    
-    
     @FXML
     private Pane animationPane;
     @FXML
@@ -188,29 +183,7 @@ public class CollisionMenuController {
     }
 
     private void handleReset(ActionEvent event, Simulation sim) throws IOException, FileNotFoundException, CsvValidationException {
-        if (sim.isSavedSim) {
-            for (CollisionObject obj : sim.getCom().getAllColObjs()) {
-                sim.getCom().addCollisionObjectsToBeRemoved(obj);
-                animationPane.getChildren().remove(obj.getVv().getVisVector());
-                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
-                animationPane.getChildren().remove(obj.getShape());
-            }
-
-            sim.getCom().cleanupCollisionObjects();
-        ArrayList<CollisionObject> objects = new ArrayList<>();
-      
-        
-            objects = SavedSim.load(Simulation.lastLoaded, this);
-            sim = new Simulation(0, this);
-            this.initialize(sim);
-            
-            
-            sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
-            sim.setFriction(SavedSim.frictionToPass);
-            sim.isSavedSim = true;
- 
-        } 
-        else if (sim.isPresetSim) {
+        if (Simulation.isSavedSim) {
             for (CollisionObject obj : sim.getCom().getAllColObjs()) {
                 sim.getCom().addCollisionObjectsToBeRemoved(obj);
                 animationPane.getChildren().remove(obj.getVv().getVisVector());
@@ -220,17 +193,34 @@ public class CollisionMenuController {
 
             sim.getCom().cleanupCollisionObjects();
             ArrayList<CollisionObject> objects = new ArrayList<>();
-      
-        
+
+            objects = SavedSim.load(Simulation.lastLoaded, this);
+            sim = new Simulation(0, this);
+            this.initialize(sim);
+
+            sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
+            sim.setFriction(SavedSim.frictionToPass);
+            Simulation.isSavedSim = true;
+
+        } else if (Simulation.isPresetSim) {
+            for (CollisionObject obj : sim.getCom().getAllColObjs()) {
+                sim.getCom().addCollisionObjectsToBeRemoved(obj);
+                animationPane.getChildren().remove(obj.getVv().getVisVector());
+                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
+                animationPane.getChildren().remove(obj.getShape());
+            }
+
+            sim.getCom().cleanupCollisionObjects();
+            ArrayList<CollisionObject> objects = new ArrayList<>();
+
             objects = PresetSim.load(Simulation.lastLoaded, this);
             sim = new Simulation(0, this);
             this.initialize(sim);
-            
-            
+
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
             sim.setFriction(SavedSim.frictionToPass);
-            sim.isPresetSim = true;
- 
+            Simulation.isPresetSim = true;
+
         } else {
             for (CollisionObject obj : sim.getCom().getAllColObjs()) {
                 sim.getCom().addCollisionObjectsToBeRemoved(obj);
@@ -254,7 +244,6 @@ public class CollisionMenuController {
         if (sim.com.getAllColObjs().size() == 30) {
             this.btnAddObj.setDisable(true);
         }
-
     }
 
     public boolean getBoing() {
@@ -316,7 +305,5 @@ public class CollisionMenuController {
                 obj.setPosY(paneHeight - 2 * obj.getHeight());
             }
         }
-
     }
-
 }

@@ -28,6 +28,7 @@ import javafx.stage.Stage;
  * @author sabri
  */
 public class SavedSimMenuController {
+
     Stage primaryStage;
 
     @FXML
@@ -38,7 +39,7 @@ public class SavedSimMenuController {
     Button btnDelete;
 
     MainMenuController mmc;
- 
+
     public SavedSimMenuController(MainMenuController mmc, Stage primaryStage) {
         this.mmc = mmc;
         this.primaryStage = primaryStage;
@@ -71,35 +72,35 @@ public class SavedSimMenuController {
         for (Object o : selectedIndices) {
             int index = (int) o;
             filePath = (String) SavedSim.getSavedSimList().get(index);
-        
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
-            edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
-            loader.setController(menuController);
-            BorderPane root = loader.load();
-            objects = SavedSim.load(filePath, menuController);
-            Simulation sim = new Simulation(0, menuController);
-            menuController.initialize(sim);
-            
-            primaryStage.close();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setMaximized(true);
-            primaryStage.show(); 
-            sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
-            sim.setFriction(SavedSim.frictionToPass);
-            sim.isSavedSim = true;
-            sim.lastLoaded = filePath;
-        } catch (IOException e) {
-            System.out.println(e);
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
+                edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
+                loader.setController(menuController);
+                BorderPane root = loader.load();
+                objects = SavedSim.load(filePath, menuController);
+                Simulation sim = new Simulation(0, menuController);
+                menuController.initialize(sim);
+
+                primaryStage.close();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                primaryStage.setMaximized(true);
+                primaryStage.show();
+                sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
+                sim.setFriction(SavedSim.frictionToPass);
+                Simulation.isSavedSim = true;
+                Simulation.lastLoaded = filePath;
+            } catch (IOException e) {
+                System.out.println(e);
+            }
         }
     }
-    }
-    
+
     @FXML
-    public void handleDelete(ActionEvent event){        
+    public void handleDelete(ActionEvent event) {
         ObservableList selectedIndices = listViewSims.getSelectionModel().getSelectedIndices();
-        String fileName="";
+        String fileName = "";
 
         for (Object o : selectedIndices) {
             int index = (int) o;

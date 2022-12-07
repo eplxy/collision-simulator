@@ -6,21 +6,17 @@ package edu.vanier.collisionsimulator.ui;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 
 /**
  *
@@ -29,14 +25,6 @@ import javafx.scene.paint.ImagePattern;
 public class ParametersController {
 
     private static ObservableList savedImageList = FXCollections.observableArrayList();
-
-    public static ObservableList getSavedImageList() {
-        return savedImageList;
-    }
-
-    public static void setSavedImageList(ObservableList savedImageList) {
-        ParametersController.savedImageList = savedImageList;
-    }
 
     CollisionObject obj;
     CollisionMenuController cmc;
@@ -60,14 +48,10 @@ public class ParametersController {
     TextArea txtAreaError;
     @FXML
     Button imageButton1;
-
     String errorMsg = "";
-
     @FXML
     ListView listViewImages;
-
     private static final DecimalFormat df = new DecimalFormat("0.00");
-
     @FXML
     Button btnEnter;
 
@@ -78,7 +62,6 @@ public class ParametersController {
 
     @FXML
     public void initialize() {
-
         btnEnter.setOnAction((event) -> {
             handleEnter(event);
         });
@@ -264,6 +247,14 @@ public class ParametersController {
 
     public void setPosYTxtField(TextField posYTxtField) {
         this.posYTxtField = posYTxtField;
+    }
+    
+    public static ObservableList getSavedImageList() {
+        return savedImageList;
+    }
+
+    public static void setSavedImageList(ObservableList savedImageList) {
+        ParametersController.savedImageList = savedImageList;
     }
 
 }

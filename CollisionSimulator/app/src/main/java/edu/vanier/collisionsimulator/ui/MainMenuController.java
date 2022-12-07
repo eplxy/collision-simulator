@@ -4,7 +4,6 @@
  */
 package edu.vanier.collisionsimulator.ui;
 
-import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -59,7 +58,6 @@ public class MainMenuController {
     
     public void handleCollision(ActionEvent event, Stage primaryStage){
         try {
-           
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
             loader.setController(menuController);
@@ -92,6 +90,7 @@ public class MainMenuController {
         dialog.setScene(dialogScene);
         dialog.show();
     }
+    
     public void handleSavedSim(ActionEvent event, Stage primaryStage) throws IOException{
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);

@@ -37,15 +37,11 @@ public class CollisionSimulatorApp extends Application {
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 
     //https://stackoverflow.com/questions/5694385/getting-the-filenames-of-all-files-in-a-folder
     private void initializeSavedSimsList() {
-
         File[] files = new File("src/main/resources/savedSim/").listFiles();
-//If this pathname does not denote a directory, then listFiles() returns null. 
-
         for (File file : files) {
             if (file.isFile()) {
                 SavedSim.getSavedSimList().add(file.getName().substring(0, file.getName().length()-4));
@@ -54,10 +50,7 @@ public class CollisionSimulatorApp extends Application {
     }
     
     private void initializeImageList() {
-
         File[] files = new File("src/main/resources/images/").listFiles();
-//If this pathname does not denote a directory, then listFiles() returns null. 
-
         for (File file : files) {
             if (file.isFile()) {
                 ParametersController.getSavedImageList().add(file.getName().substring(0, file.getName().length()-4));

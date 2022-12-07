@@ -27,21 +27,16 @@ public class SavedSim {
 
     static public double frictionToPass;
     static private String filePath = null;
-    //static private List<String> SavedSimNamesList = new ArrayList<>();
     private static ObservableList savedSimList = FXCollections.observableArrayList();
 
     //https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/#:~:text=Writing%20a%20CSV%20file%20is,()%20method%20of%20CSVWriter%20class.
     public static void savedSimulation(Simulation sim, String fileName) {
         savedSimList.add(fileName);
-        // first create file object for file placed at location
-        // specified by filepath
         filePath = "src/main/resources/savedSim/" + fileName + ".csv";
         File file = new File(filePath);
         try {
-            // create FileWriter object with file as parameter
             FileWriter outputfile = new FileWriter(file);
 
-            // create CSVWriter object filewriter object as parameter
             CSVWriter writer = new CSVWriter(outputfile);
 
             List<CollisionObject> colObjs = sim.getCom().getAllColObjs();
@@ -50,7 +45,6 @@ public class SavedSim {
                 String[] parametersArr = {Double.toString(obj.getPosX()), Double.toString(obj.getPosY()), Double.toString(obj.getMass()), Double.toString(obj.getSpeed()), Double.toString(obj.getDirection()), Boolean.toString(obj.isSizeScaling()), Double.toString(obj.getSize()), obj.getImgFilePath()};
                 writer.writeNext(parametersArr);
             }
-            // closing writer connection
             writer.close();
         } catch (IOException e) {
             System.out.println(e);
@@ -59,8 +53,6 @@ public class SavedSim {
 
     public static ArrayList<CollisionObject> load(String fileName, CollisionMenuController cmc) throws FileNotFoundException, IOException, CsvValidationException {
         ArrayList<CollisionObject> objects = new ArrayList<>();
-        // first create file object for file placed at location
-        // specified by filepath
         filePath = "src/main/resources/savedSim/" + fileName + ".csv";
         File file = new File(filePath);
 
@@ -85,7 +77,6 @@ public class SavedSim {
             if (!objectParametersArr[7].equals("")) {
                 c.updateImage(objectParametersArr[7]);
             }
-
             c.setVelocityX(speed * Math.cos(Math.toRadians(direction)));
             c.setVelocityY(speed * Math.sin(Math.toRadians(direction)));
             c.getVv().update();
