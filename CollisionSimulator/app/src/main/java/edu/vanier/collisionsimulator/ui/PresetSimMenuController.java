@@ -190,13 +190,13 @@ public class PresetSimMenuController {
                 filePath = "solar";
                 }
             else if(togbtn4.isSelected()){
-                index = 3;
+                filePath = "marbles";
             }
             else if(togbtn5.isSelected()){
-                index = 4;
+                filePath = "petanque";
             }
             else if(togbtn6.isSelected()){
-                index = 5;
+                filePath = "theTeam";
             }
             else{
                 return;
@@ -216,7 +216,7 @@ public class PresetSimMenuController {
             primaryStage.setMaximized(true);
             primaryStage.show(); 
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
-            sim.setFriction(SavedSim.frictionToPass);
+            sim.setFriction(PresetSim.frictionToPass);
             sim.isPresetSim = true;
             sim.lastLoaded = filePath;
         } catch (IOException e) {
