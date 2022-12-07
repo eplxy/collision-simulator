@@ -33,6 +33,7 @@ public class Simulation {
     //associated pane
     public Pane animationPane;
     public static boolean isSavedSim = false;
+    public static boolean isPresetSim = false;
     public static String lastLoaded = "";
 
     /**
@@ -218,7 +219,7 @@ public class Simulation {
     public CollisionObjectManager getCom() {
         return com;
     }
-
+    
     public void setCom(CollisionObjectManager com) {
         this.com = com;
     }

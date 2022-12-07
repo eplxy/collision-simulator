@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -41,7 +42,11 @@ public class MainMenuController {
             handleCollision(event, this.primaryStage);
         });
         btnPresetSim.setOnAction((event) -> {
-            handlePresetSim(event);
+            try {
+                handlePresetSim(event, this.primaryStage);
+            } catch (IOException ex) {
+                Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         btnSavedSim.setOnAction((event) -> {
             try {
@@ -75,8 +80,17 @@ public class MainMenuController {
 
     }
     
-    public void handlePresetSim(ActionEvent event){
-
+    public void handlePresetSim(ActionEvent event, Stage primaryStage) throws IOException{
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/presetSimMenu.fxml"));
+        PresetSimMenuController presetsimMenuController = new PresetSimMenuController(this, primaryStage);
+        loader.setController(presetsimMenuController);
+        Pane root = loader.load();
+        Scene dialogScene = new Scene(root);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
     public void handleSavedSim(ActionEvent event, Stage primaryStage) throws IOException{
         final Stage dialog = new Stage();

@@ -8,6 +8,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collisionsimulator.controllers.CollisionController;
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.SavedSim;
+import edu.vanier.collisionsimulator.simulator.PresetSim;
 import edu.vanier.collisionsimulator.simulator.Simulation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -207,6 +208,28 @@ public class CollisionMenuController {
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
             sim.setFriction(SavedSim.frictionToPass);
             sim.isSavedSim = true;
+ 
+        } 
+        else if (sim.isPresetSim) {
+            for (CollisionObject obj : sim.getCom().getAllColObjs()) {
+                sim.getCom().addCollisionObjectsToBeRemoved(obj);
+                animationPane.getChildren().remove(obj.getVv().getVisVector());
+                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
+                animationPane.getChildren().remove(obj.getShape());
+            }
+
+            sim.getCom().cleanupCollisionObjects();
+            ArrayList<CollisionObject> objects = new ArrayList<>();
+      
+        
+            objects = PresetSim.load(Simulation.lastLoaded, this);
+            sim = new Simulation(0, this);
+            this.initialize(sim);
+            
+            
+            sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
+            sim.setFriction(SavedSim.frictionToPass);
+            sim.isPresetSim = true;
  
         } else {
             for (CollisionObject obj : sim.getCom().getAllColObjs()) {
