@@ -218,7 +218,7 @@ public class CollisionMenuController {
             this.initialize(sim);
 
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
-            sim.setFriction(SavedSim.frictionToPass);
+            sim.setFriction(PresetSim.frictionToPass);
             Simulation.isPresetSim = true;
 
         } else {
