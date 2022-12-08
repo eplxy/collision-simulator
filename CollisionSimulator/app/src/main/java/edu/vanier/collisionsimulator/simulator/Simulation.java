@@ -68,7 +68,6 @@ public class Simulation {
             CollisionController.updateCollisionObjects(com, this.animationPane, this.friction);
             // removed dead sprites.
             com.cleanupCollisionObjects();
-
         };
 
         final KeyFrame kf = new KeyFrame(Duration.millis((1000 / (float) this.frameRate)), onFinished);

@@ -95,8 +95,8 @@ public class ParametersController {
             obj.setMass(Double.parseDouble(massTxtField.getText()));
             obj.setPosY(Double.parseDouble(posYTxtField.getText()));
             obj.setPosX(Double.parseDouble(posXTxtField.getText()));
-            obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
             obj.setDirection(Double.parseDouble(directionTxtField.getText()));
+            obj.setSpeed(Double.parseDouble(speedTxtField.getText()));
             obj.getVv().update();
 
             if (sizeCheck.isSelected()) {

@@ -81,15 +81,15 @@ public abstract class CollisionObject {
         VisualVector vv = new VisualVector(this);
     }
 
-    public void updateImage(String filePath){
+    public void updateImage(String filePath) {
         this.setImgFilePath(filePath);
         this.getShape().setFill(new ImagePattern(new Image("images/" + filePath + ".png")));
     }
-    
+
     public void setEffect(Node node) {
-        
+
         Lighting light = new Lighting(new Light.Distant());
-        
+
         DropShadow ds1 = new DropShadow();
         ds1.setOffsetY(4.0f);
         ds1.setOffsetX(4.0f);
@@ -98,15 +98,15 @@ public abstract class CollisionObject {
         node.setEffect(ds1);
         node.setEffect(light);
     }
-    
-    public void updateEffect(){
+
+    public void updateEffect() {
         DropShadow ds = new DropShadow();
-        ds.setOffsetX(-4.0f*(this.getVelocityX()/Math.abs(this.getVelocityX())));
-        ds.setOffsetY(-4.0f*(this.getVelocityY()/Math.abs(this.getVelocityY())));
+        ds.setOffsetX(-4.0f * (this.getVelocityX() / Math.abs(this.getVelocityX())));
+        ds.setOffsetY(-4.0f * (this.getVelocityY() / Math.abs(this.getVelocityY())));
         ds.setColor((Color) this.getShape().getStroke());
         this.shape.setEffect(ds);
     }
-    
+
     public void update() {
 
         double newPosX = posX + v.x;
@@ -130,7 +130,7 @@ public abstract class CollisionObject {
         this.width = 60 + (size - 1) * 40;
         this.height = 60 + (size - 1) * 40;
         this.shape.resize(width, height);
-        
+
     }
 
     public final void setMouseListener(CollisionMenuController cmc) {
@@ -146,7 +146,7 @@ public abstract class CollisionObject {
                     if (!this.getShape().getStroke().equals(Color.TRANSPARENT)) {
                         if (Math.sqrt(Math.pow(event2.getX() - this.getPosX(), 2) + (Math.pow(event2.getY() - this.getPosY(), 2))) < this.width) {
                         } else if (event2.getButton() == MouseButton.SECONDARY) {
-                            CustomVector newVel = new CustomVector((event2.getSceneX()-5 - this.getPosX()) * 0.05, (event2.getSceneY()-35 - this.getPosY()) * 0.05);
+                            CustomVector newVel = new CustomVector((event2.getSceneX() - 5 - this.getPosX()) * 0.05, (event2.getSceneY() - 35 - this.getPosY()) * 0.05);
                             if (newVel.computeLength() > 50) {
                                 this.setV(newVel.normalize().scalarMult(50));
                             } else {
@@ -197,8 +197,6 @@ public abstract class CollisionObject {
 
     }
 
-
-
     class Delta {
 
         double x, y;
@@ -220,10 +218,8 @@ public abstract class CollisionObject {
     public void setImgFilePath(String imgFilePath) {
         this.imgFilePath = imgFilePath;
     }
-    
-    
-    
-     public boolean isSizeScaling() {
+
+    public boolean isSizeScaling() {
         return sizeScaling;
     }
 
@@ -321,8 +317,16 @@ public abstract class CollisionObject {
 
     public void setDirection(double direction) {
         this.direction = direction;
-        CustomVector newV = new CustomVector(true, this.getSpeed(), direction);
-        this.v = newV;
+        if (this.speed == 0) {
+            CustomVector tempV = new CustomVector(1, 1);
+            CustomVector finalV = new CustomVector(true, tempV.computeLength(), direction);
+            this.v = finalV;
+        } else {
+
+            CustomVector newV = new CustomVector(true, this.getSpeed(), direction);
+            this.v = newV;
+
+        }
     }
 
     public Shape getShape() {
