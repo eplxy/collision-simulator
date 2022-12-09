@@ -62,7 +62,7 @@ public class MainMenuController {
             edu.vanier.collisionsimulator.ui.CollisionMenuController menuController = new edu.vanier.collisionsimulator.ui.CollisionMenuController(primaryStage);
             loader.setController(menuController);
             BorderPane root = loader.load();
-            Simulation sim = new Simulation(2, menuController);
+            Simulation sim = new Simulation(menuController);
             menuController.initialize(sim);
             
             primaryStage.close();
@@ -70,7 +70,7 @@ public class MainMenuController {
             primaryStage.setScene(scene);
             primaryStage.setMaximized(true);
             primaryStage.show(); 
-            sim.createRandomObjects2(sim.numberOfObj, sim.cmc, sim.animationPane);
+            sim.createRandomObjects2(2, sim.cmc, sim.animationPane);
             Simulation.isSavedSim = false;
         } catch (IOException e) {
             System.out.println(e);

@@ -79,7 +79,7 @@ public class SavedSimMenuController {
                 loader.setController(menuController);
                 BorderPane root = loader.load();
                 objects = SavedSim.load(filePath, menuController);
-                Simulation sim = new Simulation(0, menuController);
+                Simulation sim = new Simulation(menuController);
                 menuController.initialize(sim);
 
                 primaryStage.close();

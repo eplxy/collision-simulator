@@ -195,7 +195,7 @@ public class CollisionMenuController {
             ArrayList<CollisionObject> objects = new ArrayList<>();
 
             objects = SavedSim.load(Simulation.lastLoaded, this);
-            sim = new Simulation(0, this);
+            sim = new Simulation(this);
             this.initialize(sim);
 
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);
@@ -214,7 +214,7 @@ public class CollisionMenuController {
             ArrayList<CollisionObject> objects = new ArrayList<>();
 
             objects = PresetSim.load(Simulation.lastLoaded, this);
-            sim = new Simulation(0, this);
+            sim = new Simulation(this);
             this.initialize(sim);
 
             sim.loadSavedSim(objects, sim.cmc, sim.animationPane);

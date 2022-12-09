@@ -2,10 +2,7 @@ package edu.vanier.collisionsimulator.controllers;
 
 import edu.vanier.collisionsimulator.simulator.CollisionObject;
 import edu.vanier.collisionsimulator.simulator.CollisionObjectManager;
-import javafx.animation.PauseTransition;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.MotionBlur;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -14,7 +11,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author 2186084
+ * @author Steven Lam, Sabrina Amoura, Matthew Hantar, Wassim Yahia
  */
 public class CollisionController {
 
@@ -24,6 +21,7 @@ public class CollisionController {
 
     public static void checkCollisions(CollisionObjectManager com) {
         com.resetCollisionsToCheck();
+        
         // check each sprite against other sprite objects.
         for (CollisionObject colObjA : com.getCollisionsToCheck()) {
             for (CollisionObject colObjB : com.getAllColObjs()) {
@@ -55,40 +53,35 @@ public class CollisionController {
                 ds1.setOffsetY(4.0f);
                 ds1.setOffsetX(4.0f);
                 ds1.setColor(color);
-                
-                
+
                 colObjA.getShape().setStrokeWidth(5);
                 colObjA.getShape().setStroke(color);
                 colObjA.getShape().setEffect(ds1);
-                
+
                 colObjB.getShape().setStrokeWidth(5);
                 colObjB.getShape().setStroke(color);
                 colObjB.getShape().setEffect(ds1);
-                
-                
+
             }
         }
         return false;
     }
-    
-    
-    private static void applyFriction(CollisionObject colObj, double friction){
-        
-        double speedMult = colObj.getV().computeLength()-friction*0.0001*colObj.getMass();
-        if(speedMult > 0){
+
+    private static void applyFriction(CollisionObject colObj, double friction) {
+
+        double speedMult = colObj.getV().computeLength() - friction * 0.0001 * colObj.getMass();
+        if (speedMult > 0) {
             colObj.setV(colObj.getV().normalize().scalarMult(speedMult));
         } else {
             colObj.setV(new CustomVector(0, 0));
         }
-        
-        
-        
+
     }
 
     public static void handleUpdate(CollisionObject colObj, Pane aPane, double friction) {
         bounceOffBorder(colObj, aPane);
         applyFriction(colObj, friction);
-        
+
         colObj.update();
 
     }
@@ -99,16 +92,9 @@ public class CollisionController {
         }
     }
 
-    //TODO: SOLVE BOUNDS ISSUE (it is 3 am. i am tired.)
-    //TODO: Solve top and bottom border bouncing teleportation
     public static boolean intersectsBorderX(CollisionObject colObj, Pane aPane) {
         return ((colObj.getPosX() + BORDER_BUFFER >= (aPane.getWidth() - colObj.getWidth() / 2))
                 || (colObj.getPosX() <= (0 + colObj.getWidth() / 2) + BORDER_BUFFER));
-    }
-
-    public static boolean predictIntersectsBorderX(CollisionObject colObj, Pane aPane) {
-        return ((colObj.getPosX() + colObj.getVelocityX() >= (aPane.getWidth() - colObj.getWidth() / 2))
-                || (colObj.getPosX() + colObj.getVelocityX() <= (0 + colObj.getWidth() / 2)));
     }
 
     public static boolean intersectsBorderY(CollisionObject colObj, Pane aPane) {
@@ -116,26 +102,19 @@ public class CollisionController {
                 || (colObj.getPosY() <= (0 + colObj.getHeight() / 2) + BORDER_BUFFER));
     }
 
-    public static boolean predictIntersectsBorderY(CollisionObject colObj, Pane aPane) {
-        return ((colObj.getPosY() + colObj.getVelocityY() >= (aPane.getHeight() - colObj.getHeight() / 2))
-                || (colObj.getPosY() + colObj.getVelocityY() <= (0 + colObj.getHeight() / 2)));
-    }
-
     public static void bounceOffBorder(CollisionObject colObj, Pane aPane) {
 
-        //should be aPane.getBounds().getMinX() instead of "0" and maxX instead of "1800"
         if (intersectsBorderX(colObj, aPane)) {
             colObj.setVelocityX(colObj.getVelocityX() * -1);
         }
 
         if (intersectsBorderY(colObj, aPane)) {
+
             colObj.setVelocityY(colObj.getVelocityY() * -1);
         }
 
     }
 
-    
-    
     private static void boing() {
         if (boingEnabled) {
             if (Math.random() <= 0.1) {

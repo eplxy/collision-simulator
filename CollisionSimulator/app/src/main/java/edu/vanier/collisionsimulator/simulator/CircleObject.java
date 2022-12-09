@@ -3,30 +3,19 @@ package edu.vanier.collisionsimulator.simulator;
 import edu.vanier.collisionsimulator.ui.CollisionMenuController;
 import java.io.IOException;
 import javafx.scene.Node;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
  *
- * @author sabri
+ * @author Steven Lam, Sabrina Amoura, Matthew Hantar, Wassim Yahia
  */
 public class CircleObject extends CollisionObject {
 
     private double radius;
     protected Node node;
 
-    private Image map = new Image("images/protagonist.PNG");
-    private ImagePattern pattern = new ImagePattern(map);
-
-
-    
-    
     public Node getNode() {
         return node;
     }
@@ -45,28 +34,6 @@ public class CircleObject extends CollisionObject {
         this.node = node;
     }
 
-    
-    
-    
-    //default circle object for animation
-    public CircleObject() throws IOException {
-        super();
-        this.shape = new Circle(50.0f);
-        this.shape.setStroke(Color.TRANSPARENT);
-        this.collidingShape = this.shape;
-        this.radius = 50;
-        this.height = this.radius * 2;
-        this.width = this.radius * 2;
-        this.mass = 5;
-
-    }
-//    //default circle object for ui testing
-//
-
-   
-    
-    
-
     public CircleObject(CollisionMenuController cmc, String imagePath) throws IOException {
         super(cmc);
         this.shape = new Circle(30);
@@ -78,9 +45,7 @@ public class CircleObject extends CollisionObject {
         this.mass = 5;
 
         //NO DEFAULT WASSIMS REST IN PEACE WASSIM.
-        //shape.setFill(pattern);
-
-        setEffect(this.shape);
+        this.setEffect(this.shape);
     }
 
     ImageView getImageViewNode() {

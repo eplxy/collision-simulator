@@ -1,8 +1,9 @@
 //
 //FOR TEST PURPOSES ONLY. NEW MAIN CLASS -> UI.COLLISIONSIMULATORAPP
-//
+//COMMENTED OUT BECAUSE IT NO LONGER WORKS
 //
 
+/*
 package edu.vanier.collisionsimulator.tests;
 
 import edu.vanier.collisionsimulator.simulator.Simulation;
@@ -85,3 +86,4 @@ public class AnimationDriver extends Application {
         double x, y;
     }
 }
+*/

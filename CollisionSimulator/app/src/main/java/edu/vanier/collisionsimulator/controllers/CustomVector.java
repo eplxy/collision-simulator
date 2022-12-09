@@ -2,8 +2,6 @@ package edu.vanier.collisionsimulator.controllers;
 
 public class CustomVector {
 
-    //TODO:find angles
-    //TODO:resolve issue with JavaFX positive Y pointing to bottom of screen
     public double[] direction;
     public double conventionalAngle;
     public double x, destX, y, destY, length;
@@ -30,13 +28,6 @@ public class CustomVector {
             this.y = components[1];
         }
 
-    }
-
-    public CustomVector(double destX, double destY, double objX, double objY) {
-        this.x = deltaX(destX, objX);
-        this.y = deltaY(destY, objY);
-        this.destX = destX;
-        this.destY = destY;
     }
 
     /**
@@ -68,16 +59,13 @@ public class CustomVector {
         int q = (int) this.direction[1];
         double a = this.direction[0];
         switch (q) {
-            case 1:
+            case 1 ->
                 this.conventionalAngle = a;
-                break;
-            case 2:
+            case 2 ->
                 this.conventionalAngle = 180 - a;
-                break;
-            case 3:
+            case 3 ->
                 this.conventionalAngle = 180 + a;
-                break;
-            case 4:
+            case 4 ->
                 this.conventionalAngle = 360 - a;
         }
     }
@@ -85,18 +73,16 @@ public class CustomVector {
     private double[] quadrantComponentModification(double x, double y) {
         int q = (int) this.direction[1];
         switch (q) {
-            case 1:
+            case 1 ->
                 y *= -1;
-                break;
-            case 2:
+            case 2 -> {
                 x *= -1;
                 y *= -1;
-                break;
-            case 3:
+            }
+            case 3 ->
                 x *= -1;
-                break;
-            case 4:
-                break;
+            case 4 -> {
+            }
         }
         return new double[]{x, y};
     }
@@ -160,12 +146,13 @@ public class CustomVector {
     }
 
     private double[] computeComponents() {
-        double x = this.length * Math.cos(Math.toRadians(this.direction[0]));
-        double y = this.length * Math.sin(Math.toRadians(this.direction[0]));
+        double xTemp = this.length * Math.cos(Math.toRadians(this.direction[0]));
+        double yTemp = this.length * Math.sin(Math.toRadians(this.direction[0]));
 
-        return quadrantComponentModification(x, y);
+        return quadrantComponentModification(xTemp, yTemp);
     }
 
+    //for debugging purposes
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";
@@ -197,32 +184,6 @@ public class CustomVector {
         this.direction = this.computeDirection();
         this.quadrantAngleModification();
         return conventionalAngle;
-    }
-
-    /**
-     * Converts point's X screen coordinate into a Cartesian system.
-     *
-     * @param mouseX Converts the mouse X coordinate into Cartesian system based
-     * on the ship center X (originX).
-     * @param originX The ship center point's X coordinate.
-     * @return double value of a Cartesian system X coordinate based on the
-     * origin X.
-     */
-    static double deltaX(double mouseX, double originX) {
-        return mouseX - originX;
-    }
-
-    /**
-     * Converts point's Y screen coordinate into a Cartesian system.
-     *
-     * @param mouseY Converts the mouse Y coordinate into Cartesian system based
-     * on the ship center Y (originY).
-     * @param originY The ship center point's Y coordinate.
-     * @return double value of a Cartesian system Y coordinate based on the
-     * origin Y.
-     */
-    static double deltaY(double mouseY, double originY) {
-        return originY - mouseY;
     }
 
 }

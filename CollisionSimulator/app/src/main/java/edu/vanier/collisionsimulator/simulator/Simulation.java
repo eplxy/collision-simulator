@@ -16,7 +16,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author 2186084
+ * @author Steven Lam, Sabrina Amoura, Matthew Hantar, Wassim Yahia
  */
 public class Simulation {
 
@@ -24,33 +24,24 @@ public class Simulation {
     public CollisionObjectManager com;
     public MediaPlayer mp;
     public Timeline loop;
-    public int numberOfObj;
     public CollisionMenuController cmc;
     private double frameRate = 60;
     public double friction = 0;
-    //associated pane
     public Pane animationPane;
     public static boolean isSavedSim = false;
     public static boolean isPresetSim = false;
     public static String lastLoaded = "";
 
     /**
-     * Creates and runs a simulation with randomized circle objects. Does not
-     * spawn objects that overlap. Takes an integer number of circle objects to
-     * be added.
+     * *
      *
-     * @param numOfObjs
+     * Simulation constructor fundamental to the app. 
+     * Has its own Timeline, CollisionObjectManager and VisualVectorManager.
+     *
+     * @param cmc associated collisionMenu instance
+     * @throws IOException
      */
-    public Simulation(int numOfObjs) throws IOException {
-        com = new CollisionObjectManager();
-        vvm = new VisualVectorManager();
-        loop = setLoop();
-
-    }
-
-    //attempt to link simulations and parameters
-    public Simulation(int numOfObjs, CollisionMenuController cmc) throws IOException {
-        this.numberOfObj = numOfObjs;
+    public Simulation(CollisionMenuController cmc) throws IOException {
         this.vvm = new VisualVectorManager();
         this.com = new CollisionObjectManager();
         this.cmc = cmc;
@@ -59,6 +50,11 @@ public class Simulation {
 
     }
 
+    
+    /***
+     * Instantiates the simulation loop.
+     * @return 
+     */ 
     private Timeline setLoop() {
 
         EventHandler<ActionEvent> onFinished = (event) -> {
@@ -216,7 +212,7 @@ public class Simulation {
     public CollisionObjectManager getCom() {
         return com;
     }
-    
+
     public void setCom(CollisionObjectManager com) {
         this.com = com;
     }

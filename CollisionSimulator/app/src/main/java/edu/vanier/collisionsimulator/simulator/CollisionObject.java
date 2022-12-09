@@ -26,31 +26,22 @@ import javafx.util.Duration;
 
 /**
  *
- * @author stella
+ * @author Steven Lam, Sabrina Amoura, Matthew Hantar, Wassim Yahia
  */
-//mostly pulled from Assignment 2
+//parts of this (a good chunk) was pulled from Assignment 2
 public abstract class CollisionObject {
 
     protected ParametersController parametersController;
 
-    protected Pane parameters;
-    protected double width, height;
-    protected int index;
-
+    protected Pane parametersPane;
+    protected double width, height, posX, posY, mass, direction, speed;
+    protected double size = 1;
     protected Shape shape;
     protected Shape collidingShape;
-
     protected Paint color;
-
-    //FOR FUTURE USE IN APPLYING IMAGES ONTO OBJECTS
     private String imgFilePath;
-    private Image image;
     private VisualVector vv;
     protected CustomVector v;
-    protected double posX, posY, mass;
-    protected double speed;
-    protected double direction;
-    protected double size = 1;
     protected boolean sizeScaling;
 
     public boolean collide(CollisionObject other) {
@@ -72,13 +63,8 @@ public abstract class CollisionObject {
 
         v = new CustomVector(0, 0);
         this.vv = new VisualVector(this);
-        this.parameters = createParametersPane(cmc);
+        this.parametersPane = createParametersPane(cmc);
 
-    }
-
-    public CollisionObject() throws IOException {
-        v = new CustomVector(0, 0);
-        VisualVector vv = new VisualVector(this);
     }
 
     public void updateImage(String filePath) {
@@ -87,14 +73,11 @@ public abstract class CollisionObject {
     }
 
     public void setEffect(Node node) {
-
         Lighting light = new Lighting(new Light.Distant());
-
         DropShadow ds1 = new DropShadow();
         ds1.setOffsetY(4.0f);
         ds1.setOffsetX(4.0f);
         ds1.setColor(Color.BLACK);
-
         node.setEffect(ds1);
         node.setEffect(light);
     }
@@ -109,11 +92,8 @@ public abstract class CollisionObject {
 
     public void update() {
 
-        double newPosX = posX + v.x;
-
-        double newPosY = posY + v.y;
-        this.setPosX(newPosX);
-        this.setPosY(newPosY);
+        this.setPosX(posX + v.x);
+        this.setPosY(posY + v.y);
         this.getVv().update();
         this.updateEffect();
 
@@ -125,8 +105,6 @@ public abstract class CollisionObject {
 
     public void setSize(double size) {
         this.size = size;
-        //this.shape.setScaleX((60 + (size - 1) * 40) / width);
-        //this.shape.setScaleY((60 + (size - 1) * 40) / height);
         this.width = 60 + (size - 1) * 40;
         this.height = 60 + (size - 1) * 40;
         this.shape.resize(width, height);
@@ -137,11 +115,10 @@ public abstract class CollisionObject {
 
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
             this.highlight();
-            cmc.getParametersPane().getChildren().setAll(parameters);
+            cmc.getParametersPane().getChildren().setAll(parametersPane);
             parametersController.displayParameters();
 
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-
                 this.shape.getParent().setOnMouseClicked((MouseEvent event2) -> {
                     if (!this.getShape().getStroke().equals(Color.TRANSPARENT)) {
                         if (Math.sqrt(Math.pow(event2.getX() - this.getPosX(), 2) + (Math.pow(event2.getY() - this.getPosY(), 2))) < this.width) {
@@ -151,19 +128,15 @@ public abstract class CollisionObject {
                                 this.setV(newVel.normalize().scalarMult(50));
                             } else {
                                 this.setV(newVel);
-                            };
-
+                            }
                             this.vv.update();
-                        };
-                    };
+                        }
+                    }
                 });
-            };
-
+            }
         });
 
     }
-
-    ;
 
     public final void setDragListeners(CollisionMenuController cmc) {
         final Delta dragDelta = new Delta();
@@ -171,10 +144,8 @@ public abstract class CollisionObject {
             // record a delta distance for the drag and drop operation.
             dragDelta.x = this.getPosX() - mouseEvent.getSceneX();
             dragDelta.y = this.getPosY() - mouseEvent.getSceneY();
-            //this.shape.setCursor(Cursor.NONE);
         });
         this.shape.setOnMouseReleased((MouseEvent mouseEvent) -> {
-            //this.shape.setCursor(Cursor.HAND);
         });
         this.shape.setOnMouseDragged((MouseEvent mouseEvent) -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -185,14 +156,13 @@ public abstract class CollisionObject {
                         || mouseEvent.getSceneY() + dragDelta.y - height < cmc.getAnimationPane().getLayoutBounds().getMinY()) {
                     return;
                 }
-
                 this.setPosX(mouseEvent.getSceneX() + dragDelta.x);
                 this.setPosY(mouseEvent.getSceneY() + dragDelta.y);
                 this.getVv().getVisVector().setStartX(this.getPosX());
                 this.getVv().getVisVector().setStartY(this.getPosY());
                 this.getVv().getVisVector().setEndX(this.getVv().getVisVector().getStartX() + this.getVelocityX() * 20);
                 this.getVv().getVisVector().setEndY(this.getVv().getVisVector().getStartY() + this.getVelocityY() * 20);
-            };
+            }
         });
 
     }
@@ -236,15 +206,11 @@ public abstract class CollisionObject {
     }
 
     public Pane getParameters() {
-        return parameters;
+        return parametersPane;
     }
 
     public void setParameters(Pane parameters) {
-        this.parameters = parameters;
-    }
-
-    public Image getImage() {
-        return image;
+        this.parametersPane = parameters;
     }
 
     public double getPosX() {
