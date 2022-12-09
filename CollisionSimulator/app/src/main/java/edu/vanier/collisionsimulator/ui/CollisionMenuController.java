@@ -231,7 +231,7 @@ public class CollisionMenuController {
 
             sim.getCom().cleanupCollisionObjects();
 
-            sim.createRandomObjects2(2, this, this.animationPane);
+            sim.createRandomObjects(2, this, this.animationPane);
         }
     }
 

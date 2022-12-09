@@ -4,11 +4,18 @@ import edu.vanier.collisionsimulator.simulator.CollisionObject;
 
 /**
  *
- * @author Steven Lam, Sabrina Amoura, Matthew Hantar, Wassim Yahia
+ * @author Steven Lam, Matthew Hantar
  *
  */
 public class PhysicsController {
 
+    /**
+     * Calculates speed post collision.
+     * See https://en.wikipedia.org/wiki/Elastic_collision#Two-dimensional_collision_with_two_moving_objects
+     * @param a
+     * @param b
+     * @return 
+     */
     public static CustomVector[] collidedSpeed(CollisionObject a, CollisionObject b) {
 
         double m1 = a.getMass();

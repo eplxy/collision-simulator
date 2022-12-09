@@ -52,7 +52,7 @@ public class Simulation {
 
     
     /***
-     * Instantiates the simulation loop.
+     * Instantiates the simulation loop. All updating events 
      * @return 
      */ 
     private Timeline setLoop() {
@@ -72,21 +72,45 @@ public class Simulation {
         return loop;
     }
 
+    
+    /**
+     * Changes the frame rate or the update rate of the simulation.
+     * Simultaneously stops current loop before setting the new one
+     * @param frameRate 
+     */
     public void setFrameRate(double frameRate) {
         this.loop.stop();
         this.frameRate = frameRate;
         this.loop = this.setLoop();
     }
 
+    
+    /**
+     * Changes the friction coefficient/value.
+     * @param friction
+     */
     public void setFriction(double friction) {
         this.friction = friction;
         cmc.sliderFriction.setValue(friction);
     }
 
+    
+    /**
+     * Returns the friction coefficient.
+     * @return the coefficient 
+     */
     public double getFriction() {
         return friction;
     }
 
+    
+    /**
+     * Checks to see if the objects to add will intersect with any existing objects
+     * @param randX X position value
+     * @param randY Y position value
+     * @param objArray array of objects to be added
+     * @return true if new object will intersect existing ones, false if not
+     */
     private boolean willSpawnIntersecting(double randX, double randY, CollisionObject[] objArray) {
 
         double objectWidth = 100 / 2;
@@ -110,6 +134,15 @@ public class Simulation {
         return false;
     }
 
+    
+    /**
+     * Loads a saved simulation.
+     * 
+     * @param objects list of objects to be loaded
+     * @param cmc associated collision menu controller
+     * @param aPane associated animation pane
+     * @throws IOException 
+     */
     public void loadSavedSim(ArrayList<CollisionObject> objects, CollisionMenuController cmc, Pane aPane) throws IOException {
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
         CollisionObject[] objectsArr = new CollisionObject[objects.size()];
@@ -130,7 +163,16 @@ public class Simulation {
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
 
-    public void createRandomObjects2(int numOfObjs, CollisionMenuController cmc, Pane aPane) throws IOException {
+    
+    /**
+     * Creates and adds randomly generated default circle objects.
+     * Objects shouldn't intersect.
+     * @param numOfObjs the number of objects to generate
+     * @param cmc associated collision menu controller
+     * @param aPane associated animation pane
+     * @throws IOException 
+     */
+    public void createRandomObjects(int numOfObjs, CollisionMenuController cmc, Pane aPane) throws IOException {
 
         CollisionObject[] randomObjsToAdd = new CollisionObject[numOfObjs];
         ArrayList<Shape> shapesToAdd = new ArrayList<>();
@@ -172,6 +214,14 @@ public class Simulation {
         this.animationPane.getChildren().addAll(shapesToAdd);
     }
 
+    
+    /**
+     * Adds one new object to the simulation.
+     * Objects shouldn't intersect.
+     * @param cmc
+     * @param aPane
+     * @throws IOException 
+     */
     public void addObject(CollisionMenuController cmc, Pane aPane) throws IOException {
 
         CollisionObject[] currentObjs = new CollisionObject[this.com.getAllColObjs().size()];

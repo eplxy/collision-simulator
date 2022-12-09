@@ -19,6 +19,11 @@ public class CollisionController {
     private static final String BOING = "/sounds/boing.mp3";
     public static boolean boingEnabled;
 
+    
+    /**
+     * Iterates through the list of objects present in simulation and checks for collisions.
+     * @param com 
+     */
     public static void checkCollisions(CollisionObjectManager com) {
         com.resetCollisionsToCheck();
         
@@ -33,6 +38,16 @@ public class CollisionController {
         }
     }
 
+    /**
+     * Runs actions on collision.
+     * Calculates and sets new velocities using PhysicsController calculations.
+     * Randomizes stroke color.
+     * Plays audio.
+     * @param colObjA First collision object
+     * @param colObjB Second collision object.
+     * @param com
+     * @return false, but execute actions if the collision is detected.
+     */
     static boolean handleCollision(CollisionObject colObjA, CollisionObject colObjB, CollisionObjectManager com) {
         if (colObjA != colObjB) {
             if (colObjA.collide(colObjB)) {
@@ -67,6 +82,12 @@ public class CollisionController {
         return false;
     }
 
+    
+    /**
+     * Reduces speed based on friction calculations.
+     * @param colObj The object to affect.
+     * @param friction The friction coefficient.
+     */
     private static void applyFriction(CollisionObject colObj, double friction) {
 
         double speedMult = colObj.getV().computeLength() - friction * 0.0001 * colObj.getMass();
@@ -78,30 +99,61 @@ public class CollisionController {
 
     }
 
+    /**
+     * Actions to occur at each frame.
+     * Border and friction interaction.
+     * @param colObj The object to update
+     * @param aPane Associated animation pane
+     * @param friction Friction coefficient
+     */
     public static void handleUpdate(CollisionObject colObj, Pane aPane, double friction) {
         bounceOffBorder(colObj, aPane);
         applyFriction(colObj, friction);
-
         colObj.update();
 
     }
 
+    
+    /**
+     * Iterates through the list of collision objects to update.
+     * @param com
+     * @param aPane
+     * @param friction 
+     */
     public static void updateCollisionObjects(CollisionObjectManager com, Pane aPane, double friction) {
         for (CollisionObject colObj : com.getAllColObjs()) {
             handleUpdate(colObj, aPane, friction);
         }
     }
 
+    /**
+     * Checks if the given collision object is intersecting either the left or right borders.
+     * @param colObj
+     * @param aPane
+     * @return 
+     */
     public static boolean intersectsBorderX(CollisionObject colObj, Pane aPane) {
         return ((colObj.getPosX() + BORDER_BUFFER >= (aPane.getWidth() - colObj.getWidth() / 2))
                 || (colObj.getPosX() <= (0 + colObj.getWidth() / 2) + BORDER_BUFFER));
     }
 
+    /**
+     * Checks if the given collision object is intersecting either the top or bottom borders.
+     * @param colObj
+     * @param aPane
+     * @return 
+     */
     public static boolean intersectsBorderY(CollisionObject colObj, Pane aPane) {
         return ((colObj.getPosY() + BORDER_BUFFER >= (aPane.getHeight() - colObj.getHeight() / 2))
                 || (colObj.getPosY() <= (0 + colObj.getHeight() / 2) + BORDER_BUFFER));
     }
 
+    
+    /**
+     * Adjusts velocity when border collision is detected.
+     * @param colObj
+     * @param aPane 
+     */
     public static void bounceOffBorder(CollisionObject colObj, Pane aPane) {
 
         if (intersectsBorderX(colObj, aPane)) {
@@ -115,6 +167,10 @@ public class CollisionController {
 
     }
 
+    /***
+     * Plays a "boing" sound effect on a 5% chance upon collision.
+     * Sound actress credits go to Steven's girlfriend.
+     */
     private static void boing() {
         if (boingEnabled) {
             if (Math.random() <= 0.1) {
