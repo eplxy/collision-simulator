@@ -33,15 +33,11 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author sabri
+ * @author Sabrina Amoura, Steven Lam, Wassim Yahia
  */
 public class CollisionMenuController {
 
     Stage primaryStage;
-
-    public CollisionMenuController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
 
     @FXML
     private Pane animationPane;
@@ -73,10 +69,29 @@ public class CollisionMenuController {
     @FXML
     Button btnReset;
 
+    /**
+     * *
+     * Sole constructor
+     *
+     * @param primaryStage
+     */
+    public CollisionMenuController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    /**
+     * *
+     * Sets event handling methods for the ui controls
+     * Sets the pane of the Simulation
+     *
+     * @param sim The current simulation in animationPane
+     * @throws IOException
+     */
     public void initialize(Simulation sim) throws IOException {
         this.sim = sim;
         sim.setAnimationPane(animationPane);
 
+        //adds a listener to track changes of the window's size and repositions CollisionObjects accordignly
         animationPane.widthProperty().addListener((obs, oldVal, newVal) -> {
             recenterObjects();
         });
@@ -84,6 +99,7 @@ public class CollisionMenuController {
             recenterObjects();
         });
 
+        //adds a listener to the sliders that control the animation speed and friction
         timelineSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             handleTimeline(sim, timelineSlider.getValue());
         });
@@ -120,15 +136,7 @@ public class CollisionMenuController {
             }
         });
         checkBoxShowDirection.setOnAction((event) -> {
-            if (checkBoxShowDirection.isSelected()) {
-                sim.getCom().getAllColObjs().forEach((t) -> {
-                    animationPane.getChildren().add(t.getVv().getVisVector());
-                });
-            } else {
-                sim.getCom().getAllColObjs().forEach((t) -> {
-                    animationPane.getChildren().remove(t.getVv().getVisVector());
-                });
-            }
+            handleShowDirection(event, sim);
         });
 
         checkBoing.setOnAction((event) -> {
@@ -136,30 +144,59 @@ public class CollisionMenuController {
         });
 
         btnReturnMenu.setOnAction((event) -> {
-            try {
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-                MainMenuController menuController = new MainMenuController(primaryStage);
-                loader.setController(menuController);
-
-                BorderPane root = loader.load();
-
-                Scene scene = new Scene(root);
-
-                sim.loop.stop();
-                primaryStage.close();
-                primaryStage.setScene(scene);
-                primaryStage.setMaximized(true);
-
-                primaryStage.show();
-
-            } catch (IOException e) {
-                System.out.println(e);
-            }
+            handleReturn(event, sim);
         });
     }
 
-    //https://stackoverflow.com/questions/22166610/how-to-create-a-popup-window-in-javafx
+    /***
+     * Shows visual vectors when the box is checked
+     * @param event
+     * @param sim The current simulation in animationPane
+     */
+    private void handleShowDirection(ActionEvent event, Simulation sim) {
+        if (checkBoxShowDirection.isSelected()) {
+            sim.getCom().getAllColObjs().forEach((t) -> {
+                animationPane.getChildren().add(t.getVv().getVisVector());
+            });
+        } else {
+            sim.getCom().getAllColObjs().forEach((t) -> {
+                animationPane.getChildren().remove(t.getVv().getVisVector());
+            });
+        }
+    }
+
+    /***
+     * replaces the scene of primaryStage with the main menu and stops the simulation playing
+     * @param event
+     * @param sim The current simulation in animationPane
+     */
+    private void handleReturn(ActionEvent event, Simulation sim) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            MainMenuController menuController = new MainMenuController(primaryStage);
+            loader.setController(menuController);
+
+            BorderPane root = loader.load();
+
+            Scene scene = new Scene(root);
+
+            sim.loop.stop();
+            primaryStage.close();
+            primaryStage.setScene(scene);
+            primaryStage.setMaximized(true);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    /***
+     * shows a modal window to enter the name of the new saved simulation
+     * part of the code is from https://stackoverflow.com/questions/22166610/how-to-create-a-popup-window-in-javafx
+     * @param event
+     * @throws IOException 
+     */
     public void handleSave(ActionEvent event) throws IOException {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -174,20 +211,38 @@ public class CollisionMenuController {
         dialog.show();
     }
 
+    /***
+     * Accelerates the animation with a factor of 60 according to the position of the slider
+     * @param sim The current simulation in animationPane
+     * @param value position of the slider
+     */
     private void handleTimeline(Simulation sim, double value) {
         sim.setFrameRate(60 * value);
     }
 
+    /***
+     * Plays the animation
+     * @param event
+     * @param sim The current simulation in animationPane
+     */
     private void handlePlay(ActionEvent event, Simulation sim) {
         sim.loop.play();
     }
 
+    /***
+     * Resets the simulation to its default parameters, 2 random Collision objects
+     * If it was a saved or preset simulation, clears all CollisionObjects and loads the same saved simulation
+     * @param event
+     * @param sim The current simulation in animationPane
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws CsvValidationException 
+     */
     private void handleReset(ActionEvent event, Simulation sim) throws IOException, FileNotFoundException, CsvValidationException {
         if (Simulation.isSavedSim) {
             for (CollisionObject obj : sim.getCom().getAllColObjs()) {
                 sim.getCom().addCollisionObjectsToBeRemoved(obj);
                 animationPane.getChildren().remove(obj.getVv().getVisVector());
-                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
                 animationPane.getChildren().remove(obj.getShape());
             }
 
@@ -225,20 +280,30 @@ public class CollisionMenuController {
             for (CollisionObject obj : sim.getCom().getAllColObjs()) {
                 sim.getCom().addCollisionObjectsToBeRemoved(obj);
                 animationPane.getChildren().remove(obj.getVv().getVisVector());
-                //int index = cmc.getAnimationPane().getChildren().indexOf(obj);
                 animationPane.getChildren().remove(obj.getShape());
             }
 
             sim.getCom().cleanupCollisionObjects();
-
             sim.createRandomObjects(2, this, this.animationPane);
         }
     }
 
+    /***
+     * Pauses the simulation
+     * @param event
+     * @param sim The current simulation in animationPane
+     */
     private void handlePause(ActionEvent event, Simulation sim) {
         sim.loop.pause();
     }
 
+    /***
+     * Adds an object at random 
+     * The button is disabled if there are 30 CollisionObjects in the simulation
+     * @param event
+     * @param sim The current simulation in animationPane
+     * @throws IOException 
+     */
     public void handleAddObj(ActionEvent event, Simulation sim) throws IOException {
         sim.addObject(this, animationPane);
         if (sim.com.getAllColObjs().size() == 30) {
@@ -250,12 +315,13 @@ public class CollisionMenuController {
         return checkBoing.isSelected();
     }
 
+    /***
+     * Sets the percentage of friction for the simulation according to the position of the slider
+     * @param sim The current simulation in animationPane
+     * @param friction position of the slider
+     */
     public void updateFriction(Simulation sim, double friction) {
         sim.setFriction(friction);
-    }
-
-    public void updateParameters() {
-
     }
 
     public Pane getAnimationPane() {

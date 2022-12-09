@@ -25,11 +25,12 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author sabri
+ * @author Sabrina Amoura
  */
 public class SavedSimMenuController {
 
     Stage primaryStage;
+    MainMenuController mmc;
 
     @FXML
     ListView listViewSims;
@@ -38,20 +39,25 @@ public class SavedSimMenuController {
     @FXML
     Button btnDelete;
 
-    MainMenuController mmc;
-
+    /***
+     * Sole constructor
+     * @param mmc
+     * @param primaryStage 
+     */
     public SavedSimMenuController(MainMenuController mmc, Stage primaryStage) {
         this.mmc = mmc;
         this.primaryStage = primaryStage;
     }
 
-    @FXML
+    /***
+     * Sets event handling method for the buttons and initial content of the listview
+     * part of the code is from: https://jenkov.com/tutorials/javafx/listview.html
+     */
     public void initialize() {
         listViewSims.setItems(SavedSim.getSavedSimList());
         btnDelete.setOnAction((event) -> {
             handleDelete(event);
         });
-//https://jenkov.com/tutorials/javafx/listview.html
         btnLoad.setOnAction(event -> {
             try {
                 handleLoad(event);
@@ -63,7 +69,13 @@ public class SavedSimMenuController {
         });
     }
 
-    @FXML
+    /***
+     * Loads the selected simulation in a CollisionMenu
+     * @param event
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws CsvValidationException 
+     */
     public void handleLoad(ActionEvent event) throws IOException, FileNotFoundException, CsvValidationException {
         ObservableList selectedIndices = listViewSims.getSelectionModel().getSelectedIndices();
         ArrayList<CollisionObject> objects = new ArrayList<>();
@@ -97,7 +109,10 @@ public class SavedSimMenuController {
         }
     }
 
-    @FXML
+    /***
+     * Delete the file associated with the selected saved simulation
+     * @param event 
+     */
     public void handleDelete(ActionEvent event) {
         ObservableList selectedIndices = listViewSims.getSelectionModel().getSelectedIndices();
         String fileName = "";

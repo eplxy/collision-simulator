@@ -12,18 +12,12 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author sabri
+ * @author Sabrina Amoura
  */
 public class SaveDialogController {
     Simulation sim;
     CollisionMenuController cmc;
     Stage stage;
-
-    public SaveDialogController(CollisionMenuController cmc, Stage stage) {
-        this.cmc = cmc;
-        this.stage = stage;
-    }
-    
     
     @FXML
     Button btnSave;
@@ -32,6 +26,20 @@ public class SaveDialogController {
     @FXML
     Label labelError;
     
+    /***
+     * Sole constructor
+     * @param cmc
+     * @param stage 
+     */
+    public SaveDialogController(CollisionMenuController cmc, Stage stage) {
+        this.cmc = cmc;
+        this.stage = stage;
+    }
+    
+    /***
+     * Sets event handling method for the button and initial content of the error label
+     * @throws IOException 
+     */
     public void initialize() throws IOException{
         btnSave.setOnAction((event) -> {
             handleSave(event);
@@ -39,6 +47,10 @@ public class SaveDialogController {
         labelError.setText("");
     }   
     
+    /***
+     * Creates a new saved simulation if the name entered is valid
+     * @param event 
+     */
     public void handleSave(ActionEvent event){
         String fileName = txtFieldName.getText();
         if(SavedSim.getSavedSimList().contains(fileName)){
@@ -50,10 +62,15 @@ public class SaveDialogController {
             stage.close();
         }
     }
-    
+   
+    /***
+     * @param name user input
+     * @return true if the name contains any of the characters not allowed
+     */
     public boolean checkFileName(String name){
         return(name.contains("<")||name.contains(">")||name.contains(":")||name.contains("\"")||name.contains("/")||name.contains("\\")||name.contains("|")||name.contains("?")||name.contains("*"));
     }
+    
     public Simulation getSim() {
         return sim;
     }

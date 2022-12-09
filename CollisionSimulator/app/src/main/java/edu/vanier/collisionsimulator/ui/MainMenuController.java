@@ -20,14 +20,10 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author 2156586
+ * @author Sabrina Amoura
  */
 public class MainMenuController {
     Stage primaryStage;
-
-    public MainMenuController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
     
     @FXML
     Button btnCollision;
@@ -35,7 +31,19 @@ public class MainMenuController {
     Button btnPresetSim;
     @FXML
     Button btnSavedSim;    
-   
+    
+    /***
+     * Sole constructor
+     * @param primaryStage 
+     */
+    public MainMenuController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+    
+   /***
+    * Sets the event handling methods for the menu buttons
+    * @throws IOException 
+    */
     public void initialize() throws IOException{
         btnCollision.setOnAction((event) -> {
             handleCollision(event, this.primaryStage);
@@ -56,6 +64,11 @@ public class MainMenuController {
         });
     }   
     
+    /***
+     * replace the scene of primaryStage with the CollisionMenu
+     * @param event
+     * @param primaryStage 
+     */
     public void handleCollision(ActionEvent event, Stage primaryStage){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CollisionMenu3.fxml"));
@@ -75,9 +88,14 @@ public class MainMenuController {
         } catch (IOException e) {
             System.out.println(e);
         }
-
     }
     
+    /***
+     * Shows a modal window with the 6 preset simulations
+     * @param event
+     * @param primaryStage
+     * @throws IOException 
+     */
     public void handlePresetSim(ActionEvent event, Stage primaryStage) throws IOException{
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -91,6 +109,12 @@ public class MainMenuController {
         dialog.show();
     }
     
+    /***
+     * Shows a modal window with the list of saved simulations
+     * @param event
+     * @param primaryStage
+     * @throws IOException 
+     */
     public void handleSavedSim(ActionEvent event, Stage primaryStage) throws IOException{
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);

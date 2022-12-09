@@ -21,7 +21,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author sabri
+ * @author Sabrina Amoura
  */
 public class SavedSim {
 
@@ -29,7 +29,14 @@ public class SavedSim {
     static private String filePath = null;
     private static ObservableList savedSimList = FXCollections.observableArrayList();
 
-    //https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/#:~:text=Writing%20a%20CSV%20file%20is,()%20method%20of%20CSVWriter%20class.
+    /***
+     * Creates a csv file in the folder savedSim with one line per CollisionObject
+     * All parameters are saved for the ColisionObjects
+     * Names the file with name entered by the user
+     * Part of the code is from: https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/#:~:text=Writing%20a%20CSV%20file%20is,()%20method%20of%20CSVWriter%20class.
+     * @param sim simulation to be saved
+     * @param fileName name entered by the user 
+     */
     public static void savedSimulation(Simulation sim, String fileName) {
         savedSimList.add(fileName);
         filePath = "src/main/resources/savedSim/" + fileName + ".csv";
@@ -51,10 +58,18 @@ public class SavedSim {
         }
     }
 
+    /***
+     * Parse the file associated to the chosen saved simulation and create CollisionObjects with the same parameters
+     * @param fileName name chosen from the list view of saved simulations 
+     * @param cmc CollisionMenuController to link to each CollisionObject
+     * @return an ArrayList of the objects to add to the simulation
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws CsvValidationException 
+     */
     public static ArrayList<CollisionObject> load(String fileName, CollisionMenuController cmc) throws FileNotFoundException, IOException, CsvValidationException {
         ArrayList<CollisionObject> objects = new ArrayList<>();
         filePath = "src/main/resources/savedSim/" + fileName + ".csv";
-        File file = new File(filePath);
 
         CSVReader reader = new CSVReaderBuilder(new FileReader(filePath)).build();
         String[] objectParametersArr;
@@ -85,6 +100,10 @@ public class SavedSim {
         return objects;
     }
 
+    /***
+     * Deletes the csv file of a saved simulation 
+     * @param fileName name selected from the list view of saved simulations
+     */
     public static void delete(String fileName) {
         filePath = "src/main/resources/savedSim/" + fileName + ".csv";
         File file = new File(filePath);
