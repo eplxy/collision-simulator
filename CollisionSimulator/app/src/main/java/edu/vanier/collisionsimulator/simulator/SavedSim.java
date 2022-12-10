@@ -77,7 +77,7 @@ public class SavedSim {
         frictionToPass = Double.parseDouble(reader.readNext()[0]);
 
         while ((objectParametersArr = reader.readNext()) != null) {
-            CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
+            CircleObject c = new CircleObject(cmc);
             c.setPosX(Double.parseDouble(objectParametersArr[0]));
             c.setPosY(Double.parseDouble(objectParametersArr[1]));
             c.setMass(Double.parseDouble(objectParametersArr[2]));

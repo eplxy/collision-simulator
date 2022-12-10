@@ -34,7 +34,7 @@ public class CircleObject extends CollisionObject {
         this.node = node;
     }
 
-    public CircleObject(CollisionMenuController cmc, String imagePath) throws IOException {
+    public CircleObject(CollisionMenuController cmc) throws IOException {
         super(cmc);
         this.shape = new Circle(30);
         this.shape.setFill(Color.valueOf("303030"));

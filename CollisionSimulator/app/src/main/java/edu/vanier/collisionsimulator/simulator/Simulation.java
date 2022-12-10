@@ -188,7 +188,7 @@ public class Simulation {
                 randY = (Math.random() * (aPane.getHeight() - bufferY) + 100);
 
             } while (willSpawnIntersecting(randX, randY, randomObjsToAdd));
-            CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
+            CircleObject c = new CircleObject(cmc);
 
             c.setPosX(randX);
             c.setPosY(randY);
@@ -237,7 +237,7 @@ public class Simulation {
             randY = (Math.random() * (aPane.getHeight() - bufferY) + 100);
 
         } while (willSpawnIntersecting(randX, randY, currentObjs));
-        CircleObject c = new CircleObject(cmc, ResourcesManager.INVADER_BEE);
+        CircleObject c = new CircleObject(cmc);
 
         c.setPosX(randX);
         c.setPosY(randY);
