@@ -85,6 +85,7 @@ public class MainMenuController {
             primaryStage.show(); 
             sim.createRandomObjects(2, sim.cmc, sim.animationPane);
             Simulation.isSavedSim = false;
+            Simulation.isPresetSim = false;
         } catch (IOException e) {
             System.out.println(e);
         }

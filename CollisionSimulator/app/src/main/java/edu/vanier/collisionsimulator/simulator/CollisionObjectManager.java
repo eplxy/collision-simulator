@@ -22,9 +22,6 @@ public class CollisionObjectManager {
         this.mp = new MediaPlayer(new Media(Simulation.class.getResource(SOUNDS).toExternalForm()));
     }
     
-
-    //TODO: code indices for deletion and creation of object
-
     private final List<CollisionObject> colObjs = new ArrayList<>();
 
     private final List<CollisionObject> collisionList = new ArrayList<>();

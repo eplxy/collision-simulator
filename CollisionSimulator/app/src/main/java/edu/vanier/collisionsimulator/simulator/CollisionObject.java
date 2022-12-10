@@ -113,6 +113,10 @@ public abstract class CollisionObject {
 
     }
 
+    /***
+     * Show parameters for the selected CollisionObject
+     * @param cmc CollisionMenuController associated to the object
+     */
     public final void setMouseListener(CollisionMenuController cmc) {
 
         this.shape.setOnMouseClicked((MouseEvent mouseEvent) -> {
@@ -140,6 +144,10 @@ public abstract class CollisionObject {
 
     }
 
+    /***
+     * Allows user to move a CollisionObject in the animation pane
+     * @param cmc CollisionMenuController associated to the object
+     */
     public final void setDragListeners(CollisionMenuController cmc) {
         final Delta dragDelta = new Delta();
         this.shape.setOnMousePressed((MouseEvent mouseEvent) -> {

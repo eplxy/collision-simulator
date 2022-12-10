@@ -69,7 +69,7 @@ public class ParametersController {
 
     /***
      * Sets event handling methods for the buttons, sliders and checkbox
-     * Load the image choices in a list view
+     * Loads the image choices in a list view
      */
     public void initialize() {
         btnEnter.setOnAction((event) -> {
