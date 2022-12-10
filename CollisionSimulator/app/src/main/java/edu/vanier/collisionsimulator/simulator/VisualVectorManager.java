@@ -11,7 +11,7 @@ import javafx.scene.shape.Line;
 
 /**
  *
- * @author 2154033
+ * @author Wassim Yahia
  */
 public class VisualVectorManager {
     private final List<Line> visVectors = new ArrayList<>();

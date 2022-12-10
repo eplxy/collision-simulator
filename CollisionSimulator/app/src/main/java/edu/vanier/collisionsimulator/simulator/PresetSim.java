@@ -22,7 +22,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author wassi
+ * @author Wassim Yahia
  */
 public class PresetSim {
     static public double frictionToPass;
@@ -35,7 +35,12 @@ public class PresetSim {
         File file = new File(filePath);
     }
     
-
+    /***
+     * Parse the file associated to the chosen preset simulation and create CollisionObjects with the same parameters
+     * @param fileName name chosen from the list of preset simulations 
+     * @param cmc CollisionMenuController to link to each CollisionObject
+     * @return an ArrayList of the objects to add to the simulation
+     */
     public static ArrayList<CollisionObject> load(String fileName, CollisionMenuController cmc) throws FileNotFoundException, IOException, CsvValidationException {
         ArrayList<CollisionObject> objects = new ArrayList<>();
         // first create file object for file placed at location

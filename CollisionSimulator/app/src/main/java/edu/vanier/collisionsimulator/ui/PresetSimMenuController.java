@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author wassi
+ * @author Wassim Yahia
  */
 public class PresetSimMenuController {
     Stage primaryStage;
@@ -55,6 +55,9 @@ public class PresetSimMenuController {
         this.mmc = mmc;
         this.primaryStage = primaryStage;
     }
+    /**
+     * initializes the preset simulation menu by giving graphics to the toggle buttons, making them mutually exclusive, and by assigning them event actions.
+     */
     @FXML
     public void initialize(){
         ImageView curling = new ImageView(new Image("images/" + "curlingStone" + ".png"));
@@ -174,6 +177,11 @@ public class PresetSimMenuController {
         
     
 }
+    /***
+     * Loads the selected simulation in a CollisionMenu
+     * @param event
+     * @throws IOException
+     */
         @FXML
     public void handleLoad(ActionEvent event) throws IOException, FileNotFoundException, CsvValidationException {
        

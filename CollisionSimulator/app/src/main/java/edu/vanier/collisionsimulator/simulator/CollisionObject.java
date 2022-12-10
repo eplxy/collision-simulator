@@ -89,7 +89,9 @@ public abstract class CollisionObject {
         ds.setColor((Color) this.getShape().getStroke());
         this.shape.setEffect(ds);
     }
-
+    /**
+     * updates the position of the collision object and its visual vector's line on the scene according to the new calculated position and velocity.
+     */
     public void update() {
 
         this.setPosX(posX + v.x);

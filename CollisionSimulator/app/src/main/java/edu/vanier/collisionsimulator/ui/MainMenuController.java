@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Sabrina Amoura
+ * @author Sabrina Amoura, Wassim Yahia
  */
 public class MainMenuController {
     Stage primaryStage;

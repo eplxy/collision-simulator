@@ -11,7 +11,7 @@ import javafx.scene.shape.StrokeType;
 
 /**
  *
- * @author 2154033
+ * @author Wassim Yahia
  */
 public class VisualVector {
 
@@ -34,7 +34,9 @@ public class VisualVector {
         visVector.setStrokeWidth(4);
         visVector.setFill(Color.BLACK);
     }
-
+    /**
+     * Updates the position of a visual vector's line in the scene.
+     */
     public void update() {
         this.visVector.setStartX(this.owner.getPosX());
         this.visVector.setStartY(this.owner.getPosY());
@@ -42,7 +44,9 @@ public class VisualVector {
         this.visVector.setEndY(visVector.getStartY() + this.owner.getVelocityY() * 20);
 
     }
-
+    /**
+     * Listens for mouse drag on the line's length and updates its length accordingly.
+     */
     public final void setDragListeners() {
         final Delta dragDelta = new Delta();
         this.visVector.setOnMousePressed((MouseEvent mouseEvent) -> {
